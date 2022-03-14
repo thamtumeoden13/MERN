@@ -66,3 +66,5 @@ package-lock.json
 .jest/
 
 android/java_pid16408.hprof
+
+.env
