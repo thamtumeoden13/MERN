@@ -85,7 +85,7 @@ const Form = ({ currentId, handleCurrentId }) => {
                     label="Tags"
                     fullWidth
                     value={productData.tags}
-                    onChange={(e) => setProductData({ ...productData, tags: e.target.value })}
+                    onChange={(e) => setProductData({ ...productData, tags: e.target.value.split(',') })}
                 />
                 <div className={classes.fileInput}>
                     <FileBase64

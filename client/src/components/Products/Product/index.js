@@ -6,7 +6,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
 
-import { deleteProduct } from '../../../redux/actions/products'
+import { deleteProduct, likeProduct } from '../../../redux/actions/products'
 
 import useStyles from './styles'
 
@@ -16,6 +16,10 @@ const Product = ({ product, handleCurrentId }) => {
 
     const handleDelete = useCallback((id) => {
         dispatch(deleteProduct(id))
+    }, [dispatch])
+
+    const handleLike = useCallback((id) => {
+        dispatch(likeProduct(id))
     }, [dispatch])
 
     return (
@@ -38,7 +42,6 @@ const Product = ({ product, handleCurrentId }) => {
                     <MoreHorizIcon fontSize='medium' />
                 </Button>
             </div>
-
             <div className={classes.details}>
                 <Typography
                     variant='body2'
@@ -56,16 +59,18 @@ const Product = ({ product, handleCurrentId }) => {
             </Typography>
             <CardContent>
                 <Typography
-                    variant='h5'
+                    variant='body2'
                     gutterBottom
+                    color='textSecondary'
+                    component='p'
                 >
                     {product.message}
                 </Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
-                <Button size='small' color='primary' onClick={() => { }} >
+                <Button size='small' color='primary' onClick={() => handleLike(product._id)} >
                     <ThumbUpAltIcon fontSize='small' />
-                    {`Like`}
+                    &nbsp; {`Like`}&nbsp;
                     {product.likeCount}
                 </Button>
                 <Button size='small' color='secondary' onClick={() => handleDelete(product._id)} >
