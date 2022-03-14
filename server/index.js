@@ -16,13 +16,13 @@ app.use(bodyParser.json({ limit: '30mb' }))
 app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }))
 app.use(cors())
 
-app.get('/', (req, res) => {
-    res.send('SUCCESS')
-})
-
 app.use('/posts', postsRouters)
 
 app.use('/products', productsRouters)
+
+app.get('/', (req, res) => {
+    res.send('Welcom to MERN fullstack API')
+})
 
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
