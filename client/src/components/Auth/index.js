@@ -9,8 +9,17 @@ import Input from '../common/Input'
 import Icon from '../common/Icon'
 
 import { AUTH } from '../../redux/constants/actionType'
+import { signIn, signUp } from '../../redux/actions/auth'
 
 import useStyles from './styles'
+
+const initFormData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+}
 
 const Auth = () => {
     const classes = useStyles()
@@ -19,18 +28,24 @@ const Auth = () => {
 
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
+    const [formData, setFormData] = useState(initFormData)
 
-    const handleChange = () => {
-
-    }
-
-    const handleShowPassword = () => {
-        setShowPassword((prevShowPassWord) => !prevShowPassWord)
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log(formData)
+        if (isSignup) {
+            dispatch(signUp(formData, navigate))
+        } else {
+            dispatch(signIn(formData, navigate))
+        }
+    }
 
+    const handleShowPassword = () => {
+        setShowPassword((prevShowPassWord) => !prevShowPassWord)
     }
 
     const switchMode = () => {
@@ -87,13 +102,13 @@ const Auth = () => {
                                     label='First Name'
                                     autoFocus
                                     half
-                                    handleCHange={handleChange}
+                                    handleChange={handleChange}
                                 />
                                 <Input
                                     name='lastName'
                                     label='Last Name'
                                     half
-                                    handleCHange={handleChange}
+                                    handleChange={handleChange}
                                 />
                             </>
                         )}

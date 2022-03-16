@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import FileBase64 from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+
 import { createProduct, updateProduct } from '../../redux/actions/products'
 
 import useStyles from './styles'
@@ -9,9 +11,11 @@ import useStyles from './styles'
 const Form = ({ currentId, handleCurrentId }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const location = useLocation()
+
     const productSelected = useSelector((state) => currentId ? state.products.data.find((product) => currentId === product._id) : null)
+    const [user, setUser] = useState(null)
     const [productData, setProductData] = useState({
-        creator: '',
         title: '',
         message: '',
         tags: '',
@@ -22,13 +26,17 @@ const Form = ({ currentId, handleCurrentId }) => {
         if (productSelected) setProductData(productSelected)
     }, [productSelected])
 
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('profile')))
+    }, [location])
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
         if (currentId) {
-            dispatch(updateProduct(currentId, productData))
+            dispatch(updateProduct(currentId, { ...productData, name: user?.result?.name }))
         } else {
-            dispatch(createProduct(productData))
+            dispatch(createProduct({ ...productData, name: user?.result?.name }))
         }
         clear()
     }
@@ -36,12 +44,21 @@ const Form = ({ currentId, handleCurrentId }) => {
     const clear = () => {
         handleCurrentId(null)
         setProductData({
-            creator: '',
             title: '',
             message: '',
             tags: '',
             selectedFile: ''
         })
+    }
+
+    if (!user?.result?.name) {
+        return (
+            <Paper className={classes.paper}>
+                <Typography variant='h6' align='center'>
+                    {`Please Sign In to create your own products and like other's products.`}
+                </Typography>
+            </Paper>
+        )
     }
 
     return (
@@ -56,14 +73,6 @@ const Form = ({ currentId, handleCurrentId }) => {
                     {`${currentId ? 'Editing' : 'Creating'} a Memory`}
                 </Typography>
                 <TextField
-                    name='creator'
-                    variant='outlined'
-                    label="Creator"
-                    fullWidth
-                    value={productData.creator}
-                    onChange={(e) => setProductData({ ...productData, creator: e.target.value })}
-                />
-                <TextField
                     name='title'
                     variant='outlined'
                     label="Title"
@@ -76,6 +85,8 @@ const Form = ({ currentId, handleCurrentId }) => {
                     variant='outlined'
                     label="Message"
                     fullWidth
+                    multiline
+                    rows={4}
                     value={productData.message}
                     onChange={(e) => setProductData({ ...productData, message: e.target.value })}
                 />

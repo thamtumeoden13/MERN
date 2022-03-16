@@ -5,7 +5,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 
 import postsRouters from './routers/posts.js'
-import productsRouters from './routers/products.js'
+import productRouters from './routers/products.js'
+import userRouters from './routers/users.js'
 
 const app = express()
 dotenv.config()
@@ -18,7 +19,9 @@ app.use(cors())
 
 app.use('/posts', postsRouters)
 
-app.use('/products', productsRouters)
+app.use('/products', productRouters)
+
+app.use('/user', userRouters)
 
 app.get('/', (req, res) => {
     res.send('Welcom to MERN fullstack API')

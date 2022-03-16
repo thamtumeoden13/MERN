@@ -3,12 +3,13 @@ import mongoose from "mongoose";
 const productSchema = mongoose.Schema({
     title: String,
     message: String,
+    name: String,
     creator: String,
     tags: [String],
     selectedFile: String,
-    likeCount: {
-        type: Number,
-        default: 0
+    likes: {
+        type: [String],
+        default: []
     },
     createdAt: {
         type: Date,
@@ -16,5 +17,5 @@ const productSchema = mongoose.Schema({
     }
 })
 
-const ProductModel = mongoose.model('ProductModel', productSchema)
+const ProductModel = mongoose.model('Product', productSchema)
 export default ProductModel

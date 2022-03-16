@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import decode from 'jwt-decode'
 
 import useStyles from './styles'
 import { LOGOUT } from '../../redux/constants/actionType';
@@ -18,20 +19,24 @@ const NavBar = () => {
     console.log({ user })
 
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('profile')))
-    }, [location])
-
-    useEffect(() => {
         const token = user?.token
-        console.log({ token })
-    }, [user])
 
-    const handleLogout = () => {
+        if (token) {
+            const decodeToken = decode(token)
+            if (decodeToken.exp * 1000 < new Date().getTime()) {
+                handleLogout()
+            }
+        }
+
+        setUser(JSON.parse(localStorage.getItem('profile')))
+    }, [location, user])
+
+    const handleLogout = useCallback(() => {
         dispatch({ type: LOGOUT })
 
         navigate('/')
         setUser(null)
-    }
+    }, [navigate, dispatch])
 
     return (
         <AppBar className={classes.appBar} position='static' color='inherit'>
