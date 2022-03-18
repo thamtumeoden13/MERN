@@ -48,19 +48,34 @@ const Product = ({ product, handleCurrentId }) => {
     }
 
     const Likes = () => {
+        let render
         if (likes.length > 0) {
-            return likes.find((like) => like === userId)
+            render = likes.find((like) => like === userId)
                 ? (
                     <>
-                        <ThumbUpAltIcon fontSize='small' />&nbsp; {likes.length > 2 ? `Your and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
+                        <ThumbUpAltIcon fontSize='small' />
+                        <div className={classes.likeContent} >
+                            &nbsp; {likes.length > 2 ? `Your and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
+                        </div>
                     </>
                 ) : (
                     <>
-                        <ThumbUpAltOutlinedIcon fontSize='small' />&nbsp; {likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
+                        <ThumbUpAltOutlinedIcon fontSize='small' />
+                        <div className={classes.likeContent}>
+                            &nbsp; {likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
+                        </div>
                     </>
                 )
+        } else {
+            render = (
+                <>
+                    <ThumbUpAltOutlinedIcon fontSize='small' />
+                    <div className={classes.likeContent}>
+                        &nbsp; {`Like`}
+                    </div>
+                </>)
         }
-        return <><ThumbUpAltOutlinedIcon fontSize='small' />&nbsp; {`Like`}</>
+        return render
     }
 
     return (

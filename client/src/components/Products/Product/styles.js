@@ -53,4 +53,5 @@ export default makeStyles({
         display: 'block',
         textAlign: 'initial',
     },
+    likeContent: { height: '36px', display: 'flex', alignItems: 'center' }
 });
