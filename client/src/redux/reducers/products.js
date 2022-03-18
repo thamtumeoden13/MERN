@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, FETCH_PRODUCT, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionType';
+import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, FETCH_PRODUCT, CREATE, UPDATE, DELETE, LIKE, COMMENT } from '../constants/actionType';
 
 const initState = {
     isLoading: false,
@@ -28,7 +28,6 @@ const reducer = (state = initState, action) => {
                 numberOfPages: action.payload.numberOfPages,
             };
         case FETCH_PRODUCT:
-            console.log('FETCH_PRODUCT', action.payload)
             return {
                 ...state,
                 product: action.payload.data,
@@ -45,6 +44,7 @@ const reducer = (state = initState, action) => {
             };
         case UPDATE:
         case LIKE:
+        case COMMENT:
             const products = state.products.map((product) => {
                 return product._id === action.payload._id ? action.payload : product
             })

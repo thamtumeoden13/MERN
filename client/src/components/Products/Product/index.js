@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from '@mui/material'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
@@ -19,6 +19,12 @@ const Product = ({ product, handleCurrentId }) => {
     const navigate = useNavigate()
 
     const [user, setUser] = useState(null)
+    const [likes, setLikes] = useState(product?.likes)
+
+    const userId = useMemo(() => { return (user?.result?.googleId || user?.result?._id) }, [user?.result?.googleId, user?.result?._id])
+    const hasLikedProduct = useMemo(() => {
+        return product?.likes.find((like) => like === userId) || false
+    }, [product?.likes, userId])
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('profile')))
@@ -30,22 +36,27 @@ const Product = ({ product, handleCurrentId }) => {
 
     const handleLike = useCallback((id) => {
         dispatch(likeProduct(id))
-    }, [dispatch])
+        if (hasLikedProduct) {
+            setLikes(product.likes.filter((id) => id !== userId))
+        } else {
+            setLikes([...product.likes, userId])
+        }
+    }, [dispatch, hasLikedProduct, userId])
 
     const handleOpenDetail = () => {
         navigate(`/products/${product._id}`)
     }
 
     const Likes = () => {
-        if (product.likes.length > 0) {
-            return product.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+        if (likes.length > 0) {
+            return likes.find((like) => like === userId)
                 ? (
                     <>
-                        <ThumbUpAltIcon fontSize='small' />&nbsp; {product.likes.length > 2 ? `Your and ${product.likes.length - 1} others` : `${product.likes.length} like${product.likes.length > 1 ? 's' : ''}`}
+                        <ThumbUpAltIcon fontSize='small' />&nbsp; {likes.length > 2 ? `Your and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
                     </>
                 ) : (
                     <>
-                        <ThumbUpAltOutlinedIcon fontSize='small' />&nbsp; {product.likes.length} {product.likes.length === 1 ? 'Like' : 'Likes'}
+                        <ThumbUpAltOutlinedIcon fontSize='small' />&nbsp; {likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
                     </>
                 )
         }

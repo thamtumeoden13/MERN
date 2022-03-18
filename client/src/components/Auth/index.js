@@ -36,7 +36,6 @@ const Auth = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(formData)
         if (isSignup) {
             dispatch(signUp(formData, navigate))
         } else {
@@ -63,12 +62,11 @@ const Auth = () => {
             dispatch({ type: AUTH, payload: { result, token } })
             navigate('/')
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
     const googleFailure = async (err) => {
-        console.log(err)
         console.log('Google Sign In was unsuccessful, Try Again Later')
     }
 

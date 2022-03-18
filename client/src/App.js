@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from '@mui/material'
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -12,7 +12,8 @@ import ProductDetail from './components/ProductDetail'
 const theme = createTheme();
 
 function App() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+
+  const authData = useSelector((state) => state.authData)
 
   return (
     <BrowserRouter>
@@ -25,7 +26,7 @@ function App() {
             <Route path='/products' exact element={<Home />} />
             <Route path='/products/search' exact element={<Home />} />
             <Route path='/products/:id' element={<ProductDetail />} />
-            <Route path='/auth' exact element={!user ? <Auth /> : <Navigate to={'/products'} />} />
+            <Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/products'} />} />
             <Route />
           </Routes>
         </Container>

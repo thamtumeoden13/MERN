@@ -24,7 +24,6 @@ export default function CreatePostModal() {
     }, [dispatch])
 
     const onSubmit = React.useCallback(() => {
-        console.log('[state]', state)
         dispatch(createPost.createPostRequest(state))
         setState({
             title: '',

@@ -30,11 +30,10 @@ app.get('/', (req, res) => {
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('Connected to DB')
-
         app.listen(PORT, () => {
             console.log(`server on running port ${PORT}`)
         })
 
     }).catch((err) => {
-        console.log('err', err)
+        console.error('err', err)
     })

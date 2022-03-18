@@ -114,3 +114,26 @@ export const likeProduct = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+
+export const commentProduct = async (req, res) => {
+    const { id: _id } = req.params
+    const { value } = req.body
+
+    if (!req.userId) return res.json({ message: 'Unauthenticated' })
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(404).send(`No Product with that id: ${_id}`)
+        }
+
+        const product = await ProductModel.findById(_id)
+
+        product.comments.push(value)
+
+        const updateProductData = await ProductModel.findByIdAndUpdate(_id, product, { new: true })
+
+        res.status(201).json(updateProductData)
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+}

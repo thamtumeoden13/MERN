@@ -11,7 +11,6 @@ export const getPosts = async (req, res) => {
 
     try {
         const posts = await PostModel.find()
-        console.log({ posts })
 
         res.status(200).json(posts)
     } catch (error) {

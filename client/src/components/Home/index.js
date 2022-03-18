@@ -54,7 +54,6 @@ function Home() {
     }
 
     const handleChangeValue = (values) => {
-        console.log({ values })
         setTags(values)
     }
 
