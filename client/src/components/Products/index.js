@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Grid, CircularProgress } from '@material-ui/core'
+import { Grid, CircularProgress } from '@mui/material'
 
 import Product from './Product'
 
@@ -8,27 +8,30 @@ import useStyles from './styles'
 
 const Products = ({ handleCurrentId }) => {
     const classes = useStyles()
-    const { data } = useSelector((state) => state.products)
 
-    console.log('[products]', data)
+    const { products, isLoading } = useSelector((state) => state.products)
+
+    if (!products.length && !isLoading) return null
 
     return (
-        !data.length ? <CircularProgress /> : (
-            <Grid
-                className={classes.mainContainer}
-                container
-                alignItems='stretch'
-                spacing={3}
-            >
-                {data.map((product) => (
-                    <Grid key={product._id} item xs={12} sm={6} >
-                        <Product product={product}
-                            handleCurrentId={handleCurrentId}
-                        />
-                    </Grid>
-                ))}
-            </Grid>
-        )
+        <>
+            {!!isLoading ? <CircularProgress /> : (
+                <Grid
+                    className={classes.mainContainer}
+                    container
+                    alignItems='stretch'
+                    spacing={3}
+                >
+                    {products.map((product) => (
+                        <Grid key={product._id} item xs={12} sm={12} md={6} lg={3} >
+                            <Product product={product}
+                                handleCurrentId={handleCurrentId}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
+        </>
     )
 }
 

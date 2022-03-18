@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mern-fullstack-project",
+  "private_key_id": "a5100ec7deee1f85d96194ceac1d152bab3148ac",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCv+O9vQXDhS5re\nNbuGZASrwZ4hq+dAQG7EInJnYwPwDT5tMsAQt+DfE2J2Uq8DR5RJONI8hO/T1yxo\nNDbAlsfuJh5hrlFfXtnBd765HF9j4HqOQr/2uwGuizUTg8jo5U/rL4OFCW3tO9Nz\nVA8xUTJYcyZsAnQlq4z3DlsuAQk1D9NDFdqFRzkQj2P/w2KhuyGcGzu8Yk05gAmG\nW9DvBWRX9bazlWs7eddvBR7PMt2ABQpOJf+NX6slAs1Yz+rHqXUsptos9MqlUgBr\noj4DJMYl5whNQuVu5SMP91HWm/GIdhb0vbhNl8cN90dkce9YPhsrMVeKiR3BHd6p\ncvVIdAAjAgMBAAECggEARFC1j3EN5AEIefzNNNKud4l+nN7SM4DwH4ep91YayL4z\nfowlwTfJfoDViE74L6NBv51mDOWk/4446KlgmirPKja1M8HLSGWXzwJwUgfgRnN2\n0LS8NoqKEBtt+wn93OBtQsYa3nJ3MRK5N7wp+8DkdS8a+vKG6brsSltR7Y2sZ+L8\nUU35Nx8vIgYiiYv3NYYHj0XLvd4rxfse8/s4ZHqrWXe/uF7QV8KCQDlNG9usEBmC\nwseVn267zxmsCEQAAI6T92DteXZZ+taG8RWIpUhxhwo88acJcEUFqvKzhxhBuBbp\nrAd4vMSru4M+X/toIHbVamlLqH9M57uvfXDpyI9vbQKBgQDhHj6I4dRkgzi6jX2P\nA1YkNpCGxIlQfg99NgdhzBcoBGfcwaTRbDBj12XQD/PI5CnhnmY1LdfTXe5NlWT6\nHEZTkntBd8OZSp+u/SeuNYPlCIrVfplK+QUmn22E2Pq4Ly83alzQQdsopbQXwUKZ\nMVV8EeEKiRrS/wRYlYjzw+YTtQKBgQDIHMdQs6Y0LF6HmfEZCTG1YCKPnyr68x+P\nfL8RAV0Mk4RCraEVoDBKqHm3z9Xt6wW8vpjaGD+fApOIyNNf/SEcHnH1/N6w13v1\n+5oshjaSfHFF9hH1oNb0xxtxKGUhlDu2QImt+zDfv1frdfLjd7s35YC3zgKHrsUW\nR1izIDHbdwKBgQCTFfO98++WDLbQDQpwmrl5x7z+kQM2+GaeZOLF31dx6g8CifNq\nccncMixvmTyrkYhbxeb58A4IKGM/hdEIKdk5WYf26o1+ZueWqgl3JbgbuU0c2S7H\ncZUP+zLPjgWiuhGbn38tAxpyoHHe44LkHPvBqNzkyVghbEYmqu1keCan0QKBgQC5\nip1vgTKge2cmeaCnIvQ5BKrm2aDDT3s60mJhxQ7eY0SlglGyOHWuM2mv+X+Uem42\nY85boVIUABKFKBd8j7oMVVo6xzw/YXypRaDcmZCt374zLQXX5kqIaLhUAi1KpiN7\nR3mgnB/jxYkiY5lSOSiYmi3vvo5v+ab5kit24mn33wKBgQCIN3O09eMbalyP0uoh\nSdlHiZ+Ovc1nCYibyif1nGk7bNCucv1GSW4x5Q7cLh1aIjiMGVz8HbXLuIMAV7Au\n4OqS36bfnd9NqklI0Swfvyrajna12bfcQhzXPy3dlaXJ4KpFGPx2Bxbmc4KK+XDk\nq2uzV4biR1gDbKvleaJrDkkK8g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "mern-fullstack-project@mern-fullstack-project.iam.gserviceaccount.com",
+  "client_id": "111773498158543339797",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mern-fullstack-project%40mern-fullstack-project.iam.gserviceaccount.com"
+}

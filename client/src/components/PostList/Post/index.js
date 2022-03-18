@@ -1,7 +1,7 @@
 import React from "react";
-import { Typography, Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton } from '@material-ui/core'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import FavoriteIcon from '@material-ui/icons/Favorite'
+import { Typography, Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton } from '@mui/material'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import moment from 'moment'
 
 import useStyles from './styles'

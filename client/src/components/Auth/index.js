@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Container, Avatar, Paper, Grid, Typography, Button } from '@material-ui/core'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { Container, Avatar, Paper, Grid, Typography, Button } from '@mui/material'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { GoogleLogin } from 'react-google-login'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'

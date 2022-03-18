@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core'
+import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import decode from 'jwt-decode'
@@ -16,7 +16,12 @@ const NavBar = () => {
 
     const [user, setUser] = useState(null)
 
-    console.log({ user })
+    const handleLogout = useCallback(() => {
+        dispatch({ type: LOGOUT })
+
+        navigate('/')
+        setUser(null)
+    }, [navigate, dispatch])
 
     useEffect(() => {
         const token = user?.token
@@ -29,14 +34,7 @@ const NavBar = () => {
         }
 
         setUser(JSON.parse(localStorage.getItem('profile')))
-    }, [location, user])
-
-    const handleLogout = useCallback(() => {
-        dispatch({ type: LOGOUT })
-
-        navigate('/')
-        setUser(null)
-    }, [navigate, dispatch])
+    }, [location, handleLogout, user?.token])
 
     return (
         <AppBar className={classes.appBar} position='static' color='inherit'>
@@ -47,11 +45,11 @@ const NavBar = () => {
                     component={Link}
                     to='/'
                 >
-                    {`Products`}
+                    {`MERN`}
                 </Typography>
                 <img
                     className={classes.image}
-                    src={'https://images.pexels.com/photos/11319741/pexels-photo-11319741.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'}
+                    src={'https://images.pexels.com/photos/1766838/pexels-photo-1766838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'}
                     alt='products' height='60'
                 />
             </div>

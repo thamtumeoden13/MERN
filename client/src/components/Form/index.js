@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { TextField, Button, Typography, Paper } from '@material-ui/core'
+import { TextField, Button, Typography, Paper } from '@mui/material'
 import FileBase64 from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { createProduct, updateProduct } from '../../redux/actions/products'
 
@@ -12,8 +12,9 @@ const Form = ({ currentId, handleCurrentId }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const location = useLocation()
+    const navigate = useNavigate()
 
-    const productSelected = useSelector((state) => currentId ? state.products.data.find((product) => currentId === product._id) : null)
+    const productSelected = useSelector((state) => currentId ? state.products.products.find((product) => currentId === product._id) : null)
     const [user, setUser] = useState(null)
     const [productData, setProductData] = useState({
         title: '',
@@ -33,10 +34,10 @@ const Form = ({ currentId, handleCurrentId }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (currentId) {
+        if (!!currentId) {
             dispatch(updateProduct(currentId, { ...productData, name: user?.result?.name }))
         } else {
-            dispatch(createProduct({ ...productData, name: user?.result?.name }))
+            dispatch(createProduct({ ...productData, name: user?.result?.name }, navigate))
         }
         clear()
     }
@@ -62,7 +63,7 @@ const Form = ({ currentId, handleCurrentId }) => {
     }
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form
                 autoComplete='off'
                 noValidate

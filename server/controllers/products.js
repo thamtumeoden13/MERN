@@ -3,10 +3,41 @@ import ProductModel from "../models/productModel.js"
 
 export const getProducts = async (req, res) => {
     // res.send("THIS IS PRODUCTS")
+    const { page } = req.query
     try {
-        const products = await ProductModel.find()
+        const LIMIT = 8
+        const startIndex = (Number(page) - 1) * LIMIT
+        const total = await ProductModel.countDocuments({})
 
-        res.status(200).json(products)
+        const products = await ProductModel.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex)
+
+        res.status(200).json({ data: products, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+export const getProduct = async (req, res) => {
+    // res.send("THIS IS PRODUCTS")
+    const { id } = req.params
+    try {
+        const product = await ProductModel.findById(id)
+
+        res.status(200).json({ data: product })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+export const getProductsBySearch = async (req, res) => {
+    const { searchQuery, tags } = req.query
+
+    try {
+        const title = new RegExp(searchQuery, 'i')
+
+        const products = await ProductModel.find({ $or: [{ title }, { tags: { $in: tags.split(',') } }] })
+
+        res.status(200).json({ data: products })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
@@ -15,9 +46,9 @@ export const getProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
     // res.send("PRODUCT CREATION")
     const product = req.body
-   
+
     const newProduct = new ProductModel({ ...product, creator: req.userId, createdAt: new Date().toISOString() })
-   
+
     try {
         await newProduct.save()
 

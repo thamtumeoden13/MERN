@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, TextareaAutosize, TextField } from '@material-ui/core';
+import { Button, Modal, TextareaAutosize, TextField } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import FileBase64 from 'react-file-base64'
 

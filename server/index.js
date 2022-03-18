@@ -38,4 +38,3 @@ mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnified
     }).catch((err) => {
         console.log('err', err)
     })
-// mongoose.set('useFindAndModify', false)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const URL = 'http://localhost:5000'
-// const URL = 'https://mern-fullstack-project.herokuapp.com'
+// const URL = 'http://localhost:5000'
+const URL = 'https://mern-fullstack-project.herokuapp.com'
 
 const API = axios.create({ baseURL: URL })
 
@@ -17,7 +17,9 @@ API.interceptors.request.use((req) => {
 export const fetchPosts = () => API.get(`/posts`);
 export const createPost = (payload) => API.post(`/posts`, payload);
 
-export const fetchProducts = () => API.get(`/products`)
+export const fetchProduct = (id) => API.get(`/products/${id}`)
+export const fetchProducts = (page) => API.get(`/products?page=${page}`)
+export const fetchProductsBySearch = (searchQuery) => API.get(`/products/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
 export const createProduct = (payload) => API.post(`/products`, payload)
 export const updateProduct = (id, payload) => API.patch(`/products/${id}`, payload)
 export const deleteProduct = (id) => API.delete(`/products/${id}`)

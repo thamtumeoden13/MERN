@@ -1,19 +1,59 @@
 import * as api from '../../api'
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionType';
+import {
+    START_LOADING, END_LOADING,
+    FETCH_ALL, FETCH_BY_SEARCH, FETCH_PRODUCT,
+    CREATE, UPDATE, DELETE, LIKE
+} from '../constants/actionType';
 
-export const getProducts = () => async (dispatch) => {
+export const getProduct = (id) => async (dispatch) => {
     try {
-        const { data } = await api.fetchProducts();
+        dispatch({ type: START_LOADING })
 
-        dispatch({ type: FETCH_ALL, payload: data })
+        const { data } = await api.fetchProduct(id);
+
+        dispatch({ type: FETCH_PRODUCT, payload: data })
+        dispatch({ type: END_LOADING })
     } catch (error) {
         console.log(error.message)
     }
 }
 
-export const createProduct = (product) => async (dispatch) => {
+export const getProducts = (page) => async (dispatch) => {
     try {
+        dispatch({ type: START_LOADING })
+
+        const { data } = await api.fetchProducts(page);
+        console.log({ data })
+
+        dispatch({ type: FETCH_ALL, payload: data })
+        dispatch({ type: END_LOADING })
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const getProductsBySearch = (searchQuery) => async (dispatch) => {
+    console.log({ searchQuery })
+    try {
+        dispatch({ type: START_LOADING })
+
+        const { data } = await api.fetchProductsBySearch(searchQuery);
+        console.log({ data })
+
+        dispatch({ type: FETCH_BY_SEARCH, payload: data })
+        dispatch({ type: END_LOADING })
+    } catch (error) {
+
+    }
+}
+
+export const createProduct = (product, navigate) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING })
+
         const { data } = await api.createProduct(product);
+
+        navigate(`/products/$${data._id}`)
 
         dispatch({ type: CREATE, payload: data });
     } catch (error) {
