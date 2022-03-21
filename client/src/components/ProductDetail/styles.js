@@ -27,10 +27,30 @@ export default makeStyles((theme) => ({
             marginLeft: 0,
         },
     },
-    recommendedPosts: {
+    commentsOuterContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    commentsInnerContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        height: '200px',
+        overflowY: 'auto',
+        marginRight: 30,
+    },
+    recommendedOuterPosts: {
         display: 'flex',
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
+        },
+    },
+    recommendedInnerPosts: {
+        display: 'flex',
+        overflowX: 'auto',
+        width: '100%',
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            overflowY: 'auto',
         },
     },
     loadingPaper: {
@@ -40,14 +60,5 @@ export default makeStyles((theme) => ({
         padding: '20px',
         borderRadius: '15px',
         height: '39vh',
-    },
-    commentsOuterContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
-    commentsInnerContainer: {
-        height: '200px',
-        overflowY: 'auto',
-        marginRight: 30,
     },
 }));

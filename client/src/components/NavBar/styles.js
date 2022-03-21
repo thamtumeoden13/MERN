@@ -13,16 +13,13 @@ export default makeStyles((theme) => ({
 		[theme.breakpoints.down('sm')]: {
 			flexDirection: 'column',
 		},
+		backgroundColor: '#f5ef33'
 	},
 	heading: {
 		color: theme.palette.primary.main,
 		textDecoration: 'none',
 		fontSize: '2em',
 		fontWeight: 300,
-	},
-	image: {
-		marginLeft: '10px',
-		marginTop: '5px',
 	},
 	toolbar: {
 		display: 'flex',
@@ -61,6 +58,11 @@ export default makeStyles((theme) => ({
 	brandContainer: {
 		display: 'flex',
 		alignItems: 'center',
+	},
+	imageLogo: { padding: '2px', width: '64px', height: '64px' },
+	imageBackground: {
+		marginLeft: '10px',
+		marginTop: '5px',
 	},
 	purple: {
 		color: theme.palette.getContrastText(deepPurple[500]),

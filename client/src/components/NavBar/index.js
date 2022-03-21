@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material'
+import { AppBar, Typography, Toolbar, Avatar, Button, Paper } from '@mui/material'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import decode from 'jwt-decode'
 
-import useStyles from './styles'
 import { LOGOUT } from '../../redux/constants/actionType';
 
+import imageLogo_Yellow from '../../assets/imageLogo_Yellow.jpeg'
+import imageLogo_Green from '../../assets/imageLogo_Green.jpeg'
+import imageBackground from '../../assets/imageBackground.jpeg'
+import useStyles from './styles'
 
 const NavBar = () => {
     const classes = useStyles()
@@ -38,21 +41,12 @@ const NavBar = () => {
 
     return (
         <AppBar className={classes.appBar} position='static' color='inherit'>
-            <div className={classes.brandContainer}>
-                <Typography
-                    className={classes.heading}
-                    variant='h2' align='center'
-                    component={Link}
-                    to='/'
-                >
-                    {`MERN`}
-                </Typography>
-                <img
-                    className={classes.image}
-                    src={'https://images.pexels.com/photos/1766838/pexels-photo-1766838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'}
-                    alt='products' height='60'
-                />
-            </div>
+            <Link to="/" className={classes.brandContainer}>
+                <Paper className={classes.imageLogo} elevation={4}>
+                    <img component={Link} to="/" src={imageLogo_Green} alt="iconLogo" height="100%" />
+                </Paper>
+                <img className={classes.imageBackground} src={imageBackground} alt="iconBackground" height="60px" />
+            </Link>
             <Toolbar className={classes.toolbar}>
                 {user ? (
                     <div className={classes.profile}>
@@ -72,7 +66,7 @@ const NavBar = () => {
                         <Button
                             className={classes.logout}
                             variant='contained'
-                            color='secondary'
+                            color='error'
                             onClick={handleLogout}
                         >
                             {`Logout`}

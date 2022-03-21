@@ -8,6 +8,13 @@ import { createProduct, updateProduct } from '../../redux/actions/products'
 
 import useStyles from './styles'
 
+const initErrors = {
+    title: '',
+    message: '',
+    tags: '',
+    selectedFile: ''
+}
+
 const Form = ({ currentId, handleCurrentId }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
@@ -22,6 +29,10 @@ const Form = ({ currentId, handleCurrentId }) => {
         tags: '',
         selectedFile: ''
     })
+    const [state, setState] = useState({
+        isValidate: false
+    })
+    const [errors, setErrors] = useState({})
 
     useEffect(() => {
         if (productSelected) setProductData(productSelected)
@@ -31,8 +42,17 @@ const Form = ({ currentId, handleCurrentId }) => {
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])
 
+    const handleChangeValue = (name, value) => {
+        setProductData({ ...productData, [name]: value })
+        setState({ ...state, isValidate: false })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        setState({ ...state, isValidate: true })
+
+        if (!valiDateFormInput()) return
 
         if (!!currentId) {
             dispatch(updateProduct(currentId, { ...productData, name: user?.result?.name }))
@@ -40,6 +60,30 @@ const Form = ({ currentId, handleCurrentId }) => {
             dispatch(createProduct({ ...productData, name: user?.result?.name }, navigate))
         }
         clear()
+    }
+
+    const valiDateFormInput = () => {
+        const errors = {}
+        switch (true) {
+            case !productData?.title || productData?.title.length == 0:
+                errors.title = 'Please Input Title!'
+                break;
+            case !productData?.message || productData?.message.length == 0:
+                errors.message = 'Please Input Message!'
+                break;
+            case !productData?.tags || productData.tags.length == 0:
+                errors.tags = 'Please Input At Least One Tags!'
+                break;
+            case !productData?.selectedFile || productData?.selectedFile.length == 0:
+                errors.selectedFile = 'Please Chosse A Image!'
+                break;
+        }
+
+        setErrors(errors)
+        if (Object.keys(errors).length > 0) {
+            return false
+        }
+        return true
     }
 
     const clear = () => {
@@ -50,6 +94,8 @@ const Form = ({ currentId, handleCurrentId }) => {
             tags: '',
             selectedFile: ''
         })
+        setState({ ...state, isValidate: false })
+        setErrors({})
     }
 
     if (!user?.result?.name) {
@@ -78,8 +124,11 @@ const Form = ({ currentId, handleCurrentId }) => {
                     variant='outlined'
                     label="Title"
                     fullWidth
+                    required
+                    error={(!!state.isValidate && !!errors.title)}
+                    helperText={errors.title || ''}
                     value={productData.title}
-                    onChange={(e) => setProductData({ ...productData, title: e.target.value })}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 />
                 <TextField
                     name='message'
@@ -88,23 +137,35 @@ const Form = ({ currentId, handleCurrentId }) => {
                     fullWidth
                     multiline
                     rows={4}
+                    required
+                    error={!!state.isValidate && !!errors.message}
+                    helperText={errors.message || ''}
                     value={productData.message}
-                    onChange={(e) => setProductData({ ...productData, message: e.target.value })}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 />
                 <TextField
                     name='tags'
                     variant='outlined'
                     label="Tags"
                     fullWidth
+                    required
+                    error={!!state.isValidate && !!errors.tags}
+                    helperText={errors.tags || ''}
                     value={productData.tags}
-                    onChange={(e) => setProductData({ ...productData, tags: e.target.value.split(',') })}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value.trim().length > 0 ? e.target.value.trim().split(',') : [])}
                 />
                 <div className={classes.fileInput}>
                     <FileBase64
                         type='file'
+                        name='selectedFile'
                         multiple={false}
-                        onDone={({ base64 }) => setProductData({ ...productData, selectedFile: base64 })}
+                        onDone={({ base64 }) => handleChangeValue('selectedFile', base64)}
                     />
+                    {!!errors.selectedFile &&
+                        <div className={classes.errorFileInput}>
+                            {errors.selectedFile}
+                        </div>
+                    }
                 </div>
                 <Button
                     className={classes.buttonSubmit}
@@ -113,17 +174,18 @@ const Form = ({ currentId, handleCurrentId }) => {
                     size='large'
                     type='submit'
                     fullWidth
+                    disabled={!productData.title && !productData.message && !productData.tags.length}
                 >
-                    Submit
+                    {`Submit`}
                 </Button>
                 <Button
                     variant='contained'
-                    color='secondary'
+                    color='error'
                     size='small'
                     fullWidth
                     onClick={clear}
                 >
-                    Clear
+                    {`Clear`}
                 </Button>
             </form>
         </Paper>

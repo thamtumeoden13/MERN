@@ -70,6 +70,7 @@ function Home() {
                                 name='search'
                                 variant='outlined'
                                 label='Search Products'
+                                type={'search'}
                                 fullWidth
                                 value={search}
                                 onKeyDown={handleKeyPress}

@@ -50,7 +50,7 @@ export const createProduct = (product, navigate) => async (dispatch) => {
 
         const { data } = await api.createProduct(product);
 
-        navigate(`/products/$${data._id}`)
+        navigate(`/products/${data._id}`)
 
         dispatch({ type: CREATE, payload: data });
     } catch (error) {
