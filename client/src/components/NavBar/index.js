@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { AppBar, Typography, Toolbar, Avatar, Button, Paper } from '@mui/material'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import decode from 'jwt-decode'
+import { AppBar, Typography, Toolbar, Avatar, Button, Paper } from '@mui/material'
+
+import SearchAppBar from '../SearchBar';
 
 import { LOGOUT } from '../../redux/constants/actionType';
 
-import imageLogo_Yellow from '../../assets/imageLogo_Yellow.jpeg'
 import imageLogo_Green from '../../assets/imageLogo_Green.jpeg'
 import imageBackground from '../../assets/imageBackground.jpeg'
 import useStyles from './styles'
@@ -48,6 +49,7 @@ const NavBar = () => {
                 <img className={classes.imageBackground} src={imageBackground} alt="iconBackground" height="60px" />
             </Link>
             <Toolbar className={classes.toolbar}>
+                <SearchAppBar />
                 {user ? (
                     <div className={classes.profile}>
                         <Avatar
@@ -73,15 +75,17 @@ const NavBar = () => {
                         </Button>
                     </div>
                 ) : (
-                    <Button
-                        className={classes.SignIn}
-                        color='primary'
-                        variant='contained'
-                        component={Link}
-                        to='/auth'
-                    >
-                        {`Sign In`}
-                    </Button>
+                    <>
+                        <Button
+                            className={classes.SignIn}
+                            color='primary'
+                            variant='contained'
+                            component={Link}
+                            to='/auth'
+                        >
+                            {`Sign In`}
+                        </Button>
+                    </>
                 )}
             </Toolbar>
         </AppBar>

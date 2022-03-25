@@ -97,7 +97,7 @@ const Product = ({ product, handleCurrentId }) => {
                             size='small'
                             onClick={() => handleCurrentId(product._id)}
                         >
-                            <MoreHorizIcon fontSize='medium' />
+                            <MoreHorizIcon fontSize='medium'  />
                         </Button>
                     </div>
                 }

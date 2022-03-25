@@ -3,8 +3,8 @@ import { deepPurple } from '@mui/material/colors';
 
 export default makeStyles((theme) => ({
 	appBar: {
-		borderRadius: 15,
-		margin: '30px 0',
+		// borderRadius: 15,
+		marginBottom: 30,
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
