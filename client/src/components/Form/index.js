@@ -65,16 +65,16 @@ const Form = ({ currentId, handleCurrentId }) => {
     const valiDateFormInput = () => {
         const errors = {}
         switch (true) {
-            case !productData?.title || productData?.title.length == 0:
+            case !productData?.title || productData?.title.length === 0:
                 errors.title = 'Please Input Title!'
                 break;
-            case !productData?.message || productData?.message.length == 0:
+            case !productData?.message || productData?.message.length === 0:
                 errors.message = 'Please Input Message!'
                 break;
-            case !productData?.tags || productData.tags.length == 0:
+            case !productData?.tags || productData.tags.length === 0:
                 errors.tags = 'Please Input At Least One Tags!'
                 break;
-            case !productData?.selectedFile || productData?.selectedFile.length == 0:
+            case !productData?.selectedFile || productData?.selectedFile.length === 0:
                 errors.selectedFile = 'Please Chosse A Image!'
                 break;
         }
@@ -100,7 +100,7 @@ const Form = ({ currentId, handleCurrentId }) => {
 
     if (!user?.result?.name) {
         return (
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} elevation={3}>
                 <Typography variant='h6' align='center'>
                     {`Please Sign In to create your own products and like other's products.`}
                 </Typography>

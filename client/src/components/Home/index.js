@@ -86,7 +86,7 @@ function Home() {
                                 onClick={handleSearch}
                                 color='primary'
                                 variant='contained'
-                                disabled={!search && !tags.length}
+                                // disabled={!search && !tags.length}
                             >
                                 {`Search`}
                             </Button>

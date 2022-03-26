@@ -1,5 +1,7 @@
 import React from "react";
-import { Typography } from '@mui/material'
+import { Typography, Box } from '@mui/material'
+
+import CarouselImage from '../CarouselImage'
 
 import useStyle from './styles'
 
@@ -8,9 +10,12 @@ function Header() {
     const classes = useStyle()
 
     return (
-        <Typography variant="h4" align="center" className={classes.container}>
-            Blog
-        </Typography>
+        <Box className={classes.container}>
+            {/* <Typography variant="h1" component='h1' align="center" >
+                Blog
+            </Typography> */}
+            <CarouselImage />
+        </Box>
     )
 }
 

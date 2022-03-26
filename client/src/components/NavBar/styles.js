@@ -1,10 +1,9 @@
 import { makeStyles } from '@mui/styles';
 import { deepPurple } from '@mui/material/colors';
+import { alpha, styled } from '@mui/material/styles';
 
 export default makeStyles((theme) => ({
 	appBar: {
-		// borderRadius: 15,
-		marginBottom: 30,
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -13,7 +12,7 @@ export default makeStyles((theme) => ({
 		[theme.breakpoints.down('sm')]: {
 			flexDirection: 'column',
 		},
-		backgroundColor: '#f5ef33'
+		backgroundColor: '#202530'
 	},
 	heading: {
 		color: theme.palette.primary.main,
@@ -24,7 +23,8 @@ export default makeStyles((theme) => ({
 	toolbar: {
 		display: 'flex',
 		justifyContent: 'flex-end',
-		width: '400px',
+		// width: '400px',
+		flex: 1,
 		[theme.breakpoints.down('md')]: {
 			width: 'auto',
 		},
@@ -47,13 +47,19 @@ export default makeStyles((theme) => ({
 			justifyContent: 'center',
 		},
 	},
+	signin: {
+		marginLeft: '20px',
+		background: 'linear-gradient(45deg, #56BBF1 30%, #4D77FF 90%)'
+	},
 	logout: {
+		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
 		marginLeft: '20px',
 	},
 	userName: {
 		display: 'flex',
 		alignItems: 'center',
 		textAlign: 'center',
+		color: 'white'
 	},
 	brandContainer: {
 		display: 'flex',
@@ -69,4 +75,12 @@ export default makeStyles((theme) => ({
 		backgroundColor: deepPurple[500],
 		margin: '0 10px'
 	},
+	menu: {
+		color: 'white',
+		display: 'flex',
+		"&:hover": {
+			background: 'linear-gradient(45deg, #56BBF1 30%, #4D77FF 90%)',
+			boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)'
+		},
+	}
 }));
