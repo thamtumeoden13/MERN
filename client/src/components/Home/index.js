@@ -11,6 +11,7 @@ import ChipInput from '../common/ChipInput';
 import { getProducts, getProductsBySearch } from '../../redux/actions/products'
 
 import useStyles from './styles'
+import SlateEditor from '../common/SlateEditor';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
@@ -86,7 +87,7 @@ function Home() {
                                 onClick={handleSearch}
                                 color='primary'
                                 variant='contained'
-                                // disabled={!search && !tags.length}
+                            // disabled={!search && !tags.length}
                             >
                                 {`Search`}
                             </Button>

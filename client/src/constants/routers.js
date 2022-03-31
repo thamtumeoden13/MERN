@@ -24,7 +24,7 @@ export const routes = [
                 route: 'products',
             },
             {
-                id: 1,
+                id: 4,
                 name: 'Liên Hệ',
                 // route: 'introduce',
                 route: 'products',
@@ -54,19 +54,19 @@ export const routes = [
             {
                 id: 2,
                 name: 'Biệt Thự Cổ Điển',
-                route: 'villas',
+                // route: 'villas',
                 route: 'tours',
             },
             {
                 id: 3,
                 name: 'Biệt Thự Hiện Đại',
-                route: 'villas',
+                // route: 'villas',
                 route: 'tours',
             },
             {
                 id: 4,
                 name: 'Biệt Thự Vườn-Mái Thái',
-                route: 'villas',
+                // route: 'villas',
                 route: 'tours',
             },
         ]

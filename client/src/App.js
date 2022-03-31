@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Container, Toolbar, Zoom, Fab, Box, Slide } from '@mui/material';
+import { Container, Zoom, Fab, Box, } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import PropTypes from 'prop-types';
 
 import NavBar from './components/NavBar';
 
@@ -17,6 +16,8 @@ import ProductDetail from './components/ProductDetail'
 
 import Tour from './pages/TourPage'
 import TourDetail from './pages/TourPage/TourDetailPage'
+
+import Project from './pages/ProjectPage';
 
 const theme = createTheme();
 
@@ -58,31 +59,6 @@ function ScrollTop(props) {
 	);
 }
 
-function HideOnScroll(props) {
-	const { children, window } = props;
-	// Note that you normally won't need to set the window ref as useScrollTrigger
-	// will default to window.
-	// This is only being set here because the demo is in an iframe.
-	const trigger = useScrollTrigger({
-		target: window ? window() : undefined,
-	});
-
-	return (
-		<Slide appear={false} direction="down" in={!trigger}>
-			{children}
-		</Slide>
-	);
-}
-
-HideOnScroll.propTypes = {
-	children: PropTypes.element.isRequired,
-	/**
-	 * Injected by the documentation to work in an iframe.
-	 * You won't need it on your project.
-	 */
-	window: PropTypes.func,
-};
-
 const App = (props) => {
 
 	const authData = useSelector((state) => state.authData)
@@ -91,11 +67,8 @@ const App = (props) => {
 		<BrowserRouter>
 			<ThemeProvider theme={theme}>
 				<Container maxWidth='xl' style={{ padding: 0 }}>
-					{/* <HideOnScroll {...props}> */}
 					<NavBar />
 					<div id="back-to-top-anchor" />
-					{/* </HideOnScroll> */}
-					{/* <Toolbar /> */}
 					<Routes>
 						<Route path='/' exact element={<Navigate to="/products" />} />
 						<Route path='/products' exact element={<Home />} />
@@ -106,6 +79,8 @@ const App = (props) => {
 						<Route path='/tours/:id' element={<TourDetail />} />
 
 						<Route path='/albums' exact element={<Album />} />
+
+						<Route path='/projects' exact element={<Project />} />
 
 						<Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/products'} />} />
 						<Route />

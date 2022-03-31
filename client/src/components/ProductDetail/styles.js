@@ -53,12 +53,17 @@ export default makeStyles((theme) => ({
             overflowY: 'auto',
         },
     },
-    loadingPaper: {
+    paper: {
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'column',
         padding: '20px',
         borderRadius: '15px',
-        height: '39vh',
+        margin: '100px 10px',
+        [theme.breakpoints.down('md')]: {
+            margin: '80px 10px',
+        },
+        [theme.breakpoints.down('sm')]: {
+            margin: '60px 10px',
+        },
     },
 }));

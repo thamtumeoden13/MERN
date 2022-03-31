@@ -26,8 +26,6 @@ const Tour = ({ tour }) => {
     const classes = useStyles()
     const navigate = useNavigate()
 
-    const [expanded, setExpanded] = useState(false);
-
     const handleOpenDetail = () => {
         navigate(`/tours/${tour.id}`)
     }
@@ -50,7 +48,7 @@ const Tour = ({ tour }) => {
             />
             <CardMedia
                 component="img"
-                height="194"
+                height="194px"
                 image={tour.image}
                 alt="Paella dish"
             />

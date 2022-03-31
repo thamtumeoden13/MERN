@@ -12,7 +12,6 @@ import useStyles from './styles'
 
 const ProductDetail = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const classes = useStyles()
 
     const { id } = useParams()
@@ -45,14 +44,17 @@ const ProductDetail = () => {
 
     if (isLoading) {
         return (
-            <Paper elevation={6} className={classes.loadingPaper}>
+            <Paper elevation={6} className={classes.paper} sx={{ display: 'flex', height: '39vh', justifyContent: 'center', alignItems: 'center' }}>
                 <CircularProgress size={'7em'} />
             </Paper>
         )
     }
 
     return (
-        <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
+        <Paper
+            className={classes.paper}
+            elevation={6}
+        >
             <div className={classes.card}>
                 <div className={classes.section}>
                     <Typography variant="h3" component="h2">{product.title}</Typography>

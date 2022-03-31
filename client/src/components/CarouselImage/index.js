@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Paper, Container, Typography, Grid, Box } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
+import { Paper, Container, Typography, Grid, Box } from "@mui/material";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import useStyle from './styles'
 
@@ -12,8 +14,7 @@ const images = [
     'https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 ]
 
-export default function Test3() {
-
+const CarouselImage = () => {
     const classes = useStyle()
 
     return (
@@ -21,7 +22,10 @@ export default function Test3() {
             className={classes.carousel}
             animation="fade"
             navButtonsAlwaysVisible
+            stopAutoPlayOnHover
             autoPlay={true}
+            NextIcon={<ArrowForwardIosIcon fontSize="large" />}
+            PrevIcon={<ArrowBackIosNewIcon fontSize="large" />}
         >
             {
                 images.map((item, i) => (
@@ -37,3 +41,5 @@ export default function Test3() {
         </Carousel>
     );
 }
+
+export default CarouselImage
