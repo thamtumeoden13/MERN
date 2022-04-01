@@ -1,6 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Typography, Paper, CircularProgress, Divider, TextField, Button } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
+import CircularProgress from '@mui/material/CircularProgress'
+import Divider from '@mui/material/Divider'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 
 import { commentProduct } from '../../redux/actions/products'
 

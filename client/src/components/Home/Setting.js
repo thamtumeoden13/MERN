@@ -2,18 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@mui/styles'
 import { alpha } from '@mui/material/styles';
+import ExpansionPanel from '@mui/material/ExpansionPanel'
+import ExpansionPanelSummary from '@mui/material/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@mui/material/ExpansionPanelDetails'
+import InputBase from '@mui/material/InputBase'
+import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+
 
 import { ExpandMore, Search, ViewList, ViewModule, Sort } from '@mui/icons-material'
-import {
-    ExpansionPanel,
-    ExpansionPanelSummary,
-    ExpansionPanelDetails,
-    InputBase,
-    IconButton,
-    Menu,
-    MenuItem
-} from '@mui/material'
-
 import { useTarget } from '../../utils'
 
 const sorts = { Title: 'docTitle', Rate: 'ratingValue', Year: 'docYear' }

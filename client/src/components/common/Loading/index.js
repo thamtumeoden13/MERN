@@ -1,5 +1,6 @@
 import React from 'react'
-import { CircularProgress, Typography } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(theme => ({

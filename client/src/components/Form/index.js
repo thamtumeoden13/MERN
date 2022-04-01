@@ -1,8 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { TextField, Button, Typography, Paper } from '@mui/material'
-import FileBase64 from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import FileBase64 from 'react-file-base64'
+
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
 
 import { createProduct, updateProduct } from '../../redux/actions/products'
 

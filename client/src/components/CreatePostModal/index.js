@@ -1,7 +1,11 @@
 import React from 'react';
-import { Button, Modal, TextareaAutosize, TextField } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import FileBase64 from 'react-file-base64'
+
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import TextField from '@mui/material/TextField';
 
 import { modalState$ } from '../../redux/selectors'
 import useStyles from './styles'

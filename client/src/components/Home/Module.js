@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardMedia, Typography } from '@mui/material'
-import { alpha } from '@mui/material/styles';
 import LazyLoad from 'react-lazyload'
+
+import Card from '@mui/material/Card'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
+import { alpha } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles'
 
 import imageLogo_Green from '../../assets/MV5BMTEwNWE3MWEtNTMxMS00YmMyLWExZDQtZGFmNWZkODkwNGZlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SY1000_SX750_AL_.jpg'

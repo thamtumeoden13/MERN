@@ -1,5 +1,8 @@
 import React from 'react'
-import { Container, Typography, Box, Grid } from '@mui/material'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 
 import ImageQuilted from '../../../components/Tours/ImageQuilted'
 import ControlledAccordions from '../../../components/Tours/ControlledAccordion'

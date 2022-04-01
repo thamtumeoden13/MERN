@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+import moment from 'moment'
+
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import ButtonBase from '@mui/material/ButtonBase'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import moment from 'moment'
-import { useDispatch } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 import { deleteProduct, likeProduct } from '../../../redux/actions/products'
 
@@ -97,7 +104,7 @@ const Product = ({ product, handleCurrentId }) => {
                             size='small'
                             onClick={() => handleCurrentId(product._id)}
                         >
-                            <MoreHorizIcon fontSize='medium'  />
+                            <MoreHorizIcon fontSize='medium' />
                         </Button>
                     </div>
                 }

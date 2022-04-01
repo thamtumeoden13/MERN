@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Autocomplete, TextField, Chip } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Chip from '@mui/material/Chip';
 
 const ChipInput = ({ label, placeholder, onChangeValue }) => {
   const timeoutChange = useRef(null)

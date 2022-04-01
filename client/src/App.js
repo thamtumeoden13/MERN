@@ -2,22 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Container, Zoom, Fab, Box, } from '@mui/material';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Container from '@mui/material/Container';
+import Zoom from '@mui/material/Zoom';
+import Fab from '@mui/material/Fab';
+import Box from '@mui/material/Box';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import NavBar from './components/NavBar';
 
 import Home from './pages/HomePage'
 
 import Album from './pages/AlbumPage';
-import Auth from './components/Auth';
+import Auth from './pages/AuthPage';
 import ProductDetail from './components/ProductDetail'
 
 import Tour from './pages/TourPage'
 import TourDetail from './pages/TourPage/TourDetailPage'
 
 import Project from './pages/ProjectPage';
+import ProjectDetail from './pages/ProjectPage/ProjectDetailPage';
 
 const theme = createTheme();
 
@@ -81,6 +85,7 @@ const App = (props) => {
 						<Route path='/albums' exact element={<Album />} />
 
 						<Route path='/projects' exact element={<Project />} />
+						<Route path='/projects/:id' element={<ProjectDetail />} />
 
 						<Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/products'} />} />
 						<Route />

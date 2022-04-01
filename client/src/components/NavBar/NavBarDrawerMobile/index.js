@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Divider from '@mui/material/Divider';
@@ -18,8 +17,6 @@ const NavBarMenuMobile = ({ drawer, toggleDrawer }) => {
             <Box
                 sx={{ width: 250 }}
                 role="presentation"
-            // onClick={toggleDrawer(false)}
-            // onKeyDown={toggleDrawer(false)}
             >
                 <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -51,7 +48,7 @@ const NavBarMenuMobile = ({ drawer, toggleDrawer }) => {
             anchor={'left'}
             open={drawer}
             onClose={() => toggleDrawer(false)}
-        // onOpen={toggleDrawer(true)}
+            onOpen={() => toggleDrawer(true)}
         >
             <List />
         </SwipeableDrawer>

@@ -1,4 +1,5 @@
 import React from 'react'
+import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -6,7 +7,6 @@ import Box from '@mui/material/Box'
 import TourItem from './Tour'
 
 import categories from '../../constants/tour.json'
-import { Container } from '@mui/material'
 
 const Tours = () => {
 

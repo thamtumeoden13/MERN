@@ -33,6 +33,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import { Button, Toolbar } from './Component'
 
+import { deserialize } from '../../../utils'
+
 const HOTKEYS = {
     'mod+b': 'bold',
     'mod+i': 'italic',
@@ -47,8 +49,8 @@ const SlateEditor = () => {
     const [value, setValue] = useState(initialValue)
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-    const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), [])
-    console.log('value', value)
+    const editor = useMemo(() => withHtml(withImages(withHistory(withReact(createEditor())))), [])
+    console.log('value', JSON.stringify(value))
     return (
         <Slate editor={editor} value={value} onChange={value => setValue(value)}>
             <Toolbar>
@@ -171,6 +173,33 @@ const withImages = editor => {
     }
 
     console.log('[withImages]', editor)
+
+    return editor
+}
+
+const withHtml = editor => {
+    const { insertData, isInline, isVoid } = editor
+
+    editor.isInline = element => {
+        return element.type === 'link' ? true : isInline(element)
+    }
+
+    editor.isVoid = element => {
+        return element.type === 'image' ? true : isVoid(element)
+    }
+
+    editor.insertData = data => {
+        const html = data.getData('text/html')
+
+        if (html) {
+            const parsed = new DOMParser().parseFromString(html, 'text/html')
+            const fragment = deserialize(parsed.body)
+            Transforms.insertFragment(editor, fragment)
+            return
+        }
+
+        insertData(data)
+    }
 
     return editor
 }
@@ -317,18 +346,19 @@ const Image = ({ attributes, children, element }) => {
             {children}
             <div
                 contentEditable={false}
-                className={css`
-            position: relative;
-          `}
+                className={css`position: relative;  `}
             >
                 <img
                     src={element.url}
-                    className={css`
-              display: block;
-              max-width: 100%;
-              max-height: 20em;
-              box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-            `}
+                    className={
+                        css`
+                            display: block;
+                            max-width: 100%;
+                            max-height: 20em;
+                            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
+                        `
+                    }
+                    alt='img'
                 />
                 <Button
                     active

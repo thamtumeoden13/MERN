@@ -1,6 +1,7 @@
 import React from "react";
-import { Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+
+import Grid from '@mui/material/Grid'
 
 import Post from "./Post";
 

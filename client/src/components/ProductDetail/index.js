@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
-import { Paper, Typography, CircularProgress, Divider } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import moment from 'moment'
+
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
+import Divider from '@mui/material/Divider'
 
 import CommentSection from './CommentSection'
 
