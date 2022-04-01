@@ -35,7 +35,7 @@ export const routes = [
         id: 2,
         name: 'Khách sạn',
         // route: 'hotels',
-        route: 'albums',
+        route: 'portfolios',
         child: [
 
         ]

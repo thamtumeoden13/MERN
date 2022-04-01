@@ -6,10 +6,8 @@ import Container from '@mui/material/Container'
 
 const TourPage = () => {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            {/* <Container maxWidth='xl'> */}
+        <Box sx={{ mt: 15 }}>
             <Tours />
-            {/* </Container> */}
         </Box>
     )
 }

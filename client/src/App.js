@@ -23,6 +23,8 @@ import TourDetail from './pages/TourPage/TourDetailPage'
 import Project from './pages/ProjectPage';
 import ProjectDetail from './pages/ProjectPage/ProjectDetailPage';
 
+import Portfolio from './pages/PortfolioPage'
+
 const theme = createTheme();
 
 
@@ -86,6 +88,9 @@ const App = (props) => {
 
 						<Route path='/projects' exact element={<Project />} />
 						<Route path='/projects/:id' element={<ProjectDetail />} />
+
+						<Route path='/portfolios' exact element={<Portfolio />} />
+						{/* <Route path='/portfolios/:id' element={<ProjectDetail />} /> */}
 
 						<Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/products'} />} />
 						<Route />

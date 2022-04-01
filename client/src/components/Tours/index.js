@@ -11,23 +11,25 @@ import categories from '../../constants/tour.json'
 const Tours = () => {
 
     return (
-        <Container sx={{ marginY: 5 }}>
+        <Box>
             {categories.map(category => {
                 return (
                     <Box key={category.id}>
                         <Typography
                             variant='h4'
                             component='h2'
-                            marginTop={5}
-                            marginBottom={3}
-
+                            marginBottom={2}
                         >
                             {`Top ${category.name} Tours`}
                         </Typography>
                         <Grid container spacing={2}>
                             {category.tours.map(tour => {
                                 return (
-                                    <Grid key={tour.id} item xs={12} sm={12} md={6} lg={3} >
+                                    <Grid
+                                        key={tour.id}
+                                        item xs={12} sm={12} md={6} lg={3}
+                                        sx={{ display: 'flex', justifyContent: 'center' }}
+                                    >
                                         <TourItem tour={tour} />
                                     </Grid>
                                 )
@@ -36,7 +38,7 @@ const Tours = () => {
                     </Box>
                 )
             })}
-        </Container>
+        </Box>
     )
 }
 
