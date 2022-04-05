@@ -6,6 +6,8 @@ import dotenv from 'dotenv'
 
 import postsRouters from './routers/posts.js'
 import productRouters from './routers/products.js'
+import projectRouters from './routers/projects.js'
+// import projectDetailRouters from './routers/projectDetail.js'
 import userRouters from './routers/users.js'
 
 const app = express()
@@ -20,6 +22,10 @@ app.use(cors())
 app.use('/posts', postsRouters)
 
 app.use('/products', productRouters)
+
+app.use('/projects', projectRouters)
+
+// app.use('/projectDetail', projectDetailRouters)
 
 app.use('/user', userRouters)
 
