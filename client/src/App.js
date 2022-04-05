@@ -25,6 +25,8 @@ import ProjectDetail from './pages/ProjectPage/ProjectDetailPage';
 
 import Portfolio from './pages/PortfolioPage'
 
+import ProductAdmin from './admin/ProjectAdmin'
+
 const theme = createTheme();
 
 
@@ -91,6 +93,8 @@ const App = (props) => {
 
 						<Route path='/portfolios' exact element={<Portfolio />} />
 						{/* <Route path='/portfolios/:id' element={<ProjectDetail />} /> */}
+
+						<Route path='/admin/products' exact element={<ProductAdmin />} />
 
 						<Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/products'} />} />
 						<Route />

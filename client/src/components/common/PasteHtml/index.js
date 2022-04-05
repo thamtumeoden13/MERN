@@ -91,6 +91,7 @@ const PasteHtmlComponent = ({ readOnly = false }) => {
         () => withHtml(withReact(withHistory(createEditor()))),
         []
     )
+    console.log(JSON.stringify(initialValue))
     return (
         <Slate editor={editor} value={value} onChange={value => setValue(value)}>
             <Editable
