@@ -32,5 +32,5 @@ export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)
 
 //project
-export const fetchProjects = (page) => API.get(`/projects?page=${page}`)
+export const fetchProjects = () => API.get(`/projects`)
 export const createProject = (payload) => API.post(`/projects`, payload)

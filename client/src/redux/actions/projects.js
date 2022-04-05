@@ -18,11 +18,11 @@ import {
 //     }
 // }
 
-export const getProjects = (page) => async (dispatch) => {
+export const getProjects = () => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
-        const { data } = await api.fetchProjects(page);
+        const { data } = await api.fetchProjects();
 
         dispatch({ type: FETCH_ALL_PROJECT, payload: data })
         dispatch({ type: END_LOADING })
@@ -46,15 +46,15 @@ export const createProject = (project, navigate) => async (dispatch) => {
 
 }
 
-// export const updateProject = (id, project) => async (dispatch) => {
-//     try {
-//         const { data } = await api.updateProject(id, project)
+export const updateProject = (id, project) => async (dispatch) => {
+    try {
+        // const { data } = await api.updateProject(id, project)
 
-//         dispatch({ type: UPDATE_PROJECT, payload: data })
-//     } catch (error) {
-//         console.error(error.message)
-//     }
-// }
+        // dispatch({ type: UPDATE_PROJECT, payload: data })
+    } catch (error) {
+        console.error(error.message)
+    }
+}
 
 // export const deleteProject = (id) => async (dispatch) => {
 //     try {

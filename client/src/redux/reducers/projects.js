@@ -8,8 +8,8 @@ const initState = {
     isLoading: false,
     projects: [],
     project: null,
-    currentPage: 0,
-    numberOfPages: 0
+    // currentPage: 0,
+    // numberOfPages: 0
 }
 
 const reducer = (state = initState, action) => {
@@ -28,8 +28,8 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 projects: action.payload.data,
-                currentPage: action.payload.currentPage,
-                numberOfPages: action.payload.numberOfPages,
+                // currentPage: action.payload.currentPage,
+                // numberOfPages: action.payload.numberOfPages,
             };
         case FETCH_PROJECT:
             return {
