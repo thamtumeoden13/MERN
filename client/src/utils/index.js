@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { jsx } from 'slate-hyperscript'
 
 /**
@@ -43,6 +44,11 @@ export const useTarget = (initial = null) => {
     const freeTarget = useCallback(() => setValue(null), [])
     return [value, { setTarget, freeTarget }]
 }
+
+export const useQuery = () => {
+    return new URLSearchParams(useLocation().search)
+}
+
 
 /**
  * helper functions

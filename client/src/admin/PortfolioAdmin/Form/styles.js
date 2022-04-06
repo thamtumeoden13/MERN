@@ -19,10 +19,7 @@ export default makeStyles((theme) => ({
         margin: '10px 0',
         padding: '10px 0 10px 10px'
     },
-    errorFileInput: {
-        width: '100%', padding: '0 10px',
-        color: '#dc5a5b', fontSize: '0.7em', marginBottom: '10px',
-    },
+    errorFileInput: { color: '#dc5a5b', fontSize: '0.7em', margin: '10px 0 0 0' },
     buttonSubmit: {
         marginBottom: 10
     }

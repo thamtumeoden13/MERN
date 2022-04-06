@@ -11,7 +11,7 @@ const Products = ({ handleCurrentId }) => {
     const classes = useStyles()
 
     const { products, isLoading } = useSelector((state) => state.products)
-
+    console.log({ products })
     if (!products.length && !isLoading) return null
 
     return (

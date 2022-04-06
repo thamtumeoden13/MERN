@@ -11,24 +11,25 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import NavBar from './components/NavBar';
 
+import Auth from './pages/AuthPage';
+
 import Home from './pages/HomePage'
 
-import Album from './pages/AlbumPage';
-import Auth from './pages/AuthPage';
+import Products from './pages/ProductPage';
 import ProductDetail from './components/ProductDetail'
 
-import Tour from './pages/TourPage'
-import TourDetail from './pages/TourPage/TourDetailPage'
+import Album from './pages/AlbumPage';
 
 import Project from './pages/ProjectPage';
 import ProjectDetail from './pages/ProjectPage/ProjectDetailPage';
 
 import Portfolio from './pages/PortfolioPage'
 
-import ProductAdmin from './admin/ProjectAdmin'
+import PortfolioAdmin from './admin/PortfolioAdmin'
+import ProjectAdmin from './admin/ProjectAdmin'
+
 
 const theme = createTheme();
-
 
 function ScrollTop(props) {
 	const { children, window } = props;
@@ -78,13 +79,10 @@ const App = (props) => {
 					<NavBar />
 					<div id="back-to-top-anchor" />
 					<Routes>
-						<Route path='/' exact element={<Navigate to="/products" />} />
-						<Route path='/products' exact element={<Home />} />
-						<Route path='/products/search' exact element={<Home />} />
+						<Route path='/' exact element={<Home />} />
+						<Route path='/products' exact element={<Products />} />
+						{/* <Route path='/products/search' exact element={<Home />} /> */}
 						<Route path='/products/:id' element={<ProductDetail />} />
-
-						<Route path='/tours' exact element={<Tour />} />
-						<Route path='/tours/:id' element={<TourDetail />} />
 
 						<Route path='/albums' exact element={<Album />} />
 
@@ -94,9 +92,11 @@ const App = (props) => {
 						<Route path='/portfolios' exact element={<Portfolio />} />
 						{/* <Route path='/portfolios/:id' element={<ProjectDetail />} /> */}
 
-						<Route path='/admin/products' exact element={<ProductAdmin />} />
+						<Route path='/admin/portfolios' exact element={<PortfolioAdmin />} />
 
-						<Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/products'} />} />
+						<Route path='/admin/projects' exact element={<ProjectAdmin />} />
+
+						<Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/'} />} />
 						<Route />
 					</Routes>
 				</Container>

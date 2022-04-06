@@ -5,6 +5,7 @@ import modal from './modal'
 import posts from './posts'
 import products from './products'
 import projects from './projects'
+import portfolios from './portfolios'
 
 export default combineReducers({
     auth,
@@ -12,4 +13,5 @@ export default combineReducers({
     posts,
     products,
     projects,
+    portfolios
 })

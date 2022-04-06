@@ -7,18 +7,15 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box'
 
 import useStyles from './styles'
-import ComboBox from '../../../components/common/ComboBox'
-import ChipInput from '../../../components/common/ChipInput'
 
 const initErrors = {
     name: '',
     title: '',
+    tags: '',
     thumbnail: '',
     imageUrl: '',
-    portfolio: ''
 }
 
 const Form = ({ currentId, handleCurrentId, onSubmit }) => {
@@ -27,56 +24,35 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    const { portfolios } = useSelector((state) => state.portfolios)
-
-    const [state, setState] = useState({ isValidate: false })
-    const [errors, setErrors] = useState({})
-    const [options, setOptions] = useState([])
+    const projectSelected = useSelector((state) => currentId ? state.projects.projects.find((project) => currentId === project._id) : null)
     const [user, setUser] = useState(null)
     const [projectData, setProjectData] = useState({
-        name: 'Nội Thất',
-        title: 'Mẫu Thiết Kế Nội Thất',
+        name: 'Khách Sạn Và (+)',
+        title: 'Mẫu Thiết Kế Biệt Thự',
         thumbnail: 'https://images.pexels.com/photos/5841924/pexels-photo-5841924.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
         imageUrl: 'https://images.pexels.com/photos/10027186/pexels-photo-10027186.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-        portfolio: ''
+        tags: '',
     })
-    const [tags, setTags] = useState([])
+    const [state, setState] = useState({
+        isValidate: false
+    })
+    const [errors, setErrors] = useState({})
+
+    useEffect(() => {
+        if (projectSelected) setProjectData(projectSelected)
+    }, [projectSelected])
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])
-
-    useEffect(() => {
-        if (!!portfolios) {
-            const options = portfolios.map(portfolio => {
-                return {
-                    label: portfolio.name,
-                    value: portfolio._id,
-                }
-            })
-            console.log('options', options)
-            setOptions(options)
-        }
-    }, [portfolios])
 
     const handleChangeValue = (name, value) => {
         setProjectData({ ...projectData, [name]: value })
         setState({ ...state, isValidate: false })
     }
 
-    const handleChangeComboBox = (name, comboBoxPortfolio) => {
-        console.log('handleChangeComboBox', name, comboBoxPortfolio)
-        setProjectData({ ...projectData, [name]: comboBoxPortfolio.value })
-        setState({ ...state, isValidate: false })
-    }
-
-    const handleChangeTag = (values) => {
-        console.log('handleChangeTag', values)
-        setTags(values)
-        setState({ ...state, isValidate: false })
-    }
-
     const handleSubmit = (e) => {
+
         setState({ ...state, isValidate: true })
 
         if (!valiDateFormInput()) return
@@ -97,10 +73,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
             case !projectData?.title || projectData?.title.length === 0:
                 errors.title = 'Please Input Title!'
                 break;
-            case !projectData?.portfolio || projectData?.portfolio.length === 0:
-                errors.portfolio = 'Please Choose Portfolio!'
-                break;
-            case !tags || tags.length === 0:
+            case !projectData?.tags || projectData.tags.length === 0:
                 errors.tags = 'Please Input At Least One Tags!'
                 break;
             case !projectData?.thumbnail || projectData?.thumbnail.length === 0:
@@ -124,9 +97,9 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
             name: '',
             title: '',
             message: '',
+            tags: '',
             thumbnail: '',
             imageUrl: '',
-            portfolio: ''
         })
         setState({ ...state, isValidate: false })
         setErrors({})
@@ -150,7 +123,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                 className={`${classes.root} ${classes.form}`}
             >
                 <Typography variant='h6'>
-                    {`${currentId ? 'Editing' : 'Creating'} a Project`}
+                    {`${currentId ? 'Editing' : 'Creating'} a Portfolio`}
                 </Typography>
                 <TextField
                     name='name'
@@ -174,32 +147,17 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     value={projectData.title}
                     onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 />
-                <>
-                    <ComboBox
-                        name='portfolio'
-                        label='Porfolio'
-                        placeholder='input portfolio'
-                        options={options} //top100Films
-                        onChange={handleChangeComboBox}
-                    />
-                    {!!errors.portfolio &&
-                        <div className={classes.errorFileInput}>
-                            {errors.portfolio}
-                        </div>
-                    }
-                </>
-                <>
-                    <ChipInput
-                        label={'Search Tags'}
-                        placeholder={'tags...'}
-                        onChangeValue={handleChangeTag}
-                    />
-                    {!!errors.tags &&
-                        <div className={classes.errorFileInput}>
-                            {errors.tags}
-                        </div>
-                    }
-                </>
+                <TextField
+                    name='tags'
+                    variant='outlined'
+                    label="Tags"
+                    fullWidth
+                    required
+                    error={!!state.isValidate && !!errors.tags}
+                    helperText={errors.tags || ''}
+                    value={projectData.tags}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value.trim().length > 0 ? e.target.value.trim().split(',') : [])}
+                />
                 <div className={classes.fileInput}>
                     <FileBase64
                         type='file'
@@ -253,6 +211,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 }
 
 export default Form
+
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [

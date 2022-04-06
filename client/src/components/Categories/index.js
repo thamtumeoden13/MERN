@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import TourItem from './Tour'
+import TourItem from './Category'
 
 import categories from '../../constants/tour.json'
 

@@ -1,3 +1,7 @@
+//auth
+export const AUTH = 'AUTH'
+export const LOGOUT = 'LOGOUT'
+
 //product
 export const CREATE = 'CREATE'
 export const UPDATE = 'UPDATE'
@@ -7,12 +11,6 @@ export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH'
 export const FETCH_PRODUCT = 'FETCH_PRODUCT'
 export const LIKE = 'LIKE'
 export const COMMENT = 'COMMENT'
-
-//auth
-export const AUTH = 'AUTH'
-export const LOGOUT = 'LOGOUT'
-
-//loading
 export const START_LOADING = 'START_LOADING'
 export const END_LOADING = 'END_LOADING'
 
@@ -22,3 +20,14 @@ export const UPDATE_PROJECT = 'UPDATE_PROJECT'
 export const DELETE_PROJECT = 'DELETE_PROJECT'
 export const FETCH_ALL_PROJECT = 'FETCH_ALL_PROJECT'
 export const FETCH_PROJECT = 'FETCH_PROJECT'
+export const START_LOADING_PROJECT = 'START_LOADING_PROJECT'
+export const END_LOADING_PROJECT = 'END_LOADING_PROJECT'
+
+//portfolio
+export const CREATE_PORTFOLIO = 'CREATE_PORTFOLIO'
+export const UPDATE_PORTFOLIO = 'UPDATE_PORTFOLIO'
+export const DELETE_PORTFOLIO = 'DELETE_PORTFOLIO'
+export const FETCH_ALL_PORTFOLIO = 'FETCH_ALL_PORTFOLIO'
+export const FETCH_PORTFOLIO = 'FETCH_PORTFOLIO'
+export const START_LOADING_PORTFOLIO = 'START_LOADING_PORTFOLIO'
+export const END_LOADING_PORTFOLIO = 'END_LOADING_PORTFOLIO'

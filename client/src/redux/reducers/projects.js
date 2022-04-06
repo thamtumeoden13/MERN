@@ -1,5 +1,5 @@
 import {
-    START_LOADING, END_LOADING,
+    START_LOADING_PROJECT, END_LOADING_PROJECT,
     FETCH_ALL_PROJECT, FETCH_PROJECT,
     CREATE_PROJECT, UPDATE_PROJECT, DELETE_PROJECT
 } from '../constants/actionType';
@@ -14,12 +14,12 @@ const initState = {
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
-        case START_LOADING:
+        case START_LOADING_PROJECT:
             return {
                 ...state,
                 isLoading: true,
             }
-        case END_LOADING:
+        case END_LOADING_PROJECT:
             return {
                 ...state,
                 isLoading: false,

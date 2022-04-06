@@ -18,7 +18,6 @@ import ChipInput from '../common/ChipInput';
 import { getProducts, getProductsBySearch } from '../../redux/actions/products'
 
 import useStyles from './styles'
-import SlateEditor from '../common/SlateEditor';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
