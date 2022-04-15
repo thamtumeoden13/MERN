@@ -7,15 +7,18 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
 
 import useStyles from './styles'
+import ComboBox from '../../../components/common/ComboBox'
+import ChipInput from '../../../components/common/ChipInput'
 
 const initErrors = {
     name: '',
     title: '',
-    tags: '',
     thumbnail: '',
     imageUrl: '',
+    project: ''
 }
 
 const Form = ({ currentId, handleCurrentId, onSubmit }) => {
@@ -24,41 +27,71 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    const portfolioSelected = useSelector((state) => currentId ? state.portfolios.portfolios.find((portfolio) => currentId === portfolio._id) : null)
+    const { projects } = useSelector((state) => state.projects)
+
+    const [state, setState] = useState({ isValidate: false })
+    const [errors, setErrors] = useState({})
+    const [options, setOptions] = useState([])
     const [user, setUser] = useState(null)
-    const [portfolioData, setPortfolioData] = useState({
-        name: 'Khách Sạn Và (+)',
-        title: 'Mẫu Thiết Kế Biệt Thự',
+    const [projectData, setProjectData] = useState({
+        name: 'Nội Thất',
+        title: 'Mẫu Thiết Kế Nội Thất',
         thumbnail: 'https://images.pexels.com/photos/5841924/pexels-photo-5841924.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
         imageUrl: 'https://images.pexels.com/photos/10027186/pexels-photo-10027186.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-        tags: '',
+        project: '',
+        portfolio: ''
     })
-    const [state, setState] = useState({
-        isValidate: false
-    })
-    const [errors, setErrors] = useState({})
-
-    useEffect(() => {
-        if (portfolioSelected) setPortfolioData(portfolioSelected)
-    }, [portfolioSelected])
+    const [tags, setTags] = useState([])
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])
 
+    useEffect(() => {
+        if (!!projects) {
+            const options = projects.map(project => {
+                return {
+                    label: project.name,
+                    value: project._id,
+                }
+            })
+            console.log('options', options)
+            setOptions(options)
+        }
+    }, [projects])
+
     const handleChangeValue = (name, value) => {
-        setPortfolioData({ ...portfolioData, [name]: value })
+        setProjectData({ ...projectData, [name]: value })
+        setState({ ...state, isValidate: false })
+    }
+
+    const handleChangeComboBox = (name, comboBoxProject) => {
+        // console.log('handleChangeComboBox', name, comboBoxProject)
+        let portfolioId
+        if (name == 'project') {
+            const find = projects.find(project => project._id == comboBoxProject.value)
+            console.log('portfolio', find)
+            portfolioId = find.portfolio
+            setProjectData({ ...projectData, [name]: comboBoxProject.value })
+
+        }
+        setProjectData({ ...projectData, [name]: comboBoxProject.value, 'portfolio': portfolioId })
+        setState({ ...state, isValidate: false })
+    }
+
+    const handleChangeTag = (values) => {
+        // console.log('handleChangeTag', values)
+        setTags(values)
         setState({ ...state, isValidate: false })
     }
 
     const handleSubmit = (e) => {
-
         setState({ ...state, isValidate: true })
 
         if (!valiDateFormInput()) return
 
         if (onSubmit) {
-            onSubmit({ ...portfolioData })
+            onSubmit({ ...projectData })
         }
 
         clear()
@@ -67,19 +100,22 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     const valiDateFormInput = () => {
         const errors = {}
         switch (true) {
-            case !portfolioData?.name || portfolioData?.name.length === 0:
+            case !projectData?.name || projectData?.name.length === 0:
                 errors.name = 'Please Input Name!'
                 break;
-            case !portfolioData?.title || portfolioData?.title.length === 0:
+            case !projectData?.title || projectData?.title.length === 0:
                 errors.title = 'Please Input Title!'
                 break;
-            case !portfolioData?.tags || portfolioData.tags.length === 0:
+            case !projectData?.project || projectData?.project.length === 0:
+                errors.project = 'Please Choose Project!'
+                break;
+            case !tags || tags.length === 0:
                 errors.tags = 'Please Input At Least One Tags!'
                 break;
-            case !portfolioData?.thumbnail || portfolioData?.thumbnail.length === 0:
+            case !projectData?.thumbnail || projectData?.thumbnail.length === 0:
                 errors.thumbnail = 'Please Chosse A Image!'
                 break;
-            case !portfolioData?.imageUrl || portfolioData?.imageUrl.length === 0:
+            case !projectData?.imageUrl || projectData?.imageUrl.length === 0:
                 errors.imageUrl = 'Please Chosse A Image!'
                 break;
         }
@@ -93,13 +129,14 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 
     const clear = () => {
         handleCurrentId(null)
-        setPortfolioData({
+        setProjectData({
             name: '',
             title: '',
             message: '',
-            tags: '',
             thumbnail: '',
             imageUrl: '',
+            project: '',
+            portfolio: ''
         })
         setState({ ...state, isValidate: false })
         setErrors({})
@@ -109,7 +146,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         return (
             <Paper className={classes.paper} elevation={3}>
                 <Typography variant='h6' align='center'>
-                    {`Please Sign In to create your own portfolios and like other's portfolios.`}
+                    {`Please Sign In to create your own projects and like other's projects.`}
                 </Typography>
             </Paper>
         )
@@ -123,7 +160,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                 className={`${classes.root} ${classes.form}`}
             >
                 <Typography variant='h6'>
-                    {`${currentId ? 'Editing' : 'Creating'} a Portfolio`}
+                    {`${currentId ? 'Editing' : 'Creating'} a Project`}
                 </Typography>
                 <TextField
                     name='name'
@@ -133,7 +170,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     required
                     error={(!!state.isValidate && !!errors.name)}
                     helperText={errors.name || ''}
-                    value={portfolioData.name}
+                    value={projectData.name}
                     onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 />
                 <TextField
@@ -144,20 +181,50 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     required
                     error={(!!state.isValidate && !!errors.title)}
                     helperText={errors.title || ''}
-                    value={portfolioData.title}
+                    value={projectData.title}
                     onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 />
-                <TextField
-                    name='tags'
-                    variant='outlined'
-                    label="Tags"
-                    fullWidth
-                    required
-                    error={!!state.isValidate && !!errors.tags}
-                    helperText={errors.tags || ''}
-                    value={portfolioData.tags}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value.trim().length > 0 ? e.target.value.trim().split(',') : [])}
-                />
+                <>
+                    <ComboBox
+                        name='project'
+                        label='Project'
+                        placeholder='input project'
+                        options={options} //top100Films
+                        onChange={handleChangeComboBox}
+                    />
+                    {!!errors.project &&
+                        <div className={classes.errorFileInput}>
+                            {errors.project}
+                        </div>
+                    }
+                </>
+                {/* <>
+                    <ComboBox
+                        name='portfolio'
+                        label='Portfolio'
+                        placeholder='input portfolio'
+                        defaultValue={options} //top100Films
+                        readOnly={true}
+                        onChange={handleChangeComboBox}
+                    />
+                    {!!errors.project &&
+                        <div className={classes.errorFileInput}>
+                            {errors.project}
+                        </div>
+                    }
+                </> */}
+                <>
+                    <ChipInput
+                        label={'Search Tags'}
+                        placeholder={'tags...'}
+                        onChangeValue={handleChangeTag}
+                    />
+                    {!!errors.tags &&
+                        <div className={classes.errorFileInput}>
+                            {errors.tags}
+                        </div>
+                    }
+                </>
                 <div className={classes.fileInput}>
                     <FileBase64
                         type='file'
@@ -192,7 +259,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     type='button'
                     fullWidth
                     onClick={handleSubmit}
-                // disabled={!portfolioData.name && !portfolioData.title && !portfolioData.description && !portfolioData.tags.length}
+                // disabled={!projectData.name && !projectData.title && !projectData.description && !projectData.tags.length}
                 >
                     {`Submit`}
                 </Button>
@@ -211,7 +278,6 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 }
 
 export default Form
-
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [

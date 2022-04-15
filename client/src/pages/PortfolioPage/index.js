@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom'
+
 import Box from '@mui/material/Box'
 import { Container, Grid, Typography } from '@mui/material'
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -12,9 +15,33 @@ import Portfolios from '../../components/Portfolios'
 import QuiltedImageList from '../../components/common/ImageQuilted'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
 
+import { getPortfolios } from '../../redux/actions/portfolios'
+import { getProjects } from '../../redux/actions/projects'
+import Projects from '../../components/Projects';
+
 const PortfolioPage = () => {
+    const dispatch = useDispatch()
 
     const [search, setSearch] = useState('')
+
+    const { portfolios, isLoading } = useSelector((state) => state.portfolios)
+    const { projects } = useSelector((state) => state.projects)
+
+    const { id } = useParams()
+
+    useEffect(() => {
+        dispatch(getPortfolios())
+        dispatch(getProjects())
+    }, [dispatch])
+
+    // useEffect(() => {
+    //     if (id) {
+    //         dispatch(getPortfolios(id))
+    //     } else {
+    //         dispatch(getPortfolios())
+    //         dispatch(getProjects())
+    //     }
+    // }, [dispatch, id])
 
     const handleChangeValue = (event) => {
         console.log('[handleChangeValue]', event.target.value)
@@ -77,7 +104,6 @@ const PortfolioPage = () => {
 }
 
 export default PortfolioPage
-
 
 const data = [
     {

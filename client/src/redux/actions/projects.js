@@ -1,18 +1,18 @@
 import * as api from '../../api'
 import {
-    START_LOADING, END_LOADING,
+    START_LOADING_PROJECT, END_LOADING_PROJECT,
     FETCH_ALL_PROJECT, FETCH_PROJECT,
     CREATE_PROJECT, UPDATE_PROJECT, DELETE_PROJECT,
 } from '../constants/actionType';
 
 // export const getProject = (id) => async (dispatch) => {
 //     try {
-//         dispatch({ type: START_LOADING })
+//         dispatch({ type: START_LOADING_PROJECT })
 
 //         const { data } = await api.fetchProject(id);
 
 //         dispatch({ type: FETCH_PROJECT, payload: data })
-//         dispatch({ type: END_LOADING })
+//         dispatch({ type: END_LOADING_PROJECT })
 //     } catch (error) {
 //         console.error(error.message)
 //     }
@@ -20,12 +20,12 @@ import {
 
 export const getProjects = () => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING })
+        dispatch({ type: START_LOADING_PROJECT })
 
         const { data } = await api.fetchProjects();
 
         dispatch({ type: FETCH_ALL_PROJECT, payload: data })
-        dispatch({ type: END_LOADING })
+        dispatch({ type: END_LOADING_PROJECT })
     } catch (error) {
         console.error(error.message)
     }
@@ -33,7 +33,7 @@ export const getProjects = () => async (dispatch) => {
 
 export const createProject = (project, navigate) => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING })
+        dispatch({ type: START_LOADING_PROJECT })
 
         const { data } = await api.createProject(project);
 

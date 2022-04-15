@@ -1,28 +1,26 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
+import { Box } from '@mui/material';
 
-import PortfolioItem from './Portfolio'
-
-import projectData from '../../constants/favourite.json'
+import CardList from '../CardList';
 
 import useStyles from './styles'
 
 const Portfolios = () => {
 
+    const { portfolios, isLoading } = useSelector((state) => state.portfolios)
+    const { projects } = useSelector((state) => state.projects)
+
+    console.log('PortfolioPage', portfolios)
+
+    if (!portfolios.length && !isLoading) return null
+
     return (
-        <Container>
-            <Grid container spacing={2}>
-                {projectData.map((project, index) => {
-                    return (
-                        <Grid item key={`item-${index}`} xs={12} sm={12} md={6} lg={4} >
-                            <PortfolioItem project={project} />
-                        </Grid>
-                    )
-                })}
-            </Grid>
-        </Container >
+        <Box>
+            <CardList data={projects} />
+        </Box>
     )
 }
 

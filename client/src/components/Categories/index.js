@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import TourItem from './Category'
+import CategoryItem from './Category'
 
 import categories from '../../constants/tour.json'
 
@@ -30,7 +30,7 @@ const Tours = () => {
                                         item xs={12} sm={12} md={6} lg={3}
                                         sx={{ display: 'flex', justifyContent: 'center' }}
                                     >
-                                        <TourItem tour={tour} />
+                                        <CategoryItem tour={tour} />
                                     </Grid>
                                 )
                             })}

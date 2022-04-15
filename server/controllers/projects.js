@@ -9,7 +9,7 @@ export const getProjects = async (req, res) => {
         const total = await ProjectModel.countDocuments({})
 
         const projects = await ProjectModel.find().sort({ _id: -1 }) //.limit(LIMIT).skip(startIndex)
-        console.log('[server-projects]', projects)
+        // console.log('[server-projects]', projects)
         res.status(200).json({ data: projects })
     } catch (error) {
         res.status(404).json({ message: error.message })

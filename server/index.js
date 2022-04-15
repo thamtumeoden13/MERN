@@ -5,9 +5,10 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 
 import postsRouters from './routers/posts.js'
+import portfolioRouters from './routers/portfolios.js'
 import productRouters from './routers/products.js'
 import projectRouters from './routers/projects.js'
-// import projectDetailRouters from './routers/projectDetail.js'
+import projectDetailRouters from './routers/projectDetails.js'
 import userRouters from './routers/users.js'
 
 const app = express()
@@ -23,9 +24,11 @@ app.use('/posts', postsRouters)
 
 app.use('/products', productRouters)
 
+app.use('/portfolios', portfolioRouters)
+
 app.use('/projects', projectRouters)
 
-// app.use('/projectDetail', projectDetailRouters)
+app.use('/projectDetails', projectDetailRouters)
 
 app.use('/user', userRouters)
 

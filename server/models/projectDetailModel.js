@@ -65,6 +65,18 @@ const projectSchema = mongoose.Schema({
         type: String,
         default: 'anonymous'
     },
+    createdByName: {
+        type: String,
+        default: 'anonymous'
+    },
+    project: {
+        type: String,
+        require: true
+    },
+    portfolio: {
+        type: String,
+        require: true
+    },
 })
 
 const projectModel = mongoose.model('ProjectDetail', projectSchema)

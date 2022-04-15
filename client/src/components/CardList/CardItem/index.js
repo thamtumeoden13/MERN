@@ -22,26 +22,32 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import useStyles from './styles'
 
-const PortfolioItem = ({ project }) => {
+const CardItem = ({ item, onClick }) => {
     const classes = useStyles()
     const navigate = useNavigate()
 
+    const handleClickItem = () => {
+        if (onClick) {
+            onClick(item)
+        }
+    }
+
     return (
-        <Card className={classes.cardContainer} elevation={0}>
+        <Card className={classes.cardContainer} elevation={0} onClick={handleClickItem}>
             <Box className={classes.card}>
                 <CardMedia
                     component='img'
                     height='194'
-                    image='https://tcproduction.blob.core.windows.net/media/%7B240f8b72-1159-4fd3-a150-0a837f50ba4a%7D.2573758641_297d6d19fa_o.jpg'
-                    alt='project image'
+                    image={item.thumbnail || 'https://tcproduction.blob.core.windows.net/media/%7B240f8b72-1159-4fd3-a150-0a837f50ba4a%7D.2573758641_297d6d19fa_o.jpg'}
+                    alt='portfolio image'
                 />
                 <Box className={classes.cardContent}>
                     <CardContent>
-                        {/* <Typography variant='body1' color={'text.secondary'}>
-                            {project.docTitle}
-                        </Typography> */}
+                        <Typography variant='body1' color={'text.secondary'}>
+                            {item.name}
+                        </Typography>
                         <Typography variant='body2' component='p' paragraph>
-                            {project.summaryText}
+                            {item.title}
                         </Typography>
                     </CardContent>
                 </Box>
@@ -50,4 +56,4 @@ const PortfolioItem = ({ project }) => {
     )
 }
 
-export default PortfolioItem
+export default CardItem

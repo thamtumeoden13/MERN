@@ -17,11 +17,11 @@ const ProjectDetailComponent = () => {
         <Grow in>
             <Container maxWidth='xl'>
                 <Grid className={classes.gridContainer} container spacing={3}>
-                    <Grid item xs={12} sm={6} md={9}>
+                    <Grid item xs={12} sm={6} md={8}>
                         <ProjectGeneral />
                         <PasteHtmlComponent readOnly={true} />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={4}>
                         <ProjectAlbums />
                     </Grid>
                 </Grid>

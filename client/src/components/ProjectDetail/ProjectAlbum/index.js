@@ -35,7 +35,7 @@ const ProjectAlbums = () => {
                             <Card sx={{ display: 'flex' }}>
                                 <CardMedia
                                     component="img"
-                                    sx={{ width: 96 }}
+                                    sx={{ width: 120,resize:'contain' }}
                                     // width='120'
                                     image="https://images.pexels.com/photos/8468288/pexels-photo-8468288.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
                                     alt="Live from space album cover"

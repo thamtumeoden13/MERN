@@ -71,7 +71,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     }
 
     const handleChangeTag = (values) => {
-        console.log('handleChangeTag', values)
+        // console.log('handleChangeTag', values)
         setTags(values)
         setState({ ...state, isValidate: false })
     }
@@ -80,7 +80,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         setState({ ...state, isValidate: true })
 
         if (!valiDateFormInput()) return
-
+        console.log('projectData-handleSubmit', projectData)
         if (onSubmit) {
             onSubmit({ ...projectData })
         }
@@ -177,7 +177,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                 <>
                     <ComboBox
                         name='portfolio'
-                        label='Porfolio'
+                        label='Portfolio'
                         placeholder='input portfolio'
                         options={options} //top100Films
                         onChange={handleChangeComboBox}

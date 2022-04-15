@@ -90,6 +90,10 @@ const PortfolioAdmin = () => {
         setCurrentId(id)
     }
 
+    const handlePortfolioDetail = (id) => {
+        navigate(`/portfolios/${id}`)
+    }
+
     const handleSubmitForm = (data) => {
         console.log(data)
         if (!!currentId) {
@@ -110,7 +114,11 @@ const PortfolioAdmin = () => {
                 <Grid container display='flex' flexDirection='column' spacing={3}>
                     <Grid className={classes.gridContainer} container item justifyContent='space-between' alignItems='stretch' spacing={3}>
                         <Grid item xs={12} sm={6} md={8} >
-                            <PortfolioTableList data={portfolios} />
+                            <PortfolioTableList
+                                data={portfolios}
+                                onViewDetail={handlePortfolioDetail}
+                                onEdit={handleCurrentId}
+                            />
                         </Grid>
                         <Grid item xs={12} sm={6} md={4}>
                             <Form currentId={currentId} handleCurrentId={handleCurrentId} onSubmit={handleSubmitForm} />

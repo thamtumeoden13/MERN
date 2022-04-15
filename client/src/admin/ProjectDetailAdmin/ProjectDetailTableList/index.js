@@ -21,9 +21,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit'
-
 import { visuallyHidden } from '@mui/utils';
 
 function createData(name, title, description, tags, thumbnail) {
@@ -108,21 +105,16 @@ const headCells = [
         label: 'tags',
     },
     {
-        id: 'viewDetail',
+        id: 'thumbnail',
         numeric: false,
         disablePadding: false,
-        label: 'Chi tiết',
-    },
-    {
-        id: 'edit',
-        numeric: false,
-        disablePadding: false,
-        label: 'Chỉnh sửa',
+        label: 'Ảnh đại diện',
     },
 ];
 
 const EnhancedTableHead = (props) => {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+        props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -153,10 +145,7 @@ const EnhancedTableHead = (props) => {
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
                         >
-                            <Typography variant='span'
-                                sx={{ minWidth: '100px' }}>
-                                {headCell.label}
-                            </Typography>
+                            {headCell.label}
                             {orderBy === headCell.id ? (
                                 <Box component="span" sx={visuallyHidden}>
                                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -209,7 +198,7 @@ const EnhancedTableToolbar = (props) => {
                     id="tableTitle"
                     component="div"
                 >
-                    {`Portfofio List`}
+                    Nutrition
                 </Typography>
             )}
 
@@ -234,7 +223,7 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
 
-const EnhancedTable = ({ data, onViewDetail, onEdit }) => {
+const EnhancedTable = ({ data }) => {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [selected, setSelected] = useState([]);
@@ -292,20 +281,9 @@ const EnhancedTable = ({ data, onViewDetail, onEdit }) => {
         setPage(0);
     };
 
-    const handleViewDetail = (event, row) => {
-        console.log('handleViewDetail', row)
-        if (onViewDetail) {
-            onViewDetail(row._id)
-        }
-
-    }
-
-    const handleEdit = (event, row) => {
-        console.log('handleEdit', row)
-        if (onEdit) {
-            onEdit(row._id)
-        }
-    }
+    const handleChangeDense = (event) => {
+        setDense(event.target.checked);
+    };
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -343,16 +321,14 @@ const EnhancedTable = ({ data, onViewDetail, onEdit }) => {
                                     return (
                                         <TableRow
                                             hover
+                                            onClick={(event) => handleClick(event, row.name)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell
-                                                padding="checkbox"
-                                                onClick={(event) => handleClick(event, row.name)}
-                                            >
+                                            <TableCell padding="checkbox">
                                                 <Checkbox
                                                     color="primary"
                                                     checked={isItemSelected}
@@ -370,18 +346,9 @@ const EnhancedTable = ({ data, onViewDetail, onEdit }) => {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="left">{row.title}</TableCell>
+                                            <TableCell align="left"><Button variant="text">{`Xem chi tiết`}</Button></TableCell>
                                             <TableCell align="left">{row.tags}</TableCell>
                                             <TableCell align="left">{row.thumbnail}</TableCell>
-                                            <TableCell align="left">
-                                                <Button onClick={(event) => handleViewDetail(event, row)} >
-                                                    <VisibilityIcon fontSize='small' />
-                                                </Button>
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                <Button onClick={(event) => handleEdit(event, row)}>
-                                                    <EditIcon fontSize='small' />
-                                                </Button>
-                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}

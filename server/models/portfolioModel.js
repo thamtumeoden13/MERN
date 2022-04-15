@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const projectSchema = mongoose.Schema({
+const portfolioSchema = mongoose.Schema({
     name: {
         type: String,
         require: true
@@ -36,11 +36,8 @@ const projectSchema = mongoose.Schema({
         type: String,
         default: 'anonymous'
     },
-    portfolio: {
-        type: String,
-        require: true
-    },
+
 })
 
-const projectModel = mongoose.model('Project', projectSchema)
-export default projectModel
+const portfolioModel = mongoose.model('Portfolio', portfolioSchema)
+export default portfolioModel

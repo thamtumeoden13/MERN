@@ -38,3 +38,9 @@ export const createPortfolio = (payload) => API.post(`/portfolios`, payload)
 //project
 export const fetchProjects = () => API.get(`/projects`)
 export const createProject = (payload) => API.post(`/projects`, payload)
+
+//projectDetail
+export const fetchProjectDetails = () => API.get(`/projectDetails`)
+export const fetchProjectDetailByPortfolios = (id) => API.get(`/projectDetails/${id}/portfolio`)
+export const fetchProjectDetailByProjects = (id) => API.get(`/projectDetails/${id}/project`)
+export const createProjectDetail = (payload) => API.post(`/projectDetails`, payload)
