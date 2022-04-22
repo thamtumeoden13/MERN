@@ -17,10 +17,13 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
+import Avatar from '@mui/material/Avatar';
+import { red } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit'
+
 import { visuallyHidden } from '@mui/utils';
 
 function createData(name, title, description, tags, thumbnail) {
@@ -93,10 +96,10 @@ const headCells = [
         label: 'Tiêu đề',
     },
     {
-        id: 'description',
+        id: 'thumbnail',
         numeric: false,
         disablePadding: false,
-        label: 'Mô tả',
+        label: 'Ảnh đại diện',
     },
     {
         id: 'tags',
@@ -105,16 +108,21 @@ const headCells = [
         label: 'tags',
     },
     {
-        id: 'thumbnail',
+        id: 'viewDetail',
         numeric: false,
         disablePadding: false,
-        label: 'Ảnh đại diện',
+        label: 'Chi tiết',
+    },
+    {
+        id: 'edit',
+        numeric: false,
+        disablePadding: false,
+        label: 'Chỉnh sửa',
     },
 ];
 
 const EnhancedTableHead = (props) => {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-        props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -145,7 +153,11 @@ const EnhancedTableHead = (props) => {
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
                         >
-                            {headCell.label}
+                            <Typography variant='span'
+                                sx={{ maxWidth: 180 }}
+                            >
+                                {headCell.label}
+                            </Typography>
                             {orderBy === headCell.id ? (
                                 <Box component="span" sx={visuallyHidden}>
                                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -170,6 +182,12 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
     const { numSelected } = props;
+
+    const handleRemove = () => {
+        if (props.onRemove) {
+            props.onRemove(numSelected)
+        }
+    }
 
     return (
         <Toolbar
@@ -198,13 +216,13 @@ const EnhancedTableToolbar = (props) => {
                     id="tableTitle"
                     component="div"
                 >
-                    Nutrition
+                    {`Bài viết`}
                 </Typography>
             )}
 
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                    <IconButton>
+                    <IconButton sx={{ color: red[500] }} onClick={handleRemove}>
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
@@ -223,12 +241,12 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
 
-const EnhancedTable = ({ data }) => {
+const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
-    const [dense, setDense] = useState(false);
+    const [dense, setDense] = useState(true);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [result, setResult] = useState([])
@@ -245,19 +263,19 @@ const EnhancedTable = ({ data }) => {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = result.map((n) => n.name);
+            const newSelecteds = result.map((n) => n._id);
             setSelected(newSelecteds);
             return;
         }
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, _id) => {
+        const selectedIndex = selected.indexOf(_id);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
+            newSelected = newSelected.concat(selected, _id);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -281,11 +299,29 @@ const EnhancedTable = ({ data }) => {
         setPage(0);
     };
 
-    const handleChangeDense = (event) => {
-        setDense(event.target.checked);
-    };
+    const isSelected = (_id) => selected.indexOf(_id) !== -1;
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const handleViewDetail = (event, row) => {
+        console.log('handleViewDetail', row)
+        if (onViewDetail) {
+            onViewDetail(row._id)
+        }
+
+    }
+
+    const handleEdit = (event, row) => {
+        console.log('handleEdit', row)
+        if (onEdit) {
+            onEdit(row._id)
+        }
+    }
+
+    const handleRemove = (isSelected) => {
+        console.log('[handleRemove]', isSelected, selected)
+        if (onRemove) {
+            onRemove(selected)
+        }
+    }
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -294,7 +330,7 @@ const EnhancedTable = ({ data }) => {
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length} onRemove={handleRemove} />
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
@@ -315,20 +351,22 @@ const EnhancedTable = ({ data }) => {
                             {stableSort(result, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                    const isItemSelected = isSelected(row._id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.name}
+                                            key={row._id}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">
+                                            <TableCell
+                                                padding="checkbox"
+                                                onClick={(event) => handleClick(event, row._id)}
+                                            >
                                                 <Checkbox
                                                     color="primary"
                                                     checked={isItemSelected}
@@ -346,9 +384,24 @@ const EnhancedTable = ({ data }) => {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="left">{row.title}</TableCell>
-                                            <TableCell align="left"><Button variant="text">{`Xem chi tiết`}</Button></TableCell>
-                                            <TableCell align="left">{row.tags}</TableCell>
-                                            <TableCell align="left">{row.thumbnail}</TableCell>
+                                            <TableCell align="center">
+                                                <Avatar
+                                                    sx={{ bgcolor: red[500] }}
+                                                    alt={'thumbnail'}
+                                                    src={row.thumbnail}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="left">{`[${row.tags.toString()}]`}</TableCell>
+                                            <TableCell align="left">
+                                                <Button onClick={(event) => handleViewDetail(event, row)} >
+                                                    <VisibilityIcon fontSize='small' />
+                                                </Button>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <Button onClick={(event) => handleEdit(event, row)}>
+                                                    <EditIcon fontSize='small' />
+                                                </Button>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}

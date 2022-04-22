@@ -37,6 +37,7 @@ const reducer = (state = initState, action) => {
                 projectDetail: action.payload.data,
             }
         case CREATE_PROJECT_DETAIL:
+            console.log('[CREATE_PROJECT_DETAIL]', state.projectDetails, action.payload)
             return {
                 ...state,
                 projectDetails: [...state.projectDetails, action.payload]
@@ -50,7 +51,8 @@ const reducer = (state = initState, action) => {
                 projectDetails: projectDetails
             }
         case DELETE_PROJECT_DETAIL:
-            const projectDetailsFilter = state.projectDetails.filter((projectDetail) => projectDetail._id !== action.payload)
+            const ids = action.payload.split(',')
+            const projectDetailsFilter = state.projectDetails.filter((projectDetail) => !ids.includes(projectDetail._id))
             return {
                 ...state,
                 projectDetails: projectDetailsFilter

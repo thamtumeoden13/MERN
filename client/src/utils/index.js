@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { jsx } from 'slate-hyperscript'
+import imageExtensions from 'image-extensions'
+import isUrl from 'is-url'
 
 /**
  * custom hooks
@@ -141,4 +143,11 @@ export const deserialize = el => {
     }
 
     return children
+}
+
+export const isImageUrl = url => {
+    if (!url) return false
+    if (!isUrl(url)) return false
+    const ext = new URL(url).pathname.split('.').pop()
+    return imageExtensions.includes(ext)
 }

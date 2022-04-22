@@ -50,7 +50,8 @@ const reducer = (state = initState, action) => {
                 portfolios: portfolios
             }
         case DELETE_PORTFOLIO:
-            const portfoliosFilter = state.portfolios.filter((portfolio) => portfolio._id !== action.payload)
+            const ids = action.payload.split(',')
+            const portfoliosFilter = state.portfolios.filter((portfolio) => !ids.includes(portfolio._id))
             return {
                 ...state,
                 portfolios: portfoliosFilter

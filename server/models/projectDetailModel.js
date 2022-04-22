@@ -1,45 +1,61 @@
 import mongoose from "mongoose";
 
 const projectSchema = mongoose.Schema({
+    name: {
+        type: String,
+        require: true
+    },
     title: {
         type: String,
-        default: 'Thiết Kế Biệt Thự Kết Hợp Kinh Doanh Coffee 4 Tầng 1 Tum'
+        require: true,
+    },
+    description: {
+        type: String,
+        require: true,
     },
     thumbnail: {
         type: String,
-        default: 'https://images.pexels.com/photos/5841924/pexels-photo-5841924.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+        require: true,
     },
     imageUrl: {
         type: String,
-        default: 'https://images.pexels.com/photos/10027186/pexels-photo-10027186.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+        require: true,
+    },
+    investor:{
+        type: String,
+        default: ''
+    },
+    address: {
+        type: String,
+        default: ''
     },
     scale: {
         type: String,
-        default: '5 Tầng'
+        default: ''
     },
     function: {
         type: String,
-        default: '4 Tầng + 1 Tum'
+        default: ''
     },
     expense: {
         type: String,
-        default: '2.800.000.000 VNĐ'
+        default: ''
     },
     designTeam: {
         type: String,
-        default: 'SundayTV team'
+        default: ''
     },
     designYear: {
         type: String,
-        default: '2022'
+        default: ''
     },
     estimatedTime: {
         type: String,
-        default: '6 Tháng'
+        default: ''
     },
     projectID: {
         type: String,
-        default: 'BT09'
+        default: ''
     },
     contentEditor: {
         type: String,

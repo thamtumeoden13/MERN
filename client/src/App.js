@@ -95,6 +95,9 @@ const App = (props) => {
 						<Route path='/projects' exact element={<Project />} />
 						<Route path='/projects/:id' element={<ProjectDetail />} />
 
+						<Route path='/projectDetails' exact element={<Project />} />
+						<Route path='/projectDetails/:id' element={<ProjectDetail />} />
+
 						<Route path='/admin/portfolios' exact element={<PortfolioAdmin />} />
 
 						<Route path='/admin/projects' exact element={<ProjectAdmin />} />

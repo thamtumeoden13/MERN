@@ -23,7 +23,7 @@ export const getPortfolios = () => async (dispatch) => {
         dispatch({ type: START_LOADING_PORTFOLIO })
 
         const { data } = await api.fetchPortfolios();
-        console.log({ data })
+
         dispatch({ type: FETCH_ALL_PORTFOLIO, payload: data })
         dispatch({ type: END_LOADING_PORTFOLIO })
     } catch (error) {
@@ -31,13 +31,11 @@ export const getPortfolios = () => async (dispatch) => {
     }
 }
 
-export const createPortfolio = (portfolio, navigate) => async (dispatch) => {
+export const createPortfolio = (portfolio) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PORTFOLIO })
 
         const { data } = await api.createPortfolio(portfolio);
-
-        navigate(`/portfolios/${data._id}`)
 
         dispatch({ type: CREATE_PORTFOLIO, payload: data });
     } catch (error) {
@@ -48,20 +46,22 @@ export const createPortfolio = (portfolio, navigate) => async (dispatch) => {
 
 export const updatePortfolio = (id, portfolio) => async (dispatch) => {
     try {
-        // const { data } = await api.updatePortfolio(id, portfolio)
+        dispatch({ type: START_LOADING_PORTFOLIO })
 
-        // dispatch({ type: UPDATE_PORTFOLIO, payload: data })
+        const { data } = await api.updatePortfolio(id, portfolio)
+
+        dispatch({ type: UPDATE_PORTFOLIO, payload: data })
     } catch (error) {
         console.error(error.message)
     }
 }
 
-// export const deletePortfolio = (id) => async (dispatch) => {
-//     try {
-//         await api.deletePortfolio(id)
+export const deletePortfolio = (ids) => async (dispatch) => {
+    try {
+        await api.deletePortfolio(ids)
 
-//         dispatch({ type: DELETE_PORTFOLIO, payload: id })
-//     } catch (error) {
-//         console.error(error.message)
-//     }
-// }
+        dispatch({ type: DELETE_PORTFOLIO, payload: ids })
+    } catch (error) {
+        console.error(error.message)
+    }
+}

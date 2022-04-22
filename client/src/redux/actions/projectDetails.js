@@ -5,14 +5,14 @@ import {
     CREATE_PROJECT_DETAIL, UPDATE_PROJECT_DETAIL, DELETE_PROJECT_DETAIL,
 } from '../constants/actionType';
 
-// export const getProjectProjectDetail = (id) => async (dispatch) => {
+// export const getProjectDetail = (id) => async (dispatch) => {
 //     try {
-//         dispatch({ type: START_LOADING_PROJECT_DETAIL })
+//         dispatch({ type: START_LOADING_PROJECT })
 
 //         const { data } = await api.fetchProject(id);
 
-//         dispatch({ type: FETCH_PROJECT_DETAIL, payload: data })
-//         dispatch({ type: END_LOADING_PROJECT_DETAIL })
+//         dispatch({ type: FETCH_PROJECT, payload: data })
+//         dispatch({ type: END_LOADING_PROJECT })
 //     } catch (error) {
 //         console.error(error.message)
 //     }
@@ -57,13 +57,11 @@ export const getProjectDetailByProjects = (id) => async (dispatch) => {
     }
 }
 
-export const createProjectDetail = (projectDetail, navigate) => async (dispatch) => {
+export const createProjectDetail = (projectDetail) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROJECT_DETAIL })
 
         const { data } = await api.createProjectDetail(projectDetail);
-
-        navigate(`/projectDetailDetails/${data._id}`)
 
         dispatch({ type: CREATE_PROJECT_DETAIL, payload: data });
     } catch (error) {
@@ -74,20 +72,20 @@ export const createProjectDetail = (projectDetail, navigate) => async (dispatch)
 
 export const updateProjectDetail = (id, projectDetail) => async (dispatch) => {
     try {
-        // const { data } = await api.updateProjectDetail(id, projectDetail)
+        const { data } = await api.updateProjectDetail(id, projectDetail)
 
-        // dispatch({ type: UPDATE_PROJECT_DETAIL, payload: data })
+        dispatch({ type: UPDATE_PROJECT_DETAIL, payload: data })
     } catch (error) {
         console.error(error.message)
     }
 }
 
-// export const deleteProject = (id) => async (dispatch) => {
-//     try {
-//         await api.deleteProjectDetail(id)
+export const deleteProjectDetail = (ids) => async (dispatch) => {
+    try {
+        await api.deleteProjectDetail(ids)
 
-//         dispatch({ type: DELETE_PROJECT_DETAIL, payload: id })
-//     } catch (error) {
-//         console.error(error.message)
-//     }
-// }
+        dispatch({ type: DELETE_PROJECT_DETAIL, payload: ids })
+    } catch (error) {
+        console.error(error.message)
+    }
+}

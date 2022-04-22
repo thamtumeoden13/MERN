@@ -121,7 +121,7 @@ const Form = ({ currentId, handleCurrentId }) => {
                 onSubmit={handleSubmit}
             >
                 <Typography variant='h6'>
-                    {`${currentId ? 'Editing' : 'Creating'} a Memory`}
+                    {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} a Memory`}
                 </Typography>
                 <TextField
                     name='title'

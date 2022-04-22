@@ -13,7 +13,6 @@ export const getPortfolio = async (req, res) => {
 }
 
 export const getPortfolios = async (req, res) => {
-    // res.send("THIS IS PRODUCTS")
     try {
         const portfolios = await PortfolioModel.find().sort({ _id: -1 })
 
@@ -34,5 +33,33 @@ export const createPortfolio = async (req, res) => {
         res.status(201).json(newPortfolio)
     } catch (error) {
         res.status(409).json({ message: error.message })
+    }
+}
+
+export const updatePortfolio = async (req, res) => {
+    const { id: _id } = req.params
+    const portfolio = req.body
+    try {
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(404).send(`No Portfolio with that id: ${_id}`)
+        }
+        const updatePortfolioData = await PortfolioModel.findByIdAndUpdate(_id, { ...portfolio, _id }, { new: true })
+        res.status(201).json(updatePortfolioData)
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+}
+
+export const deletePortfolio = async (req, res) => {
+    const { id: ids } = req.params
+    try {
+        // if (!mongoose.Types.ObjectId.isValid(_id)) {
+        //     return res.status(404).send(`No Portfolio with that id: ${_id}`)
+        // }
+        await PortfolioModel.deleteMany({ _id: { $in: ids.split(',') } })
+        res.status(201).json({ message: 'Portfolio deleted successfully' })
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+
     }
 }

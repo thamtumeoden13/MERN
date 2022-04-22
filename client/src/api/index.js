@@ -34,13 +34,19 @@ export const signUp = (formData) => API.post('/user/signup', formData)
 //portfolio
 export const fetchPortfolios = () => API.get(`/portfolios`)
 export const createPortfolio = (payload) => API.post(`/portfolios`, payload)
+export const updatePortfolio = (id, payload) => API.patch(`/portfolios/${id}`, payload)
+export const deletePortfolio = (ids) => API.delete(`/portfolios/${ids}`)
 
 //project
 export const fetchProjects = () => API.get(`/projects`)
 export const createProject = (payload) => API.post(`/projects`, payload)
+export const updateProject = (id, payload) => API.patch(`/projects/${id}`, payload)
+export const deleteProject = (ids) => API.delete(`/projects/${ids}`)
 
 //projectDetail
 export const fetchProjectDetails = () => API.get(`/projectDetails`)
 export const fetchProjectDetailByPortfolios = (id) => API.get(`/projectDetails/${id}/portfolio`)
 export const fetchProjectDetailByProjects = (id) => API.get(`/projectDetails/${id}/project`)
 export const createProjectDetail = (payload) => API.post(`/projectDetails`, payload)
+export const updateProjectDetail = (id, payload) => API.patch(`/projectDetails/${id}`, payload)
+export const deleteProjectDetail = (ids) => API.delete(`/projectDetails/${ids}`)

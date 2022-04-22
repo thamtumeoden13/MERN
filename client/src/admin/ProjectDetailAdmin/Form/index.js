@@ -8,17 +8,30 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
+import Avatar from '@mui/material/Avatar'
 
-import useStyles from './styles'
-import ComboBox from '../../../components/common/ComboBox'
 import ChipInput from '../../../components/common/ChipInput'
+import ComboBox from '../../../components/common/ComboBox'
 
-const initErrors = {
+import { isImageUrl } from '../../../utils'
+import useStyles from './styles'
+
+const initProjectDetailData = {
     name: '',
     title: '',
     thumbnail: '',
     imageUrl: '',
-    project: ''
+    tags: [],
+    project: '',
+    portfolio: '',
+    investor: 'Chú xuân',
+    address: 'Làng nhà mẫu khu đô thị Mỹ Gia, đường Phong châu, thôn Vĩnh Xuân, xã Vĩnh Thái, Tp. Nha Trang',
+    scale: '5 Tầng',
+    function: '4 Tầng + 1 Tum',
+    expense: '2.800.000.000 VNĐ',
+    designTeam: 'Sunday Art',
+    designYear: '2022',
+    estimatedTime: '6 Tháng',
 }
 
 const Form = ({ currentId, handleCurrentId, onSubmit }) => {
@@ -27,21 +40,16 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     const location = useLocation()
     const navigate = useNavigate()
 
+    const projectDetailsSelected = useSelector((state) => currentId ? state.projectDetails.projectDetails.find((projectDetail) => currentId === projectDetail._id) : null)
     const { projects } = useSelector((state) => state.projects)
 
     const [state, setState] = useState({ isValidate: false })
-    const [errors, setErrors] = useState({})
     const [options, setOptions] = useState([])
     const [user, setUser] = useState(null)
-    const [projectData, setProjectData] = useState({
-        name: 'Nội Thất',
-        title: 'Mẫu Thiết Kế Nội Thất',
-        thumbnail: 'https://images.pexels.com/photos/5841924/pexels-photo-5841924.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-        imageUrl: 'https://images.pexels.com/photos/10027186/pexels-photo-10027186.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-        project: '',
-        portfolio: ''
-    })
+    const [formData, setFormData] = useState(initProjectDetailData)
+    const [errors, setErrors] = useState({})
     const [tags, setTags] = useState([])
+    const [defaultValue, setDefaultValue] = useState(null)
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('profile')))
@@ -55,35 +63,40 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     value: project._id,
                 }
             })
-            console.log('options', options)
             setOptions(options)
         }
     }, [projects])
 
-    const handleChangeValue = (name, value) => {
-        setProjectData({ ...projectData, [name]: value })
-        setState({ ...state, isValidate: false })
-    }
-
-    const handleChangeComboBox = (name, comboBoxProject) => {
-        // console.log('handleChangeComboBox', name, comboBoxProject)
-        let portfolioId
-        if (name == 'project') {
-            const find = projects.find(project => project._id == comboBoxProject.value)
-            console.log('portfolio', find)
-            portfolioId = find.portfolio
-            setProjectData({ ...projectData, [name]: comboBoxProject.value })
-
+    useEffect(() => {
+        if (projectDetailsSelected) {
+            console.log('[projects]')
+            const find = projects.find(e => { return e._id == projectDetailsSelected.project })
+            if (!!find && Object.keys(find).length > 0) {
+                setDefaultValue({ label: find.name, value: find._id })
+                setFormData(projectDetailsSelected)
+            }
         }
-        setProjectData({ ...projectData, [name]: comboBoxProject.value, 'portfolio': portfolioId })
-        setState({ ...state, isValidate: false })
-    }
+    }, [projectDetailsSelected])
 
-    const handleChangeTag = (values) => {
+    const handleChangeValue = useCallback((name, value) => {
+        setFormData({ ...formData, [name]: value })
+        setState({ ...state, isValidate: false })
+        setErrors({})
+    }, [formData, state])
+
+    const handleChangeComboBox = useCallback((name, comboBoxProject) => {
+        const find = projects.find(project => project._id == comboBoxProject.value)
+        const portfolioId = find.portfolio
+        setFormData({ ...formData, project: comboBoxProject.value || '', portfolio: portfolioId })
+        setState({ ...state, isValidate: false })
+    }, [formData, state])
+
+    const handleChangeTag = useCallback((values) => {
         // console.log('handleChangeTag', values)
         setTags(values)
         setState({ ...state, isValidate: false })
-    }
+        setErrors({})
+    }, [state])
 
     const handleSubmit = (e) => {
         setState({ ...state, isValidate: true })
@@ -91,7 +104,8 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         if (!valiDateFormInput()) return
 
         if (onSubmit) {
-            onSubmit({ ...projectData })
+            const data = { ...formData, tags: tags }
+            onSubmit(data)
         }
 
         clear()
@@ -100,23 +114,29 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     const valiDateFormInput = () => {
         const errors = {}
         switch (true) {
-            case !projectData?.name || projectData?.name.length === 0:
+            case !formData?.name || formData?.name.length === 0:
                 errors.name = 'Please Input Name!'
                 break;
-            case !projectData?.title || projectData?.title.length === 0:
+            case !formData?.title || formData?.title.length === 0:
                 errors.title = 'Please Input Title!'
                 break;
-            case !projectData?.project || projectData?.project.length === 0:
-                errors.project = 'Please Choose Project!'
+            case !formData?.project || formData?.project.length === 0:
+                errors.project = 'Please Choose a Project!'
                 break;
-            case !tags || tags.length === 0:
-                errors.tags = 'Please Input At Least One Tags!'
-                break;
-            case !projectData?.thumbnail || projectData?.thumbnail.length === 0:
+            // case !tags || tags.length === 0:
+            //     errors.tags = 'Please Input At Least One Tags!'
+            //     break;
+            case !formData?.thumbnail || formData?.thumbnail.length === 0:
                 errors.thumbnail = 'Please Chosse A Image!'
                 break;
-            case !projectData?.imageUrl || projectData?.imageUrl.length === 0:
+            case !isImageUrl(formData?.thumbnail):
+                errors.thumbnail = 'URL Is Not An Image!'
+                break;
+            case !formData?.imageUrl || formData?.imageUrl.length === 0:
                 errors.imageUrl = 'Please Chosse A Image!'
+                break;
+            case !isImageUrl(formData?.imageUrl):
+                errors.imageUrl = 'URL Is Not An Image!'
                 break;
         }
 
@@ -129,17 +149,11 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 
     const clear = () => {
         handleCurrentId(null)
-        setProjectData({
-            name: '',
-            title: '',
-            message: '',
-            thumbnail: '',
-            imageUrl: '',
-            project: '',
-            portfolio: ''
-        })
+        setFormData(initProjectDetailData)
         setState({ ...state, isValidate: false })
+        setTags([])
         setErrors({})
+        setDefaultValue(null)
     }
 
     if (!user?.result?.name) {
@@ -152,15 +166,17 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         )
     }
 
+    console.log('[formData]', formData)
+
     return (
-        <Paper className={classes.paper} elevation={6}>
+        <Paper className={classes.paper} elevation={6} sx={{ maxHeight: '60vh', overflow: 'auto' }}>
             <form
                 autoComplete='off'
                 noValidate
                 className={`${classes.root} ${classes.form}`}
             >
                 <Typography variant='h6'>
-                    {`${currentId ? 'Editing' : 'Creating'} a Project`}
+                    {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Bài Viết`}
                 </Typography>
                 <TextField
                     name='name'
@@ -170,7 +186,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     required
                     error={(!!state.isValidate && !!errors.name)}
                     helperText={errors.name || ''}
-                    value={projectData.name}
+                    value={formData.name}
                     onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 />
                 <TextField
@@ -181,7 +197,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     required
                     error={(!!state.isValidate && !!errors.title)}
                     helperText={errors.title || ''}
-                    value={projectData.title}
+                    value={formData.title}
                     onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 />
                 <>
@@ -189,7 +205,8 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                         name='project'
                         label='Project'
                         placeholder='input project'
-                        options={options} //top100Films
+                        options={options}
+                        defaultValue={defaultValue}
                         onChange={handleChangeComboBox}
                     />
                     {!!errors.project &&
@@ -198,25 +215,11 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                         </div>
                     }
                 </>
-                {/* <>
-                    <ComboBox
-                        name='portfolio'
-                        label='Portfolio'
-                        placeholder='input portfolio'
-                        defaultValue={options} //top100Films
-                        readOnly={true}
-                        onChange={handleChangeComboBox}
-                    />
-                    {!!errors.project &&
-                        <div className={classes.errorFileInput}>
-                            {errors.project}
-                        </div>
-                    }
-                </> */}
                 <>
                     <ChipInput
                         label={'Search Tags'}
                         placeholder={'tags...'}
+                        defaultValue={formData.tags}
                         onChangeValue={handleChangeTag}
                     />
                     {!!errors.tags &&
@@ -225,32 +228,140 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                         </div>
                     }
                 </>
-                <div className={classes.fileInput}>
-                    <FileBase64
-                        type='file'
-                        name='thumbnail'
-                        multiple={false}
-                        onDone={({ base64 }) => handleChangeValue('thumbnail', base64)}
-                    />
+                <Box sx={{ width: '100%' }}>
+                    <Box sx={{
+                        display: 'flex', alignItems: 'center',
+                        flex: 1,
+                    }}>
+                        <Avatar
+                            sx={{ mx: 1 }}
+                            alt={'thumbnail'}
+                            src={formData.thumbnail}
+                        />
+                        <ComboBox
+                            name='thumbnail'
+                            label='Thumbnail'
+                            placeholder='input thumbnail'
+                            options={[]} //top100Films
+                            defaultValue={formData.thumbnail}
+                            defaultInputValue={formData.thumbnail}
+                            // onChange={handleChangeComboBox}
+                            onInputChange={handleChangeValue}
+                        />
+                    </Box>
                     {!!errors.thumbnail &&
                         <div className={classes.errorFileInput}>
                             {errors.thumbnail}
                         </div>
                     }
-                </div>
-                <div className={classes.fileInput}>
-                    <FileBase64
-                        type='file'
-                        name='imageUrl'
-                        multiple={false}
-                        onDone={({ base64 }) => handleChangeValue('imageUrl', base64)}
-                    />
+                </Box>
+                <Box sx={{ width: '100%', }}>
+                    <Box sx={{
+                        display: 'flex', alignItems: 'center',
+                        flex: 1,
+                    }}>
+                        <Avatar
+                            sx={{ mx: 1 }}
+                            alt={'imageUrl'}
+                            src={formData.imageUrl}
+                        />
+                        <ComboBox
+                            name='imageUrl'
+                            label='ImageUrl'
+                            placeholder='input imageUrl'
+                            options={[]} //top100Films
+                            defaultValue={formData.imageUrl}
+                            defaultInputValue={formData.imageUrl}
+                            // onChange={handleChangeComboBox}
+                            onInputChange={handleChangeValue}
+                        />
+                    </Box>
                     {!!errors.imageUrl &&
                         <div className={classes.errorFileInput}>
                             {errors.imageUrl}
                         </div>
                     }
-                </div>
+                </Box>
+                <TextField
+                    name='investor'
+                    variant='outlined'
+                    label="Investor"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.investor)}
+                    helperText={errors.investor || ''}
+                    value={formData.investor}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
+                <TextField
+                    name='address'
+                    variant='outlined'
+                    label="Address"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.address)}
+                    helperText={errors.address || ''}
+                    value={formData.address}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
+                <TextField
+                    name='scale'
+                    variant='outlined'
+                    label="Scale"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.scale)}
+                    helperText={errors.scale || ''}
+                    value={formData.scale}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
+                <TextField
+                    name='function'
+                    variant='outlined'
+                    label="Function"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.function)}
+                    helperText={errors.function || ''}
+                    value={formData.function}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
+                <TextField
+                    name='expense'
+                    variant='outlined'
+                    label="Expense"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.expense)}
+                    helperText={errors.expense || ''}
+                    value={formData.expense}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
+                <TextField
+                    name='designYear'
+                    variant='outlined'
+                    label="DesignYear"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.designYear)}
+                    helperText={errors.designYear || ''}
+                    value={formData.designYear}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
+                <TextField
+                    name='designTeam'
+                    variant='outlined'
+                    label="DesignTeam"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.designTeam)}
+                    helperText={errors.designTeam || ''}
+                    value={formData.designTeam}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
+                <TextField
+                    name='estimatedTime'
+                    variant='outlined'
+                    label="EstimatedTime"
+                    fullWidth
+                    error={(!!state.isValidate && !!errors.estimatedTime)}
+                    helperText={errors.estimatedTime || ''}
+                    value={formData.estimatedTime}
+                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                />
                 <Button
                     className={classes.buttonSubmit}
                     variant='contained'
@@ -259,7 +370,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                     type='button'
                     fullWidth
                     onClick={handleSubmit}
-                // disabled={!projectData.name && !projectData.title && !projectData.description && !projectData.tags.length}
+                // disabled={!formData.name && !formData.title && !formData.description && !formData.tags.length}
                 >
                     {`Submit`}
                 </Button>
@@ -278,78 +389,3 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 }
 
 export default Form
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-    { label: 'The Shawshank Redemption', value: 1994 },
-    { label: 'The Godfather', value: 1972 },
-    { label: 'The Godfather: Part II', value: 1974 },
-    { label: 'The Dark Knight', value: 2008 },
-    { label: '12 Angry Men', value: 1957 },
-    { label: "Schindler's List", value: 1993 },
-    { label: 'Pulp Fiction', value: 1994 },
-    {
-        label: 'The Lord of the Rings: The Return of the King',
-        value: 2003,
-    },
-    { label: 'The Good, the Bad and the Ugly', value: 1966 },
-    { label: 'Fight Club', value: 1999 },
-    {
-        label: 'The Lord of the Rings: The Fellowship of the Ring',
-        value: 2001,
-    },
-    {
-        label: 'Star Wars: Episode V - The Empire Strikes Back',
-        value: 1980,
-    },
-    { label: 'Forrest Gump', value: 1994 },
-    { label: 'Inception', value: 2010 },
-    {
-        label: 'The Lord of the Rings: The Two Towers',
-        value: 2002,
-    },
-    { label: "One Flew Over the Cuckoo's Nest", value: 1975 },
-    { label: 'Goodfellas', value: 1990 },
-    { label: 'The Matrix', value: 1999 },
-    { label: 'Seven Samurai', value: 1954 },
-    {
-        label: 'Star Wars: Episode IV - A New Hope',
-        value: 1977,
-    },
-    { label: 'City of God', value: 2002 },
-    { label: 'Se7en', value: 1995 },
-    { label: 'The Silence of the Lambs', value: 1991 },
-    { label: "It's a Wonderful Life", value: 1946 },
-    { label: 'Life Is Beautiful', value: 1997 },
-    { label: 'The Usual Suspects', value: 1995 },
-    { label: 'Léon: The Professional', value: 1994 },
-    { label: 'Spirited Away', value: 2001 },
-    { label: 'Saving Private Ryan', value: 1998 },
-    { label: 'Once Upon a Time in the West', value: 1968 },
-    { label: 'American History X', value: 1998 },
-    { label: 'Interstellar', value: 2014 },
-    { label: 'Casablanca', value: 1942 },
-    { label: 'City Lights', value: 1931 },
-    { label: 'Psycho', value: 1960 },
-    { label: 'The Green Mile', value: 1999 },
-    { label: 'The Intouchables', value: 2011 },
-    { label: 'Modern Times', value: 1936 },
-    { label: 'Raiders of the Lost Ark', value: 1981 },
-    { label: 'Rear Window', value: 1954 },
-    { label: 'The Pianist', value: 2002 },
-    { label: 'The Departed', value: 2006 },
-    { label: 'Terminator 2: Judgment Day', value: 1991 },
-    { label: 'Back to the Future', value: 1985 },
-    { label: 'Whiplash', value: 2014 },
-    { label: 'Gladiator', value: 2000 },
-    { label: 'Memento', value: 2000 },
-    { label: 'The Prestige', value: 2006 },
-    { label: 'The Lion King', value: 1994 },
-    { label: 'Apocalypse Now', value: 1979 },
-    { label: 'Alien', value: 1979 },
-    { label: 'Sunset Boulevard', value: 1950 },
-    {
-        label: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-        value: 1964,
-    },
-];

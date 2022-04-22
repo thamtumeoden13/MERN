@@ -31,13 +31,11 @@ export const getProjects = () => async (dispatch) => {
     }
 }
 
-export const createProject = (project, navigate) => async (dispatch) => {
+export const createProject = (project) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROJECT })
 
         const { data } = await api.createProject(project);
-
-        navigate(`/projects/${data._id}`)
 
         dispatch({ type: CREATE_PROJECT, payload: data });
     } catch (error) {
@@ -48,20 +46,22 @@ export const createProject = (project, navigate) => async (dispatch) => {
 
 export const updateProject = (id, project) => async (dispatch) => {
     try {
-        // const { data } = await api.updateProject(id, project)
+        dispatch({ type: START_LOADING_PROJECT })
 
-        // dispatch({ type: UPDATE_PROJECT, payload: data })
+        const { data } = await api.updateProject(id, project)
+
+        dispatch({ type: UPDATE_PROJECT, payload: data })
     } catch (error) {
         console.error(error.message)
     }
 }
 
-// export const deleteProject = (id) => async (dispatch) => {
-//     try {
-//         await api.deleteProject(id)
+export const deleteProject = (ids) => async (dispatch) => {
+    try {
+        await api.deleteProject(ids)
 
-//         dispatch({ type: DELETE_PROJECT, payload: id })
-//     } catch (error) {
-//         console.error(error.message)
-//     }
-// }
+        dispatch({ type: DELETE_PROJECT, payload: ids })
+    } catch (error) {
+        console.error(error.message)
+    }
+}

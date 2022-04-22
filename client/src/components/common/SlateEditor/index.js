@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import isHotkey from 'is-hotkey'
 import {
     ReactEditor, Editable, withReact, useSlate, Slate,
@@ -11,11 +13,10 @@ import {
     Element as SlateElement,
 } from 'slate'
 import { withHistory } from 'slate-history'
-import imageExtensions from 'image-extensions'
-import isUrl from 'is-url'
 import { css } from '@emotion/css'
 
 import AppBar from '@mui/material/AppBar'
+import CircularProgress from '@mui/material/CircularProgress'
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
@@ -34,8 +35,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import { Button, Toolbar } from './Component'
 
-import { deserialize } from '../../../utils'
-import ElevationScroll from '../../NavBar/ElevationScroll'
+import { deserialize, isImageUrl } from '../../../utils'
 
 const HOTKEYS = {
     'mod+b': 'bold',
@@ -46,7 +46,6 @@ const HOTKEYS = {
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
-
 
 const initialValue = [
     {
@@ -75,31 +74,78 @@ const initialValue = [
             },
         ],
     },
+    {
+        type: 'block-quote',
+        children: [{ text: 'A wise quote.' }],
+    },
+    {
+        type: 'paragraph',
+        align: 'center',
+        children: [{ text: 'Try it out for yourself!' }],
+    },
 ]
 
 const SlateEditor = (props) => {
     const timeoutRef = useRef(null)
 
-    const [value, setValue] = useState(initialValue)
+    const [value, setValue] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [editor] = useState(() => withHtml(withImages(withReact(withHistory(createEditor())))))
+
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-    const editor = useMemo(() => withHtml(withImages(withHistory(withReact(createEditor())))), [])
-    console.log({ props, value })
+
     useEffect(() => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current)
-        }
-        timeoutRef.current = setTimeout(() => {
-            if (props.onChange) {
-                props.onChange(JSON.stringify(value))
+        setIsLoading(true)
+    }, [])
+
+    useEffect(() => {
+        setValue(null)
+
+        if (!!props.initialValue && props.initialValue.length > 0) {
+            const timeoutRef = setTimeout(() => {
+                setValue(props.initialValue)
+            }, 1000);
+            return () => {
+                clearTimeout(timeoutRef)
             }
-        }, 500);
-    }, [value])
+        } else {
+            setValue(initialValue)
+        }
+        setIsLoading(false)
+        
+    }, [props.initialValue, props.isEdit])
+
+    useEffect(() => {
+        if (!!value) {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
+            timeoutRef.current = setTimeout(() => {
+                if (props.onChange) {
+                    props.onChange(JSON.stringify(value))
+                }
+            }, 500);
+        }
+    }, [value, props])
+
+    const handleChange = (value) => {
+        console.log('[handleChange]', value)
+        setValue(value)
+    }
+
+    console.log('[value]', value)
+
+    if (!!isLoading || (!isLoading && (!value || value.length <= 0))) {
+        return (
+            <div >
+                <CircularProgress size={100} />
+            </div>
+        )
+    }
 
     return (
-        <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-            {/* <ElevationScroll {...props}> */}
-            {/* <AppBar color='inherit'> */}
+        <Slate editor={editor} value={value} onChange={value => handleChange(value)}>
             <Toolbar>
                 <MarkButton format="bold" icon="format_bold" Icon={() => <FormatBoldIcon />} />
                 <MarkButton format="italic" icon="format_italic" Icon={() => <FormatItalicIcon />} />
@@ -116,14 +162,12 @@ const SlateEditor = (props) => {
                 <BlockButton format="justify" icon="format_align_justify" Icon={() => <FormatAlignJustifyIcon />} />
                 <InsertImageButton format="image" icon="insert_image" Icon={() => <ImageIcon />} />
             </Toolbar>
-            {/* </AppBar> */}
-            {/* </ElevationScroll> */}
             <Editable
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 placeholder="Enter some rich text…"
                 spellCheck
-                autoFocus
+                // autoFocus={autoFocus || false}
                 onKeyDown={event => {
                     for (const hotkey in HOTKEYS) {
                         if (isHotkey(hotkey, event)) {
@@ -222,8 +266,6 @@ const withImages = editor => {
         }
     }
 
-    console.log('[withImages]', editor)
-
     return editor
 }
 
@@ -255,29 +297,38 @@ const withHtml = editor => {
 }
 
 const isBlockActive = (editor, format, blockType = 'type') => {
-    const { selection } = editor
-    if (!selection) return false
+    try {
+        const { selection } = editor
+        if (!selection) return false
 
-    const [match] = Array.from(
-        Editor.nodes(editor, {
-            at: Editor.unhangRange(editor, selection),
-            match: n =>
-                !Editor.isEditor(n) &&
-                SlateElement.isElement(n) &&
-                n[blockType] === format,
-        })
-    )
+        const [match] = Array.from(
+            Editor.nodes(editor, {
+                at: Editor.unhangRange(editor, selection),
+                match: n =>
+                    !Editor.isEditor(n) &&
+                    SlateElement.isElement(n) &&
+                    n[blockType] === format,
+            })
+        )
 
-    return !!match
+        return !!match
+    } catch (error) {
+        console.error('[error-isMarkActive', error)
+    }
 }
 
 const isMarkActive = (editor, format) => {
-    const marks = Editor.marks(editor)
-    return marks ? marks[format] === true : false
+    try {
+        const marks = Editor.marks(editor)
+        return marks ? marks[format] === true : false
+    } catch (error) {
+        console.error('[error-isMarkActive', error)
+    }
 }
 
 const Element = ({ attributes, children, element }) => {
     const style = { textAlign: element.align }
+    // console.log('[render-element]', element)
     switch (element.type) {
         case 'block-quote':
             return (
@@ -331,6 +382,7 @@ const Element = ({ attributes, children, element }) => {
 }
 
 const Leaf = ({ attributes, children, leaf }) => {
+    // console.log('[render-leaf]', leaf)
     if (leaf.bold) {
         children = <strong>{children}</strong>
     }
@@ -373,7 +425,7 @@ const MarkButton = ({ format, icon, Icon }) => {
     const editor = useSlate()
     return (
         <Button
-            active={isMarkActive(editor, format)}
+            active={isMarkActive(editor, format) || false}
             onMouseDown={event => {
                 event.preventDefault()
                 toggleMark(editor, format)
@@ -447,11 +499,4 @@ const InsertImageButton = ({ Icon }) => {
     )
 }
 
-const isImageUrl = url => {
-    if (!url) return false
-    if (!isUrl(url)) return false
-    const ext = new URL(url).pathname.split('.').pop()
-    return imageExtensions.includes(ext)
-}
-
-export default SlateEditor
+export default memo(SlateEditor)

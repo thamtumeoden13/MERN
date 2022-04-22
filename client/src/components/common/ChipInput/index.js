@@ -1,21 +1,41 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, memo } from "react";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 
-const ChipInput = ({ label, placeholder, onChangeValue }) => {
+const ChipInput = (props) => {
 	const timeoutChange = useRef(null)
 
 	const [values, setValues] = useState([]);
+	const [state, setState] = useState({
+		label: '',
+		placeholder: '',
+	})
+
+	useEffect(() => {
+		setValues(props.defaultValue || [])
+	}, [props.defaultValue])
+
+	useEffect(() => {
+		setState(prev => { return { ...prev, placeholder: props.placeholder || '' } })
+	}, [props.placeholder])
+
+	useEffect(() => {
+		setState(prev => { return { ...prev, label: props.label || '' } })
+	}, [props.label])
 
 	useEffect(() => {
 		if (timeoutChange.current) {
 			clearTimeout(timeoutChange.current)
 		}
 		timeoutChange.current = setTimeout(() => {
-			onChangeValue(values)
-		}, 300);
-	}, [values, onChangeValue])
+			props.onChangeValue(values)
+		}, 500);
+	}, [values])
+
+	const handleChangeValue = (value) => {
+		setValues(value)
+	}
 
 	return (
 		<Autocomplete
@@ -25,8 +45,8 @@ const ChipInput = ({ label, placeholder, onChangeValue }) => {
 			freeSolo
 			sx={{ pr: 2 }}
 			options={[]}
-			defaultValue={[]}
-			onChange={(e, value) => setValues((state) => value)}
+			value={values}
+			onChange={(e, value) => handleChangeValue(value)}
 			renderTags={(value, getTagProps) =>
 				value.map((option, index) => {
 					return (
@@ -44,12 +64,12 @@ const ChipInput = ({ label, placeholder, onChangeValue }) => {
 				<TextField
 					{...params}
 					// variant="filled"
-					label={label}
-					placeholder={placeholder}
+					label={state.label}
+					placeholder={state.placeholder}
 				/>
 			)}
 		/>
 	);
 }
 
-export default ChipInput
+export default memo(ChipInput)

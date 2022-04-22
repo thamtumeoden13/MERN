@@ -50,7 +50,8 @@ const reducer = (state = initState, action) => {
                 projects: projects
             }
         case DELETE_PROJECT:
-            const projectsFilter = state.projects.filter((project) => project._id !== action.payload)
+            const ids = action.payload.split(',')
+            const projectsFilter = state.projects.filter((project) => !ids.includes(project._id))
             return {
                 ...state,
                 projects: projectsFilter
