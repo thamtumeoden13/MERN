@@ -5,18 +5,18 @@ import {
     CREATE_PORTFOLIO, UPDATE_PORTFOLIO, DELETE_PORTFOLIO,
 } from '../constants/actionType';
 
-// export const getPortfolio = (id) => async (dispatch) => {
-//     try {
-//         dispatch({ type: START_LOADING_PORTFOLIO })
+export const getPortfolio = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING_PORTFOLIO })
 
-//         const { data } = await api.fetchPortfolio(id);
+        const { data } = await api.fetchPortfolio(id);
 
-//         dispatch({ type: FETCH_PORTFOLIO, payload: data })
-//         dispatch({ type: END_LOADING_PORTFOLIO })
-//     } catch (error) {
-//         console.error(error.message)
-//     }
-// }
+        dispatch({ type: FETCH_PORTFOLIO, payload: data })
+        dispatch({ type: END_LOADING_PORTFOLIO })
+    } catch (error) {
+        console.error(error.message)
+    }
+}
 
 export const getPortfolios = () => async (dispatch) => {
     try {

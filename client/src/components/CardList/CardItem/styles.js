@@ -2,10 +2,11 @@ import { makeStyles } from "@mui/styles";
 
 export default makeStyles((theme) => ({
     cardContainer: {
-        display: 'flex', flexDirection: 'column', maxWidth: 345,
-        [theme.breakpoints.up('sm')]: {
-            maxWidth: 256
-        },
+        display: 'flex', flexDirection: 'column',
+        //  maxWidth: 345,
+        // [theme.breakpoints.up('sm')]: {
+        //     maxWidth: 256
+        // },
         transition: `all 0.5s ease-in-out`,
         '&:hover': {
             transform: `scale(1.03)`,

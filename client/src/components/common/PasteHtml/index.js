@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react'
+import { useSelector } from 'react-redux';
 import { jsx } from 'slate-hyperscript'
 import { Transforms, createEditor, Descendant } from 'slate'
 import { withHistory } from 'slate-history'
@@ -86,7 +87,13 @@ export const deserialize = el => {
 }
 
 const PasteHtmlComponent = (props) => {
-    const [value, setValue] = useState([])
+
+    const { projectDetail, isLoading } = useSelector((state) => state.projectDetails)
+    // const initialValue = useMemo(() => { return !!projectDetail && !!projectDetail.description ? JSON.parse(projectDetail.description) : null }, [projectDetail])
+
+    console.log('[PasteHtmlComponent]', projectDetail)
+
+    const [value, setValue] = useState(initialValue)
 
     const [state, setState] = useState({
         readOnly: false,
@@ -104,15 +111,10 @@ const PasteHtmlComponent = (props) => {
     }, [props.readOnly])
 
     useEffect(() => {
-        setState(prev => { return { ...prev, initialValue: props.initialValue } })
-        setValue(props.initialValue || [])
-    }, [props.initialValue])
-
-    useEffect(() => {
         setValue(null)
-        if (!!props.initialValue && props.initialValue.length > 0) {
+        if (!!projectDetail && Object.keys(projectDetail).length > 0) {
             const timeoutRef = setTimeout(() => {
-                setValue(props.initialValue)
+                setValue(JSON.parse(projectDetail.description))
             }, 1000);
             return () => {
                 clearTimeout(timeoutRef)
@@ -120,7 +122,21 @@ const PasteHtmlComponent = (props) => {
         } else {
             setValue(initialValue)
         }
-    }, [props.initialValue])
+    }, [projectDetail])
+
+    // useEffect(() => {
+    //     setValue(null)
+    //     if (!!props.initialValue && props.initialValue.length > 0) {
+    //         const timeoutRef = setTimeout(() => {
+    //             setValue(props.initialValue)
+    //         }, 1000);
+    //         return () => {
+    //             clearTimeout(timeoutRef)
+    //         }
+    //     } else {
+    //         setValue(initialValue)
+    //     }
+    // }, [props.initialValue])
 
     const handleChange = (value) => {
         console.log('[handleChange]', value)

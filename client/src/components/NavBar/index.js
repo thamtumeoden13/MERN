@@ -59,7 +59,7 @@ const NavBar = (props) => {
         //     return;
         // }
         // console.log('[toggleDrawer]', open, event)
-        setDrawer(open, event);
+        // setDrawer(open, event);
     };
 
     return (

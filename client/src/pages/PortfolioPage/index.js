@@ -12,36 +12,42 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
 import Portfolios from '../../components/Portfolios'
-import QuiltedImageList from '../../components/common/ImageQuilted'
+import QuiltedImageList from '../../components/common/Imagelist/ImageQuilted'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
 
-import { getPortfolios } from '../../redux/actions/portfolios'
-import { getProjects } from '../../redux/actions/projects'
-import Projects from '../../components/Projects';
+import { getProjectDetails, getProjectDetail, getProjectDetailsByPortfolioID, getProjectDetailsByProjectID } from '../../redux/actions/projectDetails'
 
 const PortfolioPage = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const { id, id2, id3 } = useParams()
 
     const [search, setSearch] = useState('')
 
-    const { portfolios, isLoading } = useSelector((state) => state.portfolios)
-    const { projects } = useSelector((state) => state.projects)
-
-    const { id } = useParams()
-
     useEffect(() => {
-        dispatch(getPortfolios())
-        dispatch(getProjects())
-    }, [dispatch])
+        if (id) {
+            dispatch(getProjectDetail(id))
+            return
+        }
 
-    // useEffect(() => {
-    //     if (id) {
-    //         dispatch(getPortfolios(id))
-    //     } else {
-    //         dispatch(getPortfolios())
-    //         dispatch(getProjects())
-    //     }
-    // }, [dispatch, id])
+        if (id2) {
+            dispatch(getProjectDetailsByPortfolioID(id2))
+            return
+        }
+
+        if (id3) {
+            dispatch(getProjectDetailsByProjectID(id3))
+            return
+        }
+
+        dispatch(getProjectDetails())
+
+    }, [dispatch, id, id2, id3])
+
+    const handleViewDetail = (id) => {
+        navigate(`/projectDetails/${id}`)
+    }
 
     const handleChangeValue = (event) => {
         console.log('[handleChangeValue]', event.target.value)
@@ -58,7 +64,7 @@ const PortfolioPage = () => {
                 <Box>
                     <QuiltedImageList data={data} />
                 </Box>
-                <Box sx={{ pl: 2, mt: 2, mb: 2 }}>
+                <Box sx={{ marginY: 4 }}>
                     <BreadcrumbComponent />
                 </Box>
                 <Box>
@@ -80,7 +86,6 @@ const PortfolioPage = () => {
                                                 <IconButton
                                                     aria-label="toggle password visibility"
                                                     onClick={handleSearch}
-                                                    // onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                 >
                                                     <SearchIcon />
@@ -94,7 +99,7 @@ const PortfolioPage = () => {
                             </Grid>
                         </Box>
                         <Grid item xs={12} sm={12} md={9}>
-                            <Portfolios />
+                            <Portfolios onViewDetail={handleViewDetail} />
                         </Grid>
                     </Grid>
                 </Box>

@@ -38,14 +38,14 @@ const CardItem = ({ item, onClick }) => {
                 <CardMedia
                     component='img'
                     height='194'
-                    image={item.thumbnail || 'https://tcproduction.blob.core.windows.net/media/%7B240f8b72-1159-4fd3-a150-0a837f50ba4a%7D.2573758641_297d6d19fa_o.jpg'}
+                    image={item.thumbnail}
                     alt='portfolio image'
                 />
                 <Box className={classes.cardContent}>
                     <CardContent>
-                        <Typography variant='body1' color={'text.secondary'}>
+                        {/* <Typography variant='body1' color={'text.secondary'}>
                             {item.name}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant='body2' component='p' paragraph>
                             {item.title}
                         </Typography>

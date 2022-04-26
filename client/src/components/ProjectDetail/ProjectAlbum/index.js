@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment'
+import { useSelector } from 'react-redux';
 
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -21,24 +22,56 @@ import { useTheme } from '@mui/material/styles';
 
 const ProjectAlbums = () => {
     const theme = useTheme();
+
+    const { projectDetailsByProjectID, projectDetailsByPortfolioID, isLoading } = useSelector((state) => state.projectDetails)
+    const { project } = useSelector((state) => state.projects)
+    const { portfolio } = useSelector((state) => state.portfolios)
+
+    const [state, setState] = useState({
+        title: '',
+        data: []
+    })
+
+    console.log('[ProjectAlbums-projectDetailsByProjectID]', projectDetailsByProjectID)
+    console.log('[ProjectAlbums-project]', project)
+
+    useEffect(() => {
+        if (!!project && !!projectDetailsByProjectID && projectDetailsByProjectID.length > 0) {
+            setState({
+                title: project.title,
+                data: projectDetailsByProjectID
+            })
+            return
+        }
+        if (!!portfolio && !!projectDetailsByPortfolioID && projectDetailsByPortfolioID.length > 0) {
+            setState({
+                title: portfolio.title,
+                data: projectDetailsByPortfolioID
+            })
+            return
+        }
+    }, [project, portfolio, projectDetailsByProjectID, projectDetailsByPortfolioID])
+
+    if (!!isLoading) return null
+
     return (
         <>
             <Typography component={'div'} variant={'h6'}
                 sx={{ m: 2, pl: 1, borderLeft: '5px solid orange' }}
             >
-                {`Biệt Thự`}
+                {state.title}
             </Typography>
             <Container maxWidth='sm'>
                 <Grid container spacing={1}>
-                    {[1, 2, 3, 4, 5].map((_, index) => (
+                    {state.data.map((item, index) => (
                         <Grid item xs={12} key={index}>
                             <Card sx={{ display: 'flex' }}>
                                 <CardMedia
                                     component="img"
-                                    sx={{ width: 120,resize:'contain' }}
+                                    sx={{ width: 120, resize: 'contain' }}
                                     // width='120'
-                                    image="https://images.pexels.com/photos/8468288/pexels-photo-8468288.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                    alt="Live from space album cover"
+                                    image={item.thumbnail}
+                                    alt="thumbnail"
                                 />
                                 <Box sx={{
                                     display: 'flex', flexDirection: 'column',
@@ -49,10 +82,10 @@ const ProjectAlbums = () => {
                                         flex: '1 0', justifyContent: 'space-between',
                                     }}>
                                         <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                            Live From Space,Live From Space,Live From Space,Live From Space,Live From Space,
+                                            {item.title}
                                         </Typography>
                                         <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                            {moment(new Date()).format('HH:MM MMM DD, YYYY')}
+                                            {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
                                         </Typography>
                                     </CardContent>
                                 </Box>

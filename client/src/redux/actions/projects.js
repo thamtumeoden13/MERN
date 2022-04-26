@@ -5,18 +5,18 @@ import {
     CREATE_PROJECT, UPDATE_PROJECT, DELETE_PROJECT,
 } from '../constants/actionType';
 
-// export const getProject = (id) => async (dispatch) => {
-//     try {
-//         dispatch({ type: START_LOADING_PROJECT })
+export const getProject = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING_PROJECT })
 
-//         const { data } = await api.fetchProject(id);
+        const { data } = await api.fetchProject(id);
 
-//         dispatch({ type: FETCH_PROJECT, payload: data })
-//         dispatch({ type: END_LOADING_PROJECT })
-//     } catch (error) {
-//         console.error(error.message)
-//     }
-// }
+        dispatch({ type: FETCH_PROJECT, payload: data })
+        dispatch({ type: END_LOADING_PROJECT })
+    } catch (error) {
+        console.error(error.message)
+    }
+}
 
 export const getProjects = () => async (dispatch) => {
     try {

@@ -1,29 +1,142 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress'
 
-import HomeComponent from '../../components/Home'
-
-import { sortBy, useToggle, useInput, useTitle } from '../../utils'
 import Header from '../../components/Header';
 import Categories from '../../components/Categories';
-import Grow from '@mui/material/Grow';
+import CardList from '../../components/CardList';
+import AppFooter from '../../components/AppFooter';
+
+import { getProjectDetails } from '../../redux/actions/projectDetails'
+
+import { sortBy, useToggle, useInput, useTitle } from '../../utils'
 
 const HomePage = () => {
 
     useTitle('Home | Valley');
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { projectDetails, isLoading } = useSelector((state) => state.projectDetails)
+
+    const [state, setState] = useState({
+        dataVilla: [],
+        dataTownHouse: [],
+        datafurniture: [],
+        subDataVilla: [
+            {
+                title: 'Biệt Thự Bán Cổ Điển'
+            },
+            {
+                title: 'Biệt Thự Cổ Điển'
+            },
+            {
+                title: 'Biệt Thự Hiện Đại'
+            },
+            {
+                title: 'Biệt Thự Vườn Mái Thái'
+            },
+        ],
+        subDataTownHouse: [
+            {
+                title: 'Nhà Phố Bán Cổ Điển'
+            },
+            {
+                title: 'Nhà Phố Cổ Điển'
+            },
+            {
+                title: 'Nhà Phố 2 Tầng'
+            },
+            {
+                title: 'Nhà Phố 3 Tầng'
+            },
+        ],
+        subDatafurniture: [
+            {
+                title: 'Nội Thất Bán Cổ Điển'
+            },
+            {
+                title: 'Nội Thất Cổ Điển'
+            },
+            {
+                title: 'Nội Thất Hiện Đại'
+            },
+            {
+                title: 'Nội Thất Căn Hộ'
+            },
+        ],
+    })
+
+    useEffect(() => {
+        dispatch(getProjectDetails())
+    }, [dispatch])
+
+    useEffect(() => {
+        let dataVilla = []
+        let dataTownHouse = []
+        let datafurniture = []
+        if (!!projectDetails && projectDetails.length > 0) {
+            dataVilla = projectDetails.filter(e => { return e.portfolio == "62643d9ff47761c9f6bfec3b" })
+            dataTownHouse = projectDetails.filter(e => { return e.portfolio == "62643dc6f47761c9f6bfec3d" })
+            datafurniture = projectDetails.filter(e => { return e.portfolio == "62643dfbf47761c9f6bfec3f" })
+        }
+        setState(prev => { return { ...prev, dataVilla, dataTownHouse, datafurniture } })
+    }, [projectDetails])
+
+    const handleViewDetail = (id) => {
+        navigate(`/projectDetails/${id}`)
+    }
+
+    console.log('[projectDetails]-HOME', projectDetails, state)
+
+    if (!!isLoading) return <CircularProgress />
+
+    if (!isLoading && (!projectDetails || projectDetails.length <= 0)) {
+        return (
+            <Box>
+                <Typography>
+                    {`Không có dữ liệu`}
+                </Typography>
+            </Box>
+        )
+    }
+
     return (
         <Box>
             <Header />
-            <Grow in>
-                <Box sx={{ mt: 3, minHeight: '100vh' }}>
-                    <Container>
-                        <Categories />
-                    </Container>
+            <Container maxWidth={'xl'}>
+                <Box sx={{ minHeight: '100vh', flexDirection: 'column' }}>
+                    <CardList
+                        title={'Thiết Kế Biệt Thự'}
+                        itemCount={4}
+                        data={state.dataVilla}
+                        subData={state.subDataVilla}
+                        onViewDetail={handleViewDetail}
+                    />
+                    <CardList
+                        title={'Thiết Kế Nhà Phố'}
+                        itemCount={4}
+                        data={state.dataTownHouse}
+                        subData={state.subDataTownHouse}
+                        onViewDetail={handleViewDetail}
+                    />
+                    <CardList
+                        title={'Thiết Kế Nội Thất'}
+                        itemCount={4}
+                        data={state.datafurniture}
+                        subData={state.subDatafurniture}
+                        onViewDetail={handleViewDetail}
+                    />
                 </Box>
-            </Grow>
-        </Box>
+            </Container>
+            <AppFooter />
+        </Box >
     );
 }
 

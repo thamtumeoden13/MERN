@@ -154,7 +154,7 @@ const EnhancedTableHead = (props) => {
                             onClick={createSortHandler(headCell.id)}
                         >
                             <Typography variant='span'
-                                sx={{ maxWidth: 180 }}
+                                sx={{ maxWidth: 240, minWidth: 120 }}
                             >
                                 {headCell.label}
                             </Typography>

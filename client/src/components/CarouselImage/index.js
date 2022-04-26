@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Carousel from "react-material-ui-carousel";
-import { Paper, Container, Typography, Grid, Box } from "@mui/material";
+import { Paper, Container, Typography, Grid, Box, Button } from "@mui/material";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-
+import HomeIcon from '@mui/icons-material/Home';
 import useStyle from './styles'
 
 const images = [
@@ -19,25 +19,50 @@ const CarouselImage = () => {
 
     return (
         <Carousel
+            NextIcon={<ArrowForwardIosIcon fontSize="large" />}
+            PrevIcon={<ArrowBackIosNewIcon fontSize="large" />}
             className={classes.carousel}
             animation="fade"
             navButtonsAlwaysVisible
             stopAutoPlayOnHover
             autoPlay={true}
-            NextIcon={<ArrowForwardIosIcon fontSize="large" />}
-            PrevIcon={<ArrowBackIosNewIcon fontSize="large" />}
+            fullHeightHover={false}     // We want the nav buttons wrapper to only be as big as the button element is
+            navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                style: {
+                    backgroundColor: 'transparent',
+                    borderRadius: 0
+                }
+            }}
+            indicatorIconButtonProps={{
+                style: {
+                    padding: '10px',
+                    color: 'gray'
+                }
+            }}
+            activeIndicatorIconButtonProps={{
+                style: {
+                    backgroundColor: 'orange'
+                }
+            }}
+            indicatorContainerProps={{
+                style: {
+                    marginTop: '-50px',
+                    textAlign: 'right',
+                    zIndex: 10,
+                    position: 'absolute'
+                }
+            }}
         >
-            {
-                images.map((item, i) => (
-                    <Box key={i} elevation={6} className={classes.carouselPaper}>
-                        <img
-                            src={item}
-                            alt=""
-                            className={classes.image}
-                        />
-                    </Box>
-                ))
-            }
+            {images.map((item, i) => (
+                <Box key={i} elevation={6} className={classes.carouselPaper}>
+                    <img
+                        src={item}
+                        alt=""
+                        className={classes.image}
+                    />
+                </Box>
+            ))}
+
         </Carousel>
     );
 }

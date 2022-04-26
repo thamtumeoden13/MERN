@@ -63,7 +63,7 @@ export const deleteProjectDetail = async (req, res) => {
     }
 }
 
-export const getProjectDetailByPortfolios = async (req, res) => {
+export const getProjectDetailsByPortfolioID = async (req, res) => {
     const { id } = req.params
     try {
         const projectDetailByPortfolio = await ProjectDetailModel.find({ portfolio: id })
@@ -75,13 +75,13 @@ export const getProjectDetailByPortfolios = async (req, res) => {
     }
 }
 
-export const getProjectDetailByProjects = async (req, res) => {
+export const getProjectDetailsByProjectID = async (req, res) => {
     const { id } = req.params
     try {
         const projectDetailByProject = await ProjectDetailModel.find({ project: id })
         console.log('projectDetailByProject', projectDetailByProject)
 
-        res.status(200).json({ data: projectDetail })
+        res.status(200).json({ data: projectDetailByProject })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }

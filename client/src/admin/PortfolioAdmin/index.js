@@ -45,8 +45,8 @@ const PortfolioAdmin = () => {
         setCurrentId(id)
     }
 
-    const handlePortfolioDetail = (id) => {
-        navigate(`/portfolios/${id}`)
+    const handleDetail = (id) => {
+        navigate(`/portfolios/portfolio/${id}`)
     }
 
     const handleRemove = (ids) => {
@@ -79,7 +79,7 @@ const PortfolioAdmin = () => {
                         <Grid item xs={12} sm={6} md={8} >
                             <PortfolioTableList
                                 data={portfolios}
-                                onViewDetail={handlePortfolioDetail}
+                                onViewDetail={handleDetail}
                                 onEdit={handleCurrentId}
                                 onRemove={handleRemove}
                             />

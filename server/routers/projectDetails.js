@@ -3,8 +3,8 @@ import express from 'express';
 import {
     getProjectDetail,
     getProjectDetails,
-    getProjectDetailByPortfolios,
-    getProjectDetailByProjects,
+    getProjectDetailsByPortfolioID,
+    getProjectDetailsByProjectID,
     createProjectDetail,
     updateProjectDetail,
     deleteProjectDetail,
@@ -16,8 +16,9 @@ const router = express.Router()
 
 router.get('/', getProjectDetails);
 router.get('/:id', getProjectDetail);
-router.get('/:id/portfolio', getProjectDetailByPortfolios);
-router.get('/:id/project', getProjectDetailByProjects);
+
+router.get('/portfolio/:id', getProjectDetailsByPortfolioID);
+router.get('/project/:id', getProjectDetailsByProjectID);
 
 router.post('/', auth, createProjectDetail);
 

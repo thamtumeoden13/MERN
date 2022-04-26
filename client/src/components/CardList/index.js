@@ -1,37 +1,61 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 import CardItem from './CardItem'
 
 import useStyles from './styles'
+import ListTitle from '../ListTitle';
 
-const CardList = ({ data, onClickItem }) => {
+const CardList = ({ title, data, subData, itemCount = 3, onViewDetail }) => {
 
-    console.log('CardList', data)
+    const [state, setState] = useState({ xs: 12, sm: 12, md: 6, lg: 4 })
+
+    useEffect(() => {
+        const baseSize = 12 / itemCount
+        const size = { xs: baseSize * 3, sm: baseSize * 3, md: baseSize * 1.5, lg: baseSize }
+
+        setState(size)
+    }, [itemCount])
 
     const handleClickItem = (item) => {
         console.log('handleClickItem', item)
-        if (onClickItem) {
-            onClickItem(item)
+        if (onViewDetail) {
+            onViewDetail(item._id)
         }
     }
 
     if (!data.length) return null
 
     return (
-        <Container>
+        <Box sx={{ mb: 2 }}>
+            {!!title &&
+                <Box sx={{ mb: 2 }}>
+                    <Typography
+                        variant="h5" component="div"
+                        sx={{ paddingY: 1, color: 'black', }}
+                    >
+                        {title}
+                    </Typography>
+                    <Divider light sx={{ width: 160, height: 1, backgroundColor: 'orange' }} />
+                </Box>
+            }
+            <ListTitle data={subData} />
             <Grid container spacing={2}>
                 {data.map((item, index) => {
                     return (
-                        <Grid item key={`item-${index}`} xs={12} sm={12} md={6} lg={4} >
+                        <Grid item key={`item-${index}`} xs={state.xs} sm={state.sm} md={state.md} lg={state.lg} >
                             <CardItem item={item} onClick={handleClickItem} />
                         </Grid>
                     )
                 })}
             </Grid>
-        </Container >
+        </Box>
     )
 }
 

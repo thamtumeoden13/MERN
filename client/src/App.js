@@ -81,16 +81,15 @@ const App = (props) => {
 					<div id="back-to-top-anchor" />
 					<Routes>
 						<Route path='/' exact element={<Home />} />
-						<Route path='/products' exact element={<Products />} />
+						{/* <Route path='/products' exact element={<Products />} /> */}
 						{/* <Route path='/products/search' exact element={<Home />} /> */}
-						<Route path='/products/:id' element={<ProductDetail />} />
-
-						<Route path='/albums' exact element={<Album />} />
+						{/* <Route path='/products/:id' element={<ProductDetail />} /> */}
+						{/* <Route path='/albums' exact element={<Album />} /> */}
 
 						<Route path='/portfolios' exact element={<Portfolio />} />
 						<Route path='/portfolios/:id' element={<Portfolio />} />
-						<Route path='/portfolios/:id/portfolio' element={<Portfolio />} />
-						<Route path='/portfolios/:id/project' element={<Portfolio />} />
+						<Route path='/portfolios/portfolio/:id2' element={<Portfolio />} />
+						<Route path='/portfolios/project/:id3' element={<Portfolio />} />
 
 						<Route path='/projects' exact element={<Project />} />
 						<Route path='/projects/:id' element={<ProjectDetail />} />
@@ -110,7 +109,7 @@ const App = (props) => {
 				</Container>
 
 				<ScrollTop {...props}>
-					<Fab color="secondary" size="small" aria-label="scroll back to top">
+					<Fab color='primary' size="small" aria-label="scroll back to top">
 						<KeyboardArrowUpIcon />
 					</Fab>
 				</ScrollTop>

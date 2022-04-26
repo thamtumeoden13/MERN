@@ -1,13 +1,16 @@
 import {
     START_LOADING_PROJECT_DETAIL, END_LOADING_PROJECT_DETAIL,
     FETCH_ALL_PROJECT_DETAIL, FETCH_PROJECT_DETAIL,
+    FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, FETCH_PROJECT_DETAIL_BY_PROJECT_ID,
     CREATE_PROJECT_DETAIL, UPDATE_PROJECT_DETAIL, DELETE_PROJECT_DETAIL
 } from '../constants/actionType';
 
 const initState = {
     isLoading: false,
     projectDetails: [],
-    project: null,
+    projectDetailsByPortfolioID: [],
+    projectDetailsByProjectID: [],
+    projectDetail: null,
     // currentPage: 0,
     // numberOfPages: 0
 }
@@ -35,6 +38,16 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 projectDetail: action.payload.data,
+            }
+        case FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID:
+            return {
+                ...state,
+                projectDetailsByPortfolioID: action.payload.data,
+            }
+        case FETCH_PROJECT_DETAIL_BY_PROJECT_ID:
+            return {
+                ...state,
+                projectDetailsByProjectID: action.payload.data,
             }
         case CREATE_PROJECT_DETAIL:
             console.log('[CREATE_PROJECT_DETAIL]', state.projectDetails, action.payload)
