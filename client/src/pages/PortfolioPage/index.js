@@ -21,7 +21,7 @@ const PortfolioPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { id, id2, id3 } = useParams()
+    const { id, projectID, projectDetailID } = useParams()
 
     const [search, setSearch] = useState('')
 
@@ -31,22 +31,22 @@ const PortfolioPage = () => {
             return
         }
 
-        if (id2) {
-            dispatch(getProjectDetailsByPortfolioID(id2))
+        if (projectID) {
+            dispatch(getProjectDetailsByPortfolioID(projectID))
             return
         }
 
-        if (id3) {
-            dispatch(getProjectDetailsByProjectID(id3))
+        if (projectDetailID) {
+            dispatch(getProjectDetailsByProjectID(projectDetailID))
             return
         }
 
         dispatch(getProjectDetails())
 
-    }, [dispatch, id, id2, id3])
+    }, [dispatch, id, projectID, projectDetailID])
 
     const handleViewDetail = (id) => {
-        navigate(`/projectDetails/${id}`)
+        navigate(`/chi-tiet-du-an/${id}`)
     }
 
     const handleChangeValue = (event) => {
@@ -60,7 +60,7 @@ const PortfolioPage = () => {
 
     return (
         <Box sx={{ mt: 15 }}>
-            <Container>
+            <Container maxWidth={'lg'}  sx={{ minHeight: '100vh' }}>
                 <Box>
                     <QuiltedImageList data={data} />
                 </Box>
@@ -104,7 +104,7 @@ const PortfolioPage = () => {
                     </Grid>
                 </Box>
             </Container>
-        </Box>
+        </Box >
     )
 }
 

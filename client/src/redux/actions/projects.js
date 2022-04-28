@@ -12,9 +12,10 @@ export const getProject = (id) => async (dispatch) => {
         const { data } = await api.fetchProject(id);
 
         dispatch({ type: FETCH_PROJECT, payload: data })
-        dispatch({ type: END_LOADING_PROJECT })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT })
     }
 }
 
@@ -25,9 +26,10 @@ export const getProjects = () => async (dispatch) => {
         const { data } = await api.fetchProjects();
 
         dispatch({ type: FETCH_ALL_PROJECT, payload: data })
-        dispatch({ type: END_LOADING_PROJECT })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT })
     }
 }
 

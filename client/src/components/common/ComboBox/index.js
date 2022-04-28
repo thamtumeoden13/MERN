@@ -12,6 +12,7 @@ const ComboBox = (props) => {
         options: [],
         disabled: false,
         readOnly: false,
+        required: false
     })
 
     useEffect(() => {
@@ -33,6 +34,10 @@ const ComboBox = (props) => {
     useEffect(() => {
         setState(prev => { return { ...prev, readOnly: props.readOnly || false } })
     }, [props.readOnly])
+
+    useEffect(() => {
+        setState(prev => { return { ...prev, required: props.required || false } })
+    }, [props.required])
 
     useEffect(() => {
         if (!!props.defaultValue && Object.keys(props.defaultValue).length > 0) {
@@ -75,7 +80,7 @@ const ComboBox = (props) => {
             options={state.options}
             value={value}
             onChange={(event, newValue) => handleChange(event, newValue)}
-            renderInput={(params) => <TextField {...params} label={state.label} />}
+            renderInput={(params) => <TextField {...params} label={state.label} required={state.required} />}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => handleInputChange(event, newInputValue)}
         />

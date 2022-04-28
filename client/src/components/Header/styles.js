@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles'
 export default makeStyles((theme) => ({
     container: {
         height: '100vh',
-        // backgroundColor: theme.palette.primary.main,
+        backgroundColor: "white",
         color: "white",
         fontWeight: 'lighter',
         padding: '5px 0',

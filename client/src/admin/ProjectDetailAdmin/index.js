@@ -47,7 +47,7 @@ const ProjectDetailAdmin = () => {
     }
 
     const handleDetail = (id) => {
-        navigate(`/projectDetails/${id}`)
+        navigate(`/chi-tiet-du-an/${id}`)
     }
 
     const handleRemove = (ids) => {

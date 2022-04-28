@@ -12,9 +12,10 @@ export const getPortfolio = (id) => async (dispatch) => {
         const { data } = await api.fetchPortfolio(id);
 
         dispatch({ type: FETCH_PORTFOLIO, payload: data })
-        dispatch({ type: END_LOADING_PORTFOLIO })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PORTFOLIO })
     }
 }
 
@@ -25,9 +26,10 @@ export const getPortfolios = () => async (dispatch) => {
         const { data } = await api.fetchPortfolios();
 
         dispatch({ type: FETCH_ALL_PORTFOLIO, payload: data })
-        dispatch({ type: END_LOADING_PORTFOLIO })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PORTFOLIO })
     }
 }
 

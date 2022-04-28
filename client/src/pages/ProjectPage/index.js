@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
@@ -7,11 +9,24 @@ import Grow from '@mui/material/Grow'
 import ProjectComponent from '../../components/Projects'
 import BreadcrumbComponent from '../../components/Breadcrumbs'
 
-const Project = () => {
+import { getProjects } from '../../redux/actions/projects'
+
+const ProjectPage = () => {
+
+    const dispatch = useDispatch()
+
+    const { projects, isLoading } = useSelector((state) => state.projects)
+
+    useEffect(() => {
+        dispatch(getProjects())
+    }, [dispatch])
+
+    console.log('[ProjectPage]', projects)
+
     return (
         <Box sx={{ mt: 15 }}>
             <Grow in>
-                <Container sx={{ marginY: 5 }}>
+                <Container sx={{ marginY: 5, }}>
                     <Box sx={{ mb: 2 }}>
                         <BreadcrumbComponent />
                     </Box>
@@ -22,7 +37,7 @@ const Project = () => {
                         color="text.primary"
                         gutterBottom
                     >
-                        {`Project List`}
+                        {`Danh Sách Dự Án`}
                     </Typography>
                     <ProjectComponent />
                 </Container>
@@ -31,4 +46,4 @@ const Project = () => {
     )
 }
 
-export default Project
+export default ProjectPage

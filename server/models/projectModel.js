@@ -40,6 +40,14 @@ const projectSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    portfolioID: {
+        type: String,
+        default: ''
+    },
+    portfolioName: {
+        type: String,
+        default: ''
+    },
 })
 
 const projectModel = mongoose.model('Project', projectSchema)

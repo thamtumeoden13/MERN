@@ -23,7 +23,11 @@ const initProjectDetailData = {
     imageUrl: '',
     tags: [],
     project: '',
+    projectID: '',
+    projectName: '',
     portfolio: '',
+    portfolioID: '',
+    portfolioName: '',
     investor: 'Chú xuân',
     address: 'Làng nhà mẫu khu đô thị Mỹ Gia, đường Phong châu, thôn Vĩnh Xuân, xã Vĩnh Thái, Tp. Nha Trang',
     scale: '5 Tầng',
@@ -33,6 +37,57 @@ const initProjectDetailData = {
     designYear: '2022',
     estimatedTime: '6 Tháng',
 }
+
+const dataTexfield = [
+    {
+        name: 'investor',
+        label: 'Chủ đầu tư',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+    {
+        name: 'address',
+        label: 'Địa chỉ',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+    {
+        name: 'scale',
+        label: 'Diện Tích',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+    {
+        name: 'function',
+        label: 'Quy Mô Dự Án',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+    {
+        name: 'expense',
+        label: 'Chủ đầu tư',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+    {
+        name: 'designTeam',
+        label: 'Nhóm thiết kế',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+    {
+        name: 'designYear',
+        label: 'Năm thiết kế',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+    {
+        name: 'estimatedTime',
+        label: 'Thời Gian Hoàn Thiện',
+        variant: 'outlined',
+        fullWidth: true,
+    },
+]
 
 const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     const classes = useStyles()
@@ -70,13 +125,13 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     useEffect(() => {
         if (projectDetailsSelected) {
             console.log('[projects]')
-            const find = projects.find(e => { return e._id == projectDetailsSelected.project })
+            const find = projects.find(e => { return e._id === projectDetailsSelected.project })
             if (!!find && Object.keys(find).length > 0) {
                 setDefaultValue({ label: find.name, value: find._id })
                 setFormData(projectDetailsSelected)
             }
         }
-    }, [projectDetailsSelected])
+    }, [projectDetailsSelected, projects])
 
     const handleChangeValue = useCallback((name, value) => {
         setFormData({ ...formData, [name]: value })
@@ -85,9 +140,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     }, [formData, state])
 
     const handleChangeComboBox = useCallback((name, comboBoxProject) => {
-        const find = projects.find(project => project._id == comboBoxProject.value)
-        const portfolioId = find.portfolio
-        setFormData({ ...formData, project: comboBoxProject.value || '', portfolio: portfolioId })
+        setFormData({ ...formData, [name]: comboBoxProject.value || '' })
         setState({ ...state, isValidate: false })
     }, [formData, state])
 
@@ -104,7 +157,17 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         if (!valiDateFormInput()) return
 
         if (onSubmit) {
-            const data = { ...formData, tags: tags }
+            const findproject = projects.find(project => project._id === formData.project)
+            console.log('[handleSubmit-findproject]', findproject)
+            const data = {
+                ...formData,
+                tags: tags,
+                projectID: formData.project,
+                projectName: findproject.name,
+                portfolio: findproject.portfolio,
+                portfolioID: findproject.portfolioID,
+                portfolioName: findproject.portfolioName,
+            }
             onSubmit(data)
         }
 
@@ -169,222 +232,163 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     console.log('[formData]', formData)
 
     return (
-        <Paper className={classes.paper} elevation={6} sx={{ maxHeight: '60vh', overflow: 'auto' }}>
-            <form
-                autoComplete='off'
-                noValidate
-                className={`${classes.root} ${classes.form}`}
-            >
-                <Typography variant='h6'>
-                    {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Bài Viết`}
-                </Typography>
-                <TextField
-                    name='name'
-                    variant='outlined'
-                    label="Name"
-                    fullWidth
-                    required
-                    error={(!!state.isValidate && !!errors.name)}
-                    helperText={errors.name || ''}
-                    value={formData.name}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='title'
-                    variant='outlined'
-                    label="Title"
-                    fullWidth
-                    required
-                    error={(!!state.isValidate && !!errors.title)}
-                    helperText={errors.title || ''}
-                    value={formData.title}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <>
-                    <ComboBox
-                        name='project'
-                        label='Project'
-                        placeholder='input project'
-                        options={options}
-                        defaultValue={defaultValue}
-                        onChange={handleChangeComboBox}
-                    />
-                    {!!errors.project &&
-                        <div className={classes.errorFileInput}>
-                            {errors.project}
-                        </div>
-                    }
-                </>
-                <>
-                    <ChipInput
-                        label={'Search Tags'}
-                        placeholder={'tags...'}
-                        defaultValue={formData.tags}
-                        onChangeValue={handleChangeTag}
-                    />
-                    {!!errors.tags &&
-                        <div className={classes.errorFileInput}>
-                            {errors.tags}
-                        </div>
-                    }
-                </>
-                <Box sx={{ width: '100%' }}>
-                    <Box sx={{
-                        display: 'flex', alignItems: 'center',
-                        flex: 1,
-                    }}>
-                        <Avatar
-                            sx={{ mx: 1 }}
-                            alt={'thumbnail'}
-                            src={formData.thumbnail}
-                        />
-                        <ComboBox
-                            name='thumbnail'
-                            label='Thumbnail'
-                            placeholder='input thumbnail'
-                            options={[]} //top100Films
-                            defaultValue={formData.thumbnail}
-                            defaultInputValue={formData.thumbnail}
-                            // onChange={handleChangeComboBox}
-                            onInputChange={handleChangeValue}
-                        />
-                    </Box>
-                    {!!errors.thumbnail &&
-                        <div className={classes.errorFileInput}>
-                            {errors.thumbnail}
-                        </div>
-                    }
-                </Box>
-                <Box sx={{ width: '100%', }}>
-                    <Box sx={{
-                        display: 'flex', alignItems: 'center',
-                        flex: 1,
-                    }}>
-                        <Avatar
-                            sx={{ mx: 1 }}
-                            alt={'imageUrl'}
-                            src={formData.imageUrl}
-                        />
-                        <ComboBox
-                            name='imageUrl'
-                            label='ImageUrl'
-                            placeholder='input imageUrl'
-                            options={[]} //top100Films
-                            defaultValue={formData.imageUrl}
-                            defaultInputValue={formData.imageUrl}
-                            // onChange={handleChangeComboBox}
-                            onInputChange={handleChangeValue}
-                        />
-                    </Box>
-                    {!!errors.imageUrl &&
-                        <div className={classes.errorFileInput}>
-                            {errors.imageUrl}
-                        </div>
-                    }
-                </Box>
-                <TextField
-                    name='investor'
-                    variant='outlined'
-                    label="Investor"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.investor)}
-                    helperText={errors.investor || ''}
-                    value={formData.investor}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='address'
-                    variant='outlined'
-                    label="Address"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.address)}
-                    helperText={errors.address || ''}
-                    value={formData.address}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='scale'
-                    variant='outlined'
-                    label="Scale"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.scale)}
-                    helperText={errors.scale || ''}
-                    value={formData.scale}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='function'
-                    variant='outlined'
-                    label="Function"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.function)}
-                    helperText={errors.function || ''}
-                    value={formData.function}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='expense'
-                    variant='outlined'
-                    label="Expense"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.expense)}
-                    helperText={errors.expense || ''}
-                    value={formData.expense}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='designYear'
-                    variant='outlined'
-                    label="DesignYear"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.designYear)}
-                    helperText={errors.designYear || ''}
-                    value={formData.designYear}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='designTeam'
-                    variant='outlined'
-                    label="DesignTeam"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.designTeam)}
-                    helperText={errors.designTeam || ''}
-                    value={formData.designTeam}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='estimatedTime'
-                    variant='outlined'
-                    label="EstimatedTime"
-                    fullWidth
-                    error={(!!state.isValidate && !!errors.estimatedTime)}
-                    helperText={errors.estimatedTime || ''}
-                    value={formData.estimatedTime}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <Button
-                    className={classes.buttonSubmit}
-                    variant='contained'
-                    color='primary'
-                    size='large'
-                    type='button'
-                    fullWidth
-                    onClick={handleSubmit}
-                // disabled={!formData.name && !formData.title && !formData.description && !formData.tags.length}
+        <Box>
+            <Paper className={classes.paper} elevation={6} sx={{ maxHeight: '60vh', overflow: 'auto' }}>
+                <form
+                    autoComplete='off'
+                    noValidate
+                    className={`${classes.root} ${classes.form}`}
                 >
-                    {`Submit`}
-                </Button>
-                <Button
-                    variant='contained'
-                    color='error'
-                    size='small'
-                    fullWidth
-                    onClick={clear}
-                >
-                    {`Clear`}
-                </Button>
-            </form>
-        </Paper>
+                    <Typography variant='h6'>
+                        {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Bài Viết`}
+                    </Typography>
+                    <TextField
+                        name='name'
+                        variant='outlined'
+                        label="Ten-goi-nho"
+                        fullWidth
+                        required
+                        error={(!!state.isValidate && !!errors.name)}
+                        helperText={errors.name || ''}
+                        value={formData.name}
+                        onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                    />
+                    <TextField
+                        name='title'
+                        variant='outlined'
+                        label="Tên gợi nhớ"
+                        fullWidth
+                        required
+                        error={(!!state.isValidate && !!errors.title)}
+                        helperText={errors.title || ''}
+                        value={formData.title}
+                        onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                    />
+                    <>
+                        <ComboBox
+                            name='project'
+                            label='Dự án'
+                            placeholder='Nhập dự án'
+                            required={true}
+                            options={options}
+                            defaultValue={defaultValue}
+                            onChange={handleChangeComboBox}
+                        />
+                        {!!errors.project &&
+                            <div className={classes.errorFileInput}>
+                                {errors.project}
+                            </div>
+                        }
+                    </>
+                    <>
+                        <ChipInput
+                            label={'Nhãn'}
+                            placeholder={'nhập dán nhãn...'}
+                            defaultValue={formData.tags}
+                            onChangeValue={handleChangeTag}
+                        />
+                        {!!errors.tags &&
+                            <div className={classes.errorFileInput}>
+                                {errors.tags}
+                            </div>
+                        }
+                    </>
+                    <Box sx={{ width: '100%' }}>
+                        <Box sx={{
+                            display: 'flex', alignItems: 'center',
+                            flex: 1,
+                        }}>
+                            <Avatar
+                                sx={{ mx: 1 }}
+                                alt={'anh-thu-nho'}
+                                src={formData.thumbnail}
+                            />
+                            <ComboBox
+                                name='thumbnail'
+                                label='Ảnh thu nhỏ'
+                                placeholder='nhập ảnh thu nhỏ...'
+                                required={true}
+                                options={[]} //top100Films
+                                defaultValue={formData.thumbnail}
+                                defaultInputValue={formData.thumbnail}
+                                // onChange={handleChangeComboBox}
+                                onInputChange={handleChangeValue}
+                            />
+                        </Box>
+                        {!!errors.thumbnail &&
+                            <div className={classes.errorFileInput}>
+                                {errors.thumbnail}
+                            </div>
+                        }
+                    </Box>
+                    <Box sx={{ width: '100%', }}>
+                        <Box sx={{
+                            display: 'flex', alignItems: 'center',
+                            flex: 1,
+                        }}>
+                            <Avatar
+                                sx={{ mx: 1 }}
+                                alt={'duong-dan-anh'}
+                                src={formData.imageUrl}
+                            />
+                            <ComboBox
+                                name='imageUrl'
+                                label='Đường dẫn ảnh'
+                                placeholder='Nhập đường dẫn ảnh'
+                                required={true}
+                                options={[]} //top100Films
+                                defaultValue={formData.imageUrl}
+                                defaultInputValue={formData.imageUrl}
+                                // onChange={handleChangeComboBox}
+                                onInputChange={handleChangeValue}
+                            />
+                        </Box>
+                        {!!errors.imageUrl &&
+                            <div className={classes.errorFileInput}>
+                                {errors.imageUrl}
+                            </div>
+                        }
+                    </Box>
+                    {dataTexfield.map(textfield => (
+                        <TextField
+                            name={textfield.name}
+                            variant={textfield.variant}
+                            label={textfield.label}
+                            fullWidth={textfield.fullWidth}
+                            error={(!!state.isValidate && !!errors[textfield.name])}
+                            helperText={errors[textfield.name] || ''}
+                            value={formData[textfield.name]}
+                            onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                        />
+                    ))}
+                </form>
+            </Paper>
+            <Paper className={classes.paperAction} elevation={0} sx={{ mt: 2, }} >
+                <Box sx={{ display: 'flex', }}>
+                    <Button
+                        className={classes.buttonSubmit}
+                        variant='contained'
+                        color='primary'
+                        size='lagre'
+                        type='button'
+                        fullWidth
+                        onClick={handleSubmit}
+                    >
+                        {`Xác Nhận`}
+                    </Button>
+                    <Button
+                        className={classes.buttonClear}
+                        variant='contained'
+                        color='error'
+                        size='lagre'
+                        fullWidth
+                        onClick={clear}
+                    >
+                        {`Làm Mới`}
+                    </Button>
+                </Box>
+            </Paper>
+        </Box>
     )
 }
 

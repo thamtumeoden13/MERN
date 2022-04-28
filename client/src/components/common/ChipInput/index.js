@@ -10,6 +10,7 @@ const ChipInput = (props) => {
 	const [state, setState] = useState({
 		label: '',
 		placeholder: '',
+        required: false
 	})
 
 	useEffect(() => {
@@ -23,6 +24,10 @@ const ChipInput = (props) => {
 	useEffect(() => {
 		setState(prev => { return { ...prev, label: props.label || '' } })
 	}, [props.label])
+
+    useEffect(() => {
+        setState(prev => { return { ...prev, required: props.required || false } })
+    }, [props.required])
 
 	useEffect(() => {
 		if (timeoutChange.current) {
@@ -66,6 +71,7 @@ const ChipInput = (props) => {
 					// variant="filled"
 					label={state.label}
 					placeholder={state.placeholder}
+					required={state.required}
 				/>
 			)}
 		/>

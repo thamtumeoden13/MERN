@@ -62,7 +62,6 @@ const CarouselImage = () => {
                     />
                 </Box>
             ))}
-
         </Carousel>
     );
 }

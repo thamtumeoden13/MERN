@@ -10,7 +10,6 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Header from '../../components/Header';
 import Categories from '../../components/Categories';
 import CardList from '../../components/CardList';
-import AppFooter from '../../components/AppFooter';
 
 import { getProjectDetails } from '../../redux/actions/projectDetails'
 
@@ -82,60 +81,63 @@ const HomePage = () => {
         let dataTownHouse = []
         let datafurniture = []
         if (!!projectDetails && projectDetails.length > 0) {
-            dataVilla = projectDetails.filter(e => { return e.portfolio == "62643d9ff47761c9f6bfec3b" })
-            dataTownHouse = projectDetails.filter(e => { return e.portfolio == "62643dc6f47761c9f6bfec3d" })
-            datafurniture = projectDetails.filter(e => { return e.portfolio == "62643dfbf47761c9f6bfec3f" })
+            dataVilla = projectDetails.filter(e => { return e.portfolio === "62643d9ff47761c9f6bfec3b" })
+            dataTownHouse = projectDetails.filter(e => { return e.portfolio === "62643dc6f47761c9f6bfec3d" })
+            datafurniture = projectDetails.filter(e => { return e.portfolio === "62643dfbf47761c9f6bfec3f" })
         }
         setState(prev => { return { ...prev, dataVilla, dataTownHouse, datafurniture } })
     }, [projectDetails])
 
     const handleViewDetail = (id) => {
-        navigate(`/projectDetails/${id}`)
+        navigate(`/chi-tiet-du-an/${id}`)
     }
 
-    console.log('[projectDetails]-HOME', projectDetails, state)
-
-    if (!!isLoading) return <CircularProgress />
-
-    if (!isLoading && (!projectDetails || projectDetails.length <= 0)) {
-        return (
-            <Box>
-                <Typography>
-                    {`Không có dữ liệu`}
-                </Typography>
-            </Box>
-        )
-    }
+    console.log('[projectDetails]-HOME', projectDetails, isLoading)
 
     return (
-        <Box>
+        <Box sx={{ backgroundColor: 'transparent' }}>
             <Header />
-            <Container maxWidth={'xl'}>
-                <Box sx={{ minHeight: '100vh', flexDirection: 'column' }}>
-                    <CardList
-                        title={'Thiết Kế Biệt Thự'}
-                        itemCount={4}
-                        data={state.dataVilla}
-                        subData={state.subDataVilla}
-                        onViewDetail={handleViewDetail}
-                    />
-                    <CardList
-                        title={'Thiết Kế Nhà Phố'}
-                        itemCount={4}
-                        data={state.dataTownHouse}
-                        subData={state.subDataTownHouse}
-                        onViewDetail={handleViewDetail}
-                    />
-                    <CardList
-                        title={'Thiết Kế Nội Thất'}
-                        itemCount={4}
-                        data={state.datafurniture}
-                        subData={state.subDatafurniture}
-                        onViewDetail={handleViewDetail}
-                    />
+            <Container sx={{ paddingY: 0, minHeight: '100vh' }}>
+                <Box sx={{
+                    minHeight: '100vh',
+                    flexDirection: 'column',
+                    justifyContent: { sx: 'center' }
+                }}>
+                    {(!projectDetails || projectDetails.length <= 0) ?
+                        <>
+                            {!!isLoading ?
+                                <CircularProgress />
+                                : <Typography variant='h3' component={'h2'}>
+                                    {`Không có dữ liệu`}
+                                </Typography>}
+                        </>
+                        :
+                        <>
+                            <CardList
+                                title={'Thiết Kế Biệt Thự'}
+                                itemCount={4}
+                                data={state.dataVilla}
+                                subData={state.subDataVilla}
+                                onViewDetail={handleViewDetail}
+                            />
+                            <CardList
+                                title={'Thiết Kế Nhà Phố'}
+                                itemCount={4}
+                                data={state.dataTownHouse}
+                                subData={state.subDataTownHouse}
+                                onViewDetail={handleViewDetail}
+                            />
+                            <CardList
+                                title={'Thiết Kế Nội Thất'}
+                                itemCount={4}
+                                data={state.datafurniture}
+                                subData={state.subDatafurniture}
+                                onViewDetail={handleViewDetail}
+                            />
+                        </>
+                    }
                 </Box>
             </Container>
-            <AppFooter />
         </Box >
     );
 }

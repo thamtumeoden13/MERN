@@ -7,12 +7,16 @@ export default makeStyles((theme) => ({
         }
     },
     paper: {
-        padding: theme.spacing(2)
+        padding: theme.spacing(2),
+    },
+    paperAction: {
+        display: 'flex',
+        flexDirection: 'column',
     },
     form: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     fileInput: {
         width: '97%',
@@ -24,6 +28,9 @@ export default makeStyles((theme) => ({
         color: '#dc5a5b', fontSize: '0.7em', marginBottom: '10px',
     },
     buttonSubmit: {
-        marginBottom: 10
+        marginRight: 8,
+    },
+    buttonClear: {
+        marginLeft: 8,
     }
 }))

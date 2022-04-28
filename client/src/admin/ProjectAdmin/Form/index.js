@@ -23,6 +23,8 @@ const initProjectData = {
     imageUrl: '',
     tags: [],
     portfolio: '',
+    portfolioID: '',
+    portfolioName: '',
 }
 
 const Form = ({ currentId, handleCurrentId, onSubmit }) => {
@@ -60,7 +62,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 
     useEffect(() => {
         if (projectsSelected) {
-            const find = portfolios.find(e => { return e._id == projectsSelected.portfolio })
+            const find = portfolios.find(e => { return e._id === projectsSelected.portfolio })
             if (!!find && Object.keys(find).length > 0) {
                 setDefaultValue({ label: find.name, value: find._id })
                 setFormData(projectsSelected)
@@ -92,7 +94,14 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         if (!valiDateFormInput()) return
 
         if (onSubmit) {
-            const data = { ...formData, tags: tags }
+            const findPortfolio = portfolios.find(e => e._id === formData.portfolio)
+            const data = {
+                ...formData,
+                tags: tags,
+                portfolioID: formData.portfolio,
+                portfolioName: findPortfolio.name,
+            }
+            console.log('[handleSubmit-data]', data)
             onSubmit(data)
         }
 
@@ -155,142 +164,151 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     }
 
     return (
-        <Paper className={classes.paper} elevation={6}>
-            <form
-                autoComplete='off'
-                noValidate
-                className={`${classes.root} ${classes.form}`}
-            >
-                <Typography variant='h6'>
-                    {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Dự Án`}
-                </Typography>
-                <TextField
-                    name='name'
-                    variant='outlined'
-                    label="Name"
-                    fullWidth
-                    required
-                    error={(!!state.isValidate && !!errors.name)}
-                    helperText={errors.name || ''}
-                    value={formData.name}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <TextField
-                    name='title'
-                    variant='outlined'
-                    label="Title"
-                    fullWidth
-                    required
-                    error={(!!state.isValidate && !!errors.title)}
-                    helperText={errors.title || ''}
-                    value={formData.title}
-                    onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
-                />
-                <>
-                    <ComboBox
-                        name='portfolio'
-                        label='Portfolio'
-                        placeholder='input portfolio'
-                        options={options}
-                        defaultValue={defaultValue}
-                        onChange={handleChangeComboBox}
-                    />
-                    {!!errors.portfolio &&
-                        <div className={classes.errorFileInput}>
-                            {errors.portfolio}
-                        </div>
-                    }
-                </>
-                <>
-                    <ChipInput
-                        label={'Search Tags'}
-                        placeholder={'tags...'}
-                        defaultValue={formData.tags}
-                        onChangeValue={handleChangeTag}
-                    />
-                    {!!errors.tags &&
-                        <div className={classes.errorFileInput}>
-                            {errors.tags}
-                        </div>
-                    }
-                </>
-                <Box sx={{ width: '100%' }}>
-                    <Box sx={{
-                        display: 'flex', alignItems: 'center',
-                        flex: 1,
-                    }}>
-                        <Avatar
-                            sx={{ mx: 1 }}
-                            alt={'thumbnail'}
-                            src={formData.thumbnail}
-                        />
-                        <ComboBox
-                            name='thumbnail'
-                            label='Thumbnail'
-                            placeholder='input thumbnail'
-                            options={[]} //top100Films
-                            defaultValue={formData.thumbnail}
-                            defaultInputValue={formData.thumbnail}
-                            // onChange={handleChangeComboBox}
-                            onInputChange={handleChangeValue}
-                        />
-                    </Box>
-                    {!!errors.thumbnail &&
-                        <div className={classes.errorFileInput}>
-                            {errors.thumbnail}
-                        </div>
-                    }
-                </Box>
-                <Box sx={{ width: '100%', }}>
-                    <Box sx={{
-                        display: 'flex', alignItems: 'center',
-                        flex: 1,
-                    }}>
-                        <Avatar
-                            sx={{ mx: 1 }}
-                            alt={'imageUrl'}
-                            src={formData.imageUrl}
-                        />
-                        <ComboBox
-                            name='imageUrl'
-                            label='ImageUrl'
-                            placeholder='input imageUrl'
-                            options={[]} //top100Films
-                            defaultValue={formData.imageUrl}
-                            defaultInputValue={formData.imageUrl}
-                            // onChange={handleChangeComboBox}
-                            onInputChange={handleChangeValue}
-                        />
-                    </Box>
-                    {!!errors.imageUrl &&
-                        <div className={classes.errorFileInput}>
-                            {errors.imageUrl}
-                        </div>
-                    }
-                </Box>
-                <Button
-                    className={classes.buttonSubmit}
-                    variant='contained'
-                    color='primary'
-                    size='large'
-                    type='button'
-                    fullWidth
-                    onClick={handleSubmit}
-                // disabled={!formData.name && !formData.title && !formData.description && !formData.tags.length}
+        <Box>
+            <Paper className={classes.paper} elevation={6}>
+                <form
+                    autoComplete='off'
+                    noValidate
+                    className={`${classes.root} ${classes.form}`}
                 >
-                    {`Submit`}
-                </Button>
-                <Button
-                    variant='contained'
-                    color='error'
-                    size='small'
-                    fullWidth
-                    onClick={clear}
-                >
-                    {`Clear`}
-                </Button>
-            </form>
-        </Paper>
+                    <Typography variant='h6'>
+                        {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Dự Án`}
+                    </Typography>
+                    <TextField
+                        name='name'
+                        variant='outlined'
+                        label="Ten-goi-nho"
+                        fullWidth
+                        required
+                        error={(!!state.isValidate && !!errors.name)}
+                        helperText={errors.name || ''}
+                        value={formData.name}
+                        onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                    />
+                    <TextField
+                        name='title'
+                        variant='outlined'
+                        label="Tên gợi nhớ"
+                        fullWidth
+                        required
+                        error={(!!state.isValidate && !!errors.title)}
+                        helperText={errors.title || ''}
+                        value={formData.title}
+                        onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                    />
+                    <>
+                        <ComboBox
+                            name='portfolio'
+                            label='Hạn mục dự án'
+                            placeholder='Nhập hạn mục dự án'
+                            required={true}
+                            options={options}
+                            defaultValue={defaultValue}
+                            onChange={handleChangeComboBox}
+                        />
+                        {!!errors.portfolio &&
+                            <div className={classes.errorFileInput}>
+                                {errors.portfolio}
+                            </div>
+                        }
+                    </>
+                    <>
+                        <ChipInput
+                            label={'Nhãn'}
+                            placeholder={'nhập dán nhãn...'}
+                            defaultValue={formData.tags}
+                            onChangeValue={handleChangeTag}
+                        />
+                        {!!errors.tags &&
+                            <div className={classes.errorFileInput}>
+                                {errors.tags}
+                            </div>
+                        }
+                    </>
+                    <Box sx={{ width: '100%' }}>
+                        <Box sx={{
+                            display: 'flex', alignItems: 'center',
+                            flex: 1,
+                        }}>
+                            <Avatar
+                                sx={{ mx: 1 }}
+                                alt={'anh-thu-nho'}
+                                src={formData.thumbnail}
+                            />
+                            <ComboBox
+                                name='thumbnail'
+                                label='Ảnh thu nhỏ'
+                                placeholder='nhập ảnh thu nhỏ...'
+                                required={true}
+                                options={[]} //top100Films
+                                defaultValue={formData.thumbnail}
+                                defaultInputValue={formData.thumbnail}
+                                // onChange={handleChangeComboBox}
+                                onInputChange={handleChangeValue}
+                            />
+                        </Box>
+                        {!!errors.thumbnail &&
+                            <div className={classes.errorFileInput}>
+                                {errors.thumbnail}
+                            </div>
+                        }
+                    </Box>
+                    <Box sx={{ width: '100%', }}>
+                        <Box sx={{
+                            display: 'flex', alignItems: 'center',
+                            flex: 1,
+                        }}>
+                            <Avatar
+                                sx={{ mx: 1 }}
+                                alt={'duong-dan-anh'}
+                                src={formData.imageUrl}
+                            />
+                            <ComboBox
+                                name='imageUrl'
+                                label='Đường dẫn ảnh'
+                                placeholder='Nhập đường dẫn ảnh'
+                                required={true}
+                                options={[]} //top100Films
+                                defaultValue={formData.imageUrl}
+                                defaultInputValue={formData.imageUrl}
+                                // onChange={handleChangeComboBox}
+                                onInputChange={handleChangeValue}
+                            />
+                        </Box>
+                        {!!errors.imageUrl &&
+                            <div className={classes.errorFileInput}>
+                                {errors.imageUrl}
+                            </div>
+                        }
+                    </Box>
+                </form>
+            </Paper>
+            <Paper className={classes.paperAction} elevation={0} sx={{ mt: 2 }}>
+                <Box sx={{ display: 'flex', }}>
+                    <Button
+                        className={classes.buttonSubmit}
+                        variant='contained'
+                        color='primary'
+                        size='lagre'
+                        type='button'
+                        fullWidth
+                        onClick={handleSubmit}
+                    >
+                        {`Xác Nhận`}
+                    </Button>
+                    <Button
+                        className={classes.buttonClear}
+                        variant='contained'
+                        color='error'
+                        size='lagre'
+                        fullWidth
+                        onClick={clear}
+                    >
+                        {`Làm Mới`}
+                    </Button>
+                </Box>
+            </Paper>
+        </Box>
     )
 }
 

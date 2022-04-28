@@ -21,7 +21,7 @@ const projectSchema = mongoose.Schema({
         type: String,
         require: true,
     },
-    investor:{
+    investor: {
         type: String,
         default: ''
     },
@@ -50,10 +50,6 @@ const projectSchema = mongoose.Schema({
         default: ''
     },
     estimatedTime: {
-        type: String,
-        default: ''
-    },
-    projectID: {
         type: String,
         default: ''
     },
@@ -89,9 +85,25 @@ const projectSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    projectID: {
+        type: String,
+        default: ''
+    },
+    projectName: {
+        type: String,
+        default: ''
+    },
     portfolio: {
         type: String,
         require: true
+    },
+    portfolioID: {
+        type: String,
+        default: ''
+    },
+    portfolioName: {
+        type: String,
+        default: ''
     },
 })
 

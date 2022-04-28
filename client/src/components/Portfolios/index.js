@@ -12,7 +12,7 @@ import useStyles from './styles'
 
 const Portfolios = ({ onViewDetail }) => {
 
-    const { id, id2, id3 } = useParams()
+    const { id, projectID, projectDetailID } = useParams()
     const { projectDetails, projectDetailsByPortfolioID, projectDetailsByProjectID, isLoading } = useSelector((state) => state.projectDetails)
 
     const [data, setData] = useState([])
@@ -20,17 +20,17 @@ const Portfolios = ({ onViewDetail }) => {
     console.log('PortfolioPage', projectDetails, projectDetailsByPortfolioID, projectDetailsByProjectID)
 
     useEffect(() => {
-        if (!!id || !!id2 || !!id3) {
+        if (!!id || !!projectID || !!projectDetailID) {
             switch (true) {
                 case !!id:
                     setData([])
                     break;
 
-                case !!id2:
+                case !!projectID:
                     setData(projectDetailsByPortfolioID || [])
                     break;
 
-                case !!id3:
+                case !!projectDetailID:
                     setData(projectDetailsByProjectID || [])
                     break;
 
@@ -38,7 +38,7 @@ const Portfolios = ({ onViewDetail }) => {
         } else {
             setData(projectDetails || [])
         }
-    }, [id, id2, id3, projectDetails, projectDetailsByPortfolioID, projectDetailsByProjectID,])
+    }, [id, projectID, projectDetailID, projectDetails, projectDetailsByPortfolioID, projectDetailsByProjectID,])
 
     const handleViewDetail = (id) => {
         if (onViewDetail) {

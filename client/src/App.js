@@ -10,10 +10,14 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import NavBar from './components/NavBar';
+import AppFooter from './components/AppFooter';
+import ScrollToTop from './components/common/ScrollToTop';
+import Router from './routes';
 
 import Auth from './pages/AuthPage';
 
 import Home from './pages/HomePage'
+import NotFound from './pages/404Page'
 
 import Products from './pages/ProductPage';
 import ProductDetail from './components/ProductDetail'
@@ -26,6 +30,7 @@ import ProjectDetail from './pages/ProjectPage/ProjectDetailPage';
 import Portfolio from './pages/PortfolioPage'
 // import PortfolioDetail from './pages/PortfolioPage/PortfolioDetailPage'
 
+import Admin from './admin'
 import PortfolioAdmin from './admin/PortfolioAdmin'
 import ProjectAdmin from './admin/ProjectAdmin'
 import ProjectDetailAdmin from './admin/ProjectDetailAdmin'
@@ -70,51 +75,52 @@ function ScrollTop(props) {
 }
 
 const App = (props) => {
-
 	const authData = useSelector((state) => state.authData)
-
+	console.log('[authData]', authData)
 	return (
-		<BrowserRouter>
-			<ThemeProvider theme={theme}>
-				<Container maxWidth='xl' style={{ padding: 0 }}>
-					<NavBar />
-					<div id="back-to-top-anchor" />
-					<Routes>
-						<Route path='/' exact element={<Home />} />
-						{/* <Route path='/products' exact element={<Products />} /> */}
-						{/* <Route path='/products/search' exact element={<Home />} /> */}
-						{/* <Route path='/products/:id' element={<ProductDetail />} /> */}
-						{/* <Route path='/albums' exact element={<Album />} /> */}
+		<ThemeProvider theme={theme}>
+			<div id="back-to-top-anchor" />
+			<ScrollToTop />
+			<ScrollTop {...props}>
+				<Fab color='primary' size="small" aria-label="scroll back to top">
+					<KeyboardArrowUpIcon />
+				</Fab>
+			</ScrollTop>
+			<div id="back-to-top-anchor" />
+			<Router />
+			<Container maxWidth='xl' style={{ padding: 0 }}>
+				<NavBar />
+				{/* <div id="back-to-top-anchor" /> */}
+				{/* <Routes>
+					<Route path='/' exact element={<Home />} />
+					<Route path='/han-muc-du-an' exact element={<Portfolio />} />
+					<Route path='/han-muc-du-an/:id' element={<Portfolio />} />
+					<Route path='/han-muc-du-an/du-an' exact element={<Navigate to={'/han-muc-du-an'} replace />} />
+					<Route path='/han-muc-du-an/du-an/:projectID' element={<Portfolio />} />
+					<Route path='/han-muc-du-an/chi-tiet-du-an' exact element={<Navigate to={'/han-muc-du-an'} replace />} />
+					<Route path='/han-muc-du-an/chi-tiet-du-an/:projectDetailID' element={<Portfolio />} />
 
-						<Route path='/portfolios' exact element={<Portfolio />} />
-						<Route path='/portfolios/:id' element={<Portfolio />} />
-						<Route path='/portfolios/portfolio/:id2' element={<Portfolio />} />
-						<Route path='/portfolios/project/:id3' element={<Portfolio />} />
+					<Route path='/du-an' exact element={<Project />} />
+					<Route path='/du-an/:id' element={<ProjectDetail />} />
 
-						<Route path='/projects' exact element={<Project />} />
-						<Route path='/projects/:id' element={<ProjectDetail />} />
+					<Route path='/chi-tiet-du-an' exact element={<Project />} />
+					<Route path='/chi-tiet-du-an/:id' element={<ProjectDetail />} />
 
-						<Route path='/projectDetails' exact element={<Project />} />
-						<Route path='/projectDetails/:id' element={<ProjectDetail />} />
+					<Route path='/quan-ly' exact element={<RequireAuth><Admin /></RequireAuth>} />
 
-						<Route path='/admin/portfolios' exact element={<PortfolioAdmin />} />
+					<Route path='/quan-ly/han-muc-du-an' element={<RequireAuth><PortfolioAdmin /></RequireAuth>} />
 
-						<Route path='/admin/projects' exact element={<ProjectAdmin />} />
+					<Route path='/quan-ly/du-an' element={<RequireAuth><ProjectAdmin /></RequireAuth>} />
 
-						<Route path='/admin/projectDetails' exact element={<ProjectDetailAdmin />} />
+					<Route path='/quan-ly/chi-tiet-du-an' element={<RequireAuth><ProjectDetailAdmin /></RequireAuth>} />
 
-						<Route path='/auth' exact element={!authData ? <Auth /> : <Navigate to={'/'} />} />
-						<Route />
-					</Routes>
-				</Container>
-
-				<ScrollTop {...props}>
-					<Fab color='primary' size="small" aria-label="scroll back to top">
-						<KeyboardArrowUpIcon />
-					</Fab>
-				</ScrollTop>
-			</ThemeProvider>
-		</BrowserRouter>
+					<Route path='/auth' element={<Auth />} />
+					<Route path='/404' element={<NotFound />} />
+					<Route path='*' element={<Navigate to="/404" />} />
+				</Routes> */}
+				<AppFooter />
+			</Container>
+		</ThemeProvider>
 	);
 }
 

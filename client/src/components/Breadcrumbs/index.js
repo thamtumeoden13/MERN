@@ -1,4 +1,4 @@
-import * as React from 'react'; import {
+import React, { useEffect, useState } from 'react'; import {
     Link as RouterLink,
     Route,
     Routes,
@@ -17,11 +17,41 @@ const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
 const BreadcrumbComponent = () => {
     const location = useLocation();
     const navigate = useNavigate()
-    const pathnames = location.pathname.split('/').filter((x) => x);
-    console.log('[pathnames]', pathnames)
+    const [pathnames, setPathnames] = useState([])
+
+    useEffect(() => {
+        const pathnames = location.pathname.split('/').filter((x) => x);
+        if (!!pathnames) {
+            const pathnamesModifier = pathnames.map(pathname => {
+                let name
+                switch (pathname.toLowerCase()) {
+                    case 'han-muc-du-an':
+                        name = 'Hạn Mục Dự Án'
+                        break;
+                    case 'du-an':
+                        name = 'Dự Án'
+                        break;
+                    case 'chi-tiet-du-an':
+                        name = 'Chi Tiết Dự Án'
+                        break;
+                    default:
+                        name = pathname
+                        break;
+                }
+
+                return {
+                    name: name,
+                    value: pathname,
+                }
+            })
+            console.log('[pathnames]', pathnames)
+            console.log('[pathnamesModifier]', pathnamesModifier)
+            setPathnames(pathnamesModifier)
+        }
+    }, [location])
 
     const handleClick = (to) => {
-        console.info('You clicked a breadcrumb.', to);
+        console.log('You clicked a breadcrumb.', to);
         navigate(to)
     }
 
@@ -30,20 +60,21 @@ const BreadcrumbComponent = () => {
             <Link underline="hover" color="inherit" href={``} onClick={() => handleClick("/")}>
                 <Typography color="primary">  {`Trang chủ`}  </Typography>
             </Link>
-            {pathnames.map((value, index) => {
+            {pathnames.map((pathname, index) => {
                 const last = index === pathnames.length - 1;
-                const to = `${pathnames.slice(0, index + 1).join('/')}`;
+                const toPathnames = pathnames.slice(0, index + 1);
+                const to = toPathnames.map(e => e.value).join('/')
                 return (
                     <Box key={to}>
                         {
                             last ? (
-                                <Typography color="text.primary">{value}</Typography>
+                                <Typography color="text.primary">{pathname.name}</Typography>
                             ) : (
                                 <Link underline="hover" color="inherit"
                                     key={to} href={``}
                                     onClick={() => handleClick(`/${to}`)}
                                 >
-                                    <Typography color="primary"> {value} </Typography>
+                                    <Typography color="primary"> {pathname.name} </Typography>
                                 </Link>
                             )
                         }

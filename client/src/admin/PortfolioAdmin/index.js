@@ -46,7 +46,7 @@ const PortfolioAdmin = () => {
     }
 
     const handleDetail = (id) => {
-        navigate(`/portfolios/portfolio/${id}`)
+        navigate(`/han-muc-du-an/du-an/${id}`)
     }
 
     const handleRemove = (ids) => {

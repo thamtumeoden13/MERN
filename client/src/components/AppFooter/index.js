@@ -13,6 +13,9 @@ import Stack from '@mui/material/Stack';
 
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+
+import { getProjects, } from '../../redux/actions/projects'
 
 
 function Copyright() {
@@ -57,6 +60,10 @@ const AppFooter = () => {
 
     const { projects, isLoading } = useSelector((state) => state.projects)
 
+    useEffect(() => {
+        dispatch(getProjects())
+    }, [dispatch])
+
     const handleClick = (project) => {
         console.info('You clicked the Chip.', project);
     };
@@ -66,9 +73,9 @@ const AppFooter = () => {
     return (
         <Typography
             component="footer"
-            sx={{ display: 'flex', bgcolor: '#202530' }}
+            sx={{ backgroundColor: 'red', display: 'flex', bgcolor: '#202530', width: '100vw' }}
         >
-            <Container sx={{ my: 2, display: 'flex' }}>
+            <Container sx={{ display: 'flex', }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
                         <Box sx={{ mb: 2 }}>
@@ -84,14 +91,14 @@ const AppFooter = () => {
                             <Typography variant="h6" component="div" sx={{ color: 'white' }} >
                                 {`NEOHOUSE - HCM`}
                             </Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', }}>
+                            <Box sx={{ mb: 1, display: 'flex', alignItems: 'center', }}>
                                 <AddLocationAltOutlinedIcon sx={{ marginRight: 1, color: 'white' }} />
                                 <Typography variant="body2" component="div" sx={{ color: 'white' }} >
-                                    {`Đ/c: 8B, Bàu Cát 8, P. 11, Q. Tân Bình, TP. Hồ Chí Minh.`}
+                                    {`Đ/c: 17/13 Huỳnh Văn Luỹ, P.Phú Lợi, TP.Thủ Dầu Một, T.Bình Dương.`}
                                 </Typography>
                             </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                                <AddLocationAltOutlinedIcon sx={{ marginRight: 1, color: 'white' }} />
+                            <Box sx={{ mb: 1, display: 'flex', alignItems: 'center', }}>
+                                <PhoneOutlinedIcon sx={{ marginRight: 1, color: 'white' }} />
                                 <Typography variant="body2" component="div" sx={{ color: 'white' }} >
                                     {`Tel: 0906 100 202.`}
                                 </Typography>
@@ -124,9 +131,9 @@ const AppFooter = () => {
                         >
                             {!!projects &&
                                 projects.map(project => (
-                                    <Stack direction="column" spacing={1}>
+                                    <Stack key={project._id} direction="column" spacing={1}>
                                         <Chip
-                                            key={project._id}
+
                                             label={project.title}
                                             style={{ color: 'white' }}
                                             variant="outlined"

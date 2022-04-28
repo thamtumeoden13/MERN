@@ -26,4 +26,17 @@ export default makeStyles((theme) => ({
 			width: 'auto',
 		},
 	},
+	appBar2: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		padding: '10px 10px',
+		backgroundColor: '#202530',
+		[theme.breakpoints.down('sm')]: {
+			padding: 0
+		},
+		[theme.breakpoints.down('md')]: {
+			padding: 0
+		},
+	},
 }));

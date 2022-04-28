@@ -21,10 +21,9 @@ const NavBarMenu = () => {
 
     const handleClick = (event, menu) => {
         console.log(event.currentTarget, menu)
-        if (!menu.route && !!menu.child && menu.child.length > 0) {
+        if (!!menu.child && menu.child.length > 0) {
             setAnchorEl(event.currentTarget);
             setMenuActived(menu.id)
-            return
         }
         if (!!menu.route) {
             handleRouteMenu(menu.route)

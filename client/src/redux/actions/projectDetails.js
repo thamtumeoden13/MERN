@@ -13,9 +13,10 @@ export const getProjectDetail = (id) => async (dispatch) => {
         const { data } = await api.fetchProjectDetail(id);
 
         dispatch({ type: FETCH_PROJECT_DETAIL, payload: data })
-        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     }
 }
 
@@ -26,9 +27,10 @@ export const getProjectDetails = () => async (dispatch) => {
         const { data } = await api.fetchProjectDetails();
 
         dispatch({ type: FETCH_ALL_PROJECT_DETAIL, payload: data })
-        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     }
 }
 
@@ -39,9 +41,10 @@ export const getProjectDetailsByPortfolioID = (id) => async (dispatch) => {
         const { data } = await api.fetchProjectDetailByPortfolios(id);
 
         dispatch({ type: FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, payload: data })
-        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     }
 }
 
@@ -52,9 +55,10 @@ export const getProjectDetailsByProjectID = (id) => async (dispatch) => {
         const { data } = await api.fetchProjectDetailByProjects(id);
 
         dispatch({ type: FETCH_PROJECT_DETAIL_BY_PROJECT_ID, payload: data })
-        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     } catch (error) {
         console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
     }
 }
 
@@ -68,7 +72,6 @@ export const createProjectDetail = (projectDetail) => async (dispatch) => {
     } catch (error) {
         console.error(error)
     }
-
 }
 
 export const updateProjectDetail = (id, projectDetail) => async (dispatch) => {
