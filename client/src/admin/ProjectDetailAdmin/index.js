@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Grow from '@mui/material/Grow'
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 
 import { getProjectDetails, createProjectDetail, updateProjectDetail, deleteProjectDetail } from '../../redux/actions/projectDetails'
 import { getProjects } from '../../redux/actions/projects'
@@ -13,6 +14,7 @@ import { getProjects } from '../../redux/actions/projects'
 import Form from './Form';
 import ProjectDetailTableList from './ProjectDetailTableList'
 import SlateEditor from '../../components/common/SlateEditor';
+import NavBarAuth from '../../components/NavBar/NavBarAuth';
 
 import useStyles from './styles'
 
@@ -73,41 +75,44 @@ const ProjectDetailAdmin = () => {
     console.log('[projectDetails]', projectDetails)
 
     return (
-        <Grow in>
-            <Container maxWidth='xl' sx={{ mt: 15 }}>
-                <Grid container display='flex' flexDirection='column' spacing={3}>
-                    <Grid className={classes.gridContainer} container item justifyContent='space-between' alignItems='stretch' spacing={3}>
-                        <Grid item xs={12} sm={6} md={8} >
-                            <ProjectDetailTableList
-                                data={projectDetails}
-                                onViewDetail={handleDetail}
-                                onEdit={handleCurrentId}
-                                onRemove={handleRemove}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Form currentId={currentId} handleCurrentId={handleCurrentId} onSubmit={handleSubmitForm} />
+        <Box sx={{ mt: 10 }}>
+            <NavBarAuth />
+            <Grow in>
+                <Container maxWidth='xl' sx={{ mt: 15 }}>
+                    <Grid container display='flex' flexDirection='column' spacing={3}>
+                        <Grid className={classes.gridContainer} container item justifyContent='space-between' alignItems='stretch' spacing={3}>
+                            <Grid item xs={12} sm={6} md={8} >
+                                <ProjectDetailTableList
+                                    data={projectDetails}
+                                    onViewDetail={handleDetail}
+                                    onEdit={handleCurrentId}
+                                    onRemove={handleRemove}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                                <Form currentId={currentId} handleCurrentId={handleCurrentId} onSubmit={handleSubmitForm} />
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}
-                    sx={{
-                        minHeight: '100vh',
-                        margin: '10px 0',
-                        backgroundColor: 'white',
-                        boxShadow: '2px 4px 10px #888888'
-                    }}
-                >
-                    <SlateEditor
-                        isEdit={isEdit}
-                        currentId={currentId}
-                        handleCurrentId={handleCurrentId}
-                        initialValue={initialValue}
-                        onChange={handleChangeDescription}
-                    />
-                </Grid>
-            </Container>
-        </Grow>
+                    <Grid item xs={12} sm={12} md={12}
+                        sx={{
+                            minHeight: '100vh',
+                            margin: '10px 0',
+                            backgroundColor: 'white',
+                            boxShadow: '2px 4px 10px #888888'
+                        }}
+                    >
+                        <SlateEditor
+                            isEdit={isEdit}
+                            currentId={currentId}
+                            handleCurrentId={handleCurrentId}
+                            initialValue={initialValue}
+                            onChange={handleChangeDescription}
+                        />
+                    </Grid>
+                </Container>
+            </Grow>
+        </Box>
     );
 }
 

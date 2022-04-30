@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Grow from '@mui/material/Grow'
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box';
 
 import { getPortfolios, createPortfolio, updatePortfolio, deletePortfolio } from '../../redux/actions/portfolios'
 
@@ -12,6 +13,7 @@ import { getPortfolios, createPortfolio, updatePortfolio, deletePortfolio } from
 import Form from './Form';
 import PortfolioTableList from './PortfolioTableList'
 import SlateEditor from '../../components/common/SlateEditor';
+import NavBarAuth from '../../components/NavBar/NavBarAuth';
 
 import useStyles from './styles'
 
@@ -45,8 +47,8 @@ const PortfolioAdmin = () => {
         setCurrentId(id)
     }
 
-    const handleDetail = (id) => {
-        navigate(`/han-muc-du-an/du-an/${id}`)
+    const handleDetail = (item) => {
+        navigate(`/han-muc-du-an/du-an/${item._id}`)
     }
 
     const handleRemove = (ids) => {
@@ -72,41 +74,44 @@ const PortfolioAdmin = () => {
     console.log('[portfolios]', portfolios)
 
     return (
-        <Grow in>
-            <Container maxWidth='xl' sx={{ mt: 15 }}>
-                <Grid container display='flex' flexDirection='column' spacing={3}>
-                    <Grid className={classes.gridContainer} container item justifyContent='space-between' alignItems='stretch' spacing={3}>
-                        <Grid item xs={12} sm={6} md={8} >
-                            <PortfolioTableList
-                                data={portfolios}
-                                onViewDetail={handleDetail}
-                                onEdit={handleCurrentId}
-                                onRemove={handleRemove}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Form currentId={currentId} handleCurrentId={handleCurrentId} onSubmit={handleSubmitForm} />
+        <Box sx={{ pt: 10 }}>
+            <NavBarAuth />  
+            <Grow in>
+                <Container maxWidth='xl'>
+                    <Grid container display='flex' flexDirection='column' spacing={3}>
+                        <Grid className={classes.gridContainer} container item justifyContent='space-between' alignItems='stretch' spacing={3}>
+                            <Grid item xs={12} sm={6} md={8} >
+                                <PortfolioTableList
+                                    data={portfolios}
+                                    onViewDetail={handleDetail}
+                                    onEdit={handleCurrentId}
+                                    onRemove={handleRemove}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                                <Form currentId={currentId} handleCurrentId={handleCurrentId} onSubmit={handleSubmitForm} />
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}
-                    sx={{
-                        minHeight: '100vh',
-                        margin: '10px 0',
-                        backgroundColor: 'white',
-                        boxShadow: '2px 4px 10px #888888'
-                    }}
-                >
-                    <SlateEditor
-                        isEdit={isEdit}
-                        currentId={currentId}
-                        handleCurrentId={handleCurrentId}
-                        initialValue={initialValue}
-                        onChange={handleChangeDescription}
-                    />
-                </Grid>
-            </Container>
-        </Grow>
+                    <Grid item xs={12} sm={12} md={12}
+                        sx={{
+                            minHeight: '100vh',
+                            margin: '10px 0',
+                            backgroundColor: 'white',
+                            boxShadow: '2px 4px 10px #888888'
+                        }}
+                    >
+                        <SlateEditor
+                            isEdit={isEdit}
+                            currentId={currentId}
+                            handleCurrentId={handleCurrentId}
+                            initialValue={initialValue}
+                            onChange={handleChangeDescription}
+                        />
+                    </Grid>
+                </Container>
+            </Grow>
+        </Box>
     );
 }
 

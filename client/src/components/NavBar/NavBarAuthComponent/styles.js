@@ -39,7 +39,8 @@ export default makeStyles((theme) => ({
 		display: 'flex',
 		alignItems: 'center',
 		textAlign: 'center',
-		color: 'white'
+		color: 'white',
+		margin: '0 10px',
 	},
 	purple: {
 		color: theme.palette.getContrastText(deepPurple[500]),

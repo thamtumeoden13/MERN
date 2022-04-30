@@ -13,7 +13,9 @@ const NavBarAuthComponent = ({ user, handleLogout }) => {
     return (
         <Box sx={{
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            flex: 1
         }}>
             {user ? (
                 <div className={classes.profile}>

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import auth from './auth'
+import toast from './toast'
 import modal from './modal'
 import posts from './posts'
 import products from './products'
@@ -10,6 +11,7 @@ import projectDetails from './projectDetails'
 
 export default combineReducers({
     auth,
+    toast,
     modal,
     posts,
     products,

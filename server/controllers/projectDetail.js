@@ -86,3 +86,16 @@ export const getProjectDetailsByProjectID = async (req, res) => {
         res.status(404).json({ message: error.message })
     }
 }
+
+export const getProjectDetailsBySearchPortfolioName = async (req, res) => {
+    const { searchQuery } = req.query
+    try {
+        const portfolioName = searchQuery
+
+        const projectDetailsBySearchPortfolioName = await ProjectDetailModel.find({ portfolioName })
+
+        res.status(200).json({ data: projectDetailsBySearchPortfolioName })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}

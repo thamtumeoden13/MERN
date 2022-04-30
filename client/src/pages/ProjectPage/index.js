@@ -8,6 +8,8 @@ import Grow from '@mui/material/Grow'
 
 import ProjectComponent from '../../components/Projects'
 import BreadcrumbComponent from '../../components/Breadcrumbs'
+import NavBar from '../../components/NavBar';
+import AppFooter from '../../components/AppFooter';
 
 import { getProjects } from '../../redux/actions/projects'
 
@@ -24,7 +26,8 @@ const ProjectPage = () => {
     console.log('[ProjectPage]', projects)
 
     return (
-        <Box sx={{ mt: 15 }}>
+        <Box sx={{ pt: 10 }}>
+            <NavBar />
             <Grow in>
                 <Container sx={{ marginY: 5, }}>
                     <Box sx={{ mb: 2 }}>
@@ -42,6 +45,7 @@ const ProjectPage = () => {
                     <ProjectComponent />
                 </Container>
             </Grow>
+            <AppFooter />
         </Box>
     )
 }

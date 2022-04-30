@@ -14,6 +14,8 @@ import CardList from '../../components/CardList';
 import { getProjectDetails } from '../../redux/actions/projectDetails'
 
 import { sortBy, useToggle, useInput, useTitle } from '../../utils'
+import NavBar from '../../components/NavBar';
+import AppFooter from '../../components/AppFooter';
 
 const HomePage = () => {
 
@@ -95,9 +97,10 @@ const HomePage = () => {
     console.log('[projectDetails]-HOME', projectDetails, isLoading)
 
     return (
-        <Box sx={{ backgroundColor: 'transparent' }}>
+        <Box sx={{ pt: 10, backgroundColor: 'transparent' }}>
+            <NavBar />
             <Header />
-            <Container sx={{ paddingY: 0, minHeight: '100vh' }}>
+            <Container sx={{ paddingY: 0, mt: 5, minHeight: '100vh' }}>
                 <Box sx={{
                     minHeight: '100vh',
                     flexDirection: 'column',
@@ -138,6 +141,7 @@ const HomePage = () => {
                     }
                 </Box>
             </Container>
+            <AppFooter />
         </Box >
     );
 }

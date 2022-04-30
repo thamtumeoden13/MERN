@@ -5,6 +5,7 @@ import {
     getProjectDetails,
     getProjectDetailsByPortfolioID,
     getProjectDetailsByProjectID,
+    getProjectDetailsBySearchPortfolioName,
     createProjectDetail,
     updateProjectDetail,
     deleteProjectDetail,
@@ -14,6 +15,7 @@ import auth from '../middleware/auth.js';
 
 const router = express.Router()
 
+router.get('/search', getProjectDetailsBySearchPortfolioName);
 router.get('/', getProjectDetails);
 router.get('/:id', getProjectDetail);
 

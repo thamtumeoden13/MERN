@@ -9,6 +9,8 @@ import Grid from '@mui/material/Grid'
 
 import ProjectDetailComponent from '../../../components/ProjectDetail'
 import BreadcrumbComponent from '../../../components/Breadcrumbs'
+import NavBar from '../../../components/NavBar';
+import AppFooter from '../../../components/AppFooter';
 
 import { getProjectDetail, getProjectDetailsByProjectID, getProjectDetailsByPortfolioID } from '../../../redux/actions/projectDetails'
 import { getProject } from '../../../redux/actions/projects'
@@ -40,9 +42,10 @@ const ProjectDetail = () => {
     }, [dispatch, projectDetail])
 
     return (
-        <Box sx={{ mt: 15 }}>
+        <Box sx={{ pt: 10 }}>
+            <NavBar />
             <Grow in>
-                <Container maxWidth='xl'>
+                <Container maxWidth='xl' sx={{ pt: 2 }}>
                     <Box sx={{ mt: 2, mb: 2 }}>
                         <BreadcrumbComponent />
                     </Box>
@@ -51,6 +54,7 @@ const ProjectDetail = () => {
                     </Box>
                 </Container>
             </Grow>
+            <AppFooter />
         </Box>
     )
 }

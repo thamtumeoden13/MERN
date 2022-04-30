@@ -16,47 +16,12 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 
 import { getProjects, } from '../../redux/actions/projects'
-
-
-function Copyright() {
-    return (
-        <React.Fragment>
-            {'© '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-        </React.Fragment>
-    );
-}
-
-const iconStyle = {
-    width: 48,
-    height: 48,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'warning.main',
-    mr: 1,
-    '&:hover': {
-        bgcolor: 'warning.dark',
-    },
-};
-
-const LANGUAGES = [
-    {
-        code: 'en-US',
-        name: 'English',
-    },
-    {
-        code: 'fr-FR',
-        name: 'Français',
-    },
-];
+import { useNavigate } from 'react-router-dom';
 
 const AppFooter = () => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const { projects, isLoading } = useSelector((state) => state.projects)
 
@@ -66,6 +31,7 @@ const AppFooter = () => {
 
     const handleClick = (project) => {
         console.info('You clicked the Chip.', project);
+        navigate(`/han-muc-du-an/chi-tiet-du-an/${project._id}`)
     };
 
     console.log('[AppFoote]', projects)
@@ -133,7 +99,6 @@ const AppFooter = () => {
                                 projects.map(project => (
                                     <Stack key={project._id} direction="column" spacing={1}>
                                         <Chip
-
                                             label={project.title}
                                             style={{ color: 'white' }}
                                             variant="outlined"

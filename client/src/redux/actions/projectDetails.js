@@ -62,6 +62,22 @@ export const getProjectDetailsByProjectID = (id) => async (dispatch) => {
     }
 }
 
+export const getProjectDetailSearchByPortfolioName = (searchQuery) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING_PROJECT_DETAIL })
+
+        const { data } = await api.fetchProjectDetailSearchByPortfolioName(searchQuery);
+
+        console.log('[data]', data)
+
+        dispatch({ type: FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, payload: data })
+    } catch (error) {
+        console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
+    }
+}
+
 export const createProjectDetail = (projectDetail) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROJECT_DETAIL })

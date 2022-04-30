@@ -17,11 +17,8 @@ import ChipInput from '../common/ChipInput';
 
 import { getProducts, getProductsBySearch } from '../../redux/actions/products'
 
+import { useQuery } from '../../utils';
 import useStyles from './styles'
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search)
-}
 
 function Home() {
 

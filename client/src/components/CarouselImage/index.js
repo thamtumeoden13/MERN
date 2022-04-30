@@ -46,7 +46,7 @@ const CarouselImage = () => {
             }}
             indicatorContainerProps={{
                 style: {
-                    marginTop: '-50px',
+                    marginTop: -100,
                     textAlign: 'right',
                     zIndex: 10,
                     position: 'absolute'

@@ -2,6 +2,11 @@
 export const AUTH = 'AUTH'
 export const LOGOUT = 'LOGOUT'
 
+//toast
+export const TOAST_SHOW = 'TOAST_SHOW'
+export const TOAST_HIDE = 'TOAST_HIDE'
+export const TOAST_CONFIG = 'TOAST_CONFIG'
+
 //product
 export const CREATE = 'CREATE'
 export const UPDATE = 'UPDATE'

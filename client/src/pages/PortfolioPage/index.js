@@ -15,7 +15,13 @@ import Portfolios from '../../components/Portfolios'
 import QuiltedImageList from '../../components/common/Imagelist/ImageQuilted'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
 
-import { getProjectDetails, getProjectDetail, getProjectDetailsByPortfolioID, getProjectDetailsByProjectID } from '../../redux/actions/projectDetails'
+import {
+    getProjectDetails, getProjectDetail,
+    getProjectDetailsByPortfolioID, getProjectDetailsByProjectID,
+    getProjectDetailSearchByPortfolioName
+} from '../../redux/actions/projectDetails'
+import NavBar from '../../components/NavBar';
+import AppFooter from '../../components/AppFooter';
 
 const PortfolioPage = () => {
     const dispatch = useDispatch()
@@ -59,8 +65,9 @@ const PortfolioPage = () => {
     }
 
     return (
-        <Box sx={{ mt: 15 }}>
-            <Container maxWidth={'lg'}  sx={{ minHeight: '100vh' }}>
+        <Box sx={{ pt: 10, }}>
+            <NavBar />
+            <Container maxWidth={'lg'} sx={{ minHeight: '100vh' }}>
                 <Box>
                     <QuiltedImageList data={data} />
                 </Box>
@@ -68,7 +75,7 @@ const PortfolioPage = () => {
                     <BreadcrumbComponent />
                 </Box>
                 <Box>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={3} sx={{ minHeight: '100vh' }}>
                         <Box sx={{
                             display: { xs: 'none', sm: 'none', md: 'flex' }, flexDirection: 'column',
                             padding: 2,
@@ -104,6 +111,7 @@ const PortfolioPage = () => {
                     </Grid>
                 </Box>
             </Container>
+            <AppFooter />
         </Box >
     )
 }

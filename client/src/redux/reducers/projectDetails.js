@@ -38,16 +38,22 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 projectDetail: action.payload.data,
+                projectDetailsByPortfolioID: [],
+                projectDetailsByProjectID: [],
             }
         case FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID:
             return {
                 ...state,
                 projectDetailsByPortfolioID: action.payload.data,
+                projectDetailsByProjectID: [],
+                projectDetail: [],
             }
         case FETCH_PROJECT_DETAIL_BY_PROJECT_ID:
             return {
                 ...state,
                 projectDetailsByProjectID: action.payload.data,
+                projectDetailsByPortfolioID: [],
+                projectDetail: [],
             }
         case CREATE_PROJECT_DETAIL:
             console.log('[CREATE_PROJECT_DETAIL]', state.projectDetails, action.payload)

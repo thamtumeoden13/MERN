@@ -12,7 +12,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     minHeight: '100vh',
     display: 'flex',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     flexDirection: 'column',
     padding: theme.spacing(12, 0)
 }));
@@ -35,7 +35,7 @@ const Page404 = () => {
 
                     <Box
                         component="img"
-                        src="/static/illustrations/illustration_404.svg"
+                        src="http://localhost:3000/surr-404.png"
                         sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
                     />
 

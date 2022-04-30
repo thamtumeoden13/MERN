@@ -2,7 +2,7 @@ import { makeStyles } from '@mui/styles'
 
 export default makeStyles((theme) => ({
     container: {
-        height: '100vh',
+        height: '90vh',
         backgroundColor: "white",
         color: "white",
         fontWeight: 'lighter',

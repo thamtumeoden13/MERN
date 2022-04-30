@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 
 import Container from '@mui/material/Container'
@@ -31,10 +31,13 @@ const Auth = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation();
 
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(initFormData)
+
+    const from = location.state?.from?.pathname || "/";
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -43,9 +46,9 @@ const Auth = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (isSignup) {
-            dispatch(signUp(formData, navigate))
+            dispatch(signUp(formData, navigate, from))
         } else {
-            dispatch(signIn(formData, navigate))
+            dispatch(signIn(formData, navigate, from))
         }
     }
 
@@ -66,7 +69,7 @@ const Auth = () => {
 
         try {
             dispatch({ type: AUTH, payload: { result, token } })
-            navigate('/')
+            navigate(from, { replace: true });
         } catch (error) {
             console.error(error)
         }

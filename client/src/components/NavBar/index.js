@@ -72,51 +72,24 @@ const NavBar = (props) => {
     };
 
     return (
-        <>
-            <HideOnScroll {...props}>
-                <AppBar position="fixed" className={classes.appBar} color='inherit' sx={{ top: 0, bottom: 'auto' }}>
-                    <Toolbar className={classes.toolbar}>
-                        <NavBarMenuIconComponent toggleDrawer={toggleDrawer} />
-                        <NavBarLogoComponent />
-                        <NavBarMenuMobile />
-                        <NavBarMenu />
-                        <NavBarDrawerMobile drawer={drawer} toggleDrawer={toggleDrawer} />
-                        <Box sx={{ flexGrow: 1 }} />
-                        <Box sx={{
-                            justifyContent: 'center',
-                            display: { xs: 'none', sm: 'flex', md: 'flex' }
-                        }}>
-                            <SearchAppBar />
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-            </HideOnScroll>
-            {/* <HideOnScroll {...props}>
-                <AppBar position="fixed" className={classes.appBar2} color='inherit' sx={{ height: 48 }} elevation={0}>
-                    <Box sx={{ paddingX: 4, display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
-                        <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>
-                            <Typography variant='body2' component='div' color={'gray'}>
-                                {`Hotline: 093710 0202 / 0906 10 0202 Email: info@neohouse.vn / tuvan@neohouse.vn`}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>
-                            <IconButton size='small' aria-label="facebook" href='https://mui.com/material-ui/api/icon-button'>
-                                <FacebookIcon fontSize="12px" sx={{ ml: 2, color: 'gray' }} />
-                            </IconButton>
-                            <IconButton size='small' aria-label="twitter">
-                                <TwitterIcon fontSize="12px" sx={{ ml: 2, color: 'gray' }} />
-                            </IconButton>
-                            <IconButton size='small' aria-label="google">
-                                <GoogleIcon fontSize="12px" sx={{ ml: 2, color: 'gray' }} />
-                            </IconButton>
-                            <IconButton size='small' aria-label="youtube">
-                                <YouTubeIcon fontSize="12px" sx={{ ml: 2, color: 'gray' }} />
-                            </IconButton>
-                        </Box>
+        <HideOnScroll {...props}>
+            <AppBar position="fixed" className={classes.appBar} color='inherit' sx={{ top: 0, bottom: 'auto' }}>
+                <Toolbar className={classes.toolbar}>
+                    <NavBarMenuIconComponent toggleDrawer={toggleDrawer} />
+                    <NavBarLogoComponent />
+                    <NavBarMenuMobile />
+                    <NavBarMenu />
+                    <NavBarDrawerMobile drawer={drawer} toggleDrawer={toggleDrawer} />
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{
+                        justifyContent: 'center',
+                        display: { xs: 'none', sm: 'flex', md: 'flex' }
+                    }}>
+                        <SearchAppBar />
                     </Box>
-                </AppBar>
-            </HideOnScroll> */}
-        </>
+                </Toolbar>
+            </AppBar>
+        </HideOnScroll>
     )
 }
 
