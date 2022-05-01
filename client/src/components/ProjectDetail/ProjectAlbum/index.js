@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment'
 import { useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+import LazyLoad from 'react-lazyload'
+import moment from 'moment'
 
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import CardActions from '@mui/material/CardActions';
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
+import CircularProgress from '@mui/material/CircularProgress';
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { useTheme } from '@mui/material/styles';
 
 const ProjectAlbums = () => {
     const theme = useTheme();
+    const navigate = useNavigate()
 
-    const { projectDetailsByProjectID, projectDetailsByPortfolioID, isLoading } = useSelector((state) => state.projectDetails)
+    const { projectDetails, projectDetailsByProjectID, projectDetailsByPortfolioID, isLoading } = useSelector((state) => state.projectDetails)
     const { project } = useSelector((state) => state.projects)
     const { portfolio } = useSelector((state) => state.portfolios)
 
@@ -50,7 +50,11 @@ const ProjectAlbums = () => {
             })
             return
         }
-    }, [project, portfolio, projectDetailsByProjectID, projectDetailsByPortfolioID])
+    }, [project, portfolio, projectDetails, projectDetailsByProjectID, projectDetailsByPortfolioID])
+
+    const handleViewDetail = (item) => {
+        navigate(`/chi-tiet-du-an/${item._id}`)
+    }
 
     if (!!isLoading) return null
 
@@ -65,31 +69,37 @@ const ProjectAlbums = () => {
                 <Grid container spacing={1}>
                     {state.data.map((item, index) => (
                         <Grid item xs={12} key={index}>
-                            <Card sx={{ display: 'flex' }}>
-                                <CardMedia
-                                    component="img"
-                                    sx={{ width: 120, resize: 'contain' }}
-                                    // width='120'
-                                    image={item.thumbnail}
-                                    alt="thumbnail"
-                                />
-                                <Box sx={{
-                                    display: 'flex', flexDirection: 'column',
-                                    justifyContent: 'center',
-                                }}>
-                                    <CardContent sx={{
+                            <LazyLoad placeholder={<CircularProgress />} offset={100} once>
+                                <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{ width: 120, }}
+                                        image={item.thumbnail}
+                                        alt="thumbnail"
+                                    />
+                                    <Box sx={{
                                         display: 'flex', flexDirection: 'column',
-                                        flex: '1 0', justifyContent: 'space-between',
+                                        justifyContent: 'center',
                                     }}>
-                                        <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                            {item.title}
-                                        </Typography>
-                                        <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                            {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                        </Typography>
-                                    </CardContent>
-                                </Box>
-                            </Card>
+                                        <CardContent sx={{
+                                            display: 'flex', flexDirection: 'column',
+                                            flex: '1 0', justifyContent: 'space-between',
+                                        }}>
+                                            <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
+                                                {item.title}
+                                            </Typography>
+                                            <Typography variant="subtitle1" color="text.secondary" component="div" >
+                                                {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
+                                            <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
+                                                <MoreHorizIcon />
+                                            </IconButton>
+                                        </CardActions>
+                                    </Box>
+                                </Card>
+                            </LazyLoad>
                         </Grid>
                     ))}
                 </Grid>

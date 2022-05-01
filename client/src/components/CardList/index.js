@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
+import LazyLoad from 'react-lazyload'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress'
 
 import CardItem from './CardItem'
 
@@ -26,7 +28,7 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail }) => {
     const handleClickItem = (item) => {
         console.log('handleClickItem', item)
         if (onViewDetail) {
-            onViewDetail(item._id)
+            onViewDetail(item)
         }
     }
 
@@ -50,7 +52,9 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail }) => {
                 {data.map((item, index) => {
                     return (
                         <Grid item key={`item-${index}`} xs={state.xs} sm={state.sm} md={state.md} lg={state.lg} >
-                            <CardItem item={item} onClick={handleClickItem} />
+                            <LazyLoad placeholder={<CircularProgress />} offset={100} once>
+                                <CardItem item={item} onClick={handleClickItem} />
+                            </LazyLoad>
                         </Grid>
                     )
                 })}

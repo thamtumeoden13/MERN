@@ -84,7 +84,6 @@ function Module({ ratingValue, ratingCount, docTitle, docResource, imgTitle, doc
             <LazyLoad height={200} offset={[100, 0]} overflow={true}>
                 <CardMedia className={classes.cardMedia} image={imageLogo_Green} />
             </LazyLoad>
-
             <div className={classes.cardContent} style={{ opacity: hover ? 100 : 0 }}>
                 <Typography>{ratingValue}/10</Typography>
                 <small className={classes.ratingCount}>{ratingCount}</small>

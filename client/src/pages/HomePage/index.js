@@ -11,6 +11,8 @@ import Header from '../../components/Header';
 import Categories from '../../components/Categories';
 import CardList from '../../components/CardList';
 
+import { getPortfolios } from '../../redux/actions/portfolios'
+import { getProjects } from '../../redux/actions/projects'
 import { getProjectDetails } from '../../redux/actions/projectDetails'
 
 import { sortBy, useToggle, useInput, useTitle } from '../../utils'
@@ -19,12 +21,14 @@ import AppFooter from '../../components/AppFooter';
 
 const HomePage = () => {
 
-    useTitle('Home | Valley');
+    useTitle('Art | Sunday');
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { projectDetails, isLoading } = useSelector((state) => state.projectDetails)
+    const { portfolios, isLoading: portfoliosLoading } = useSelector((state) => state.portfolios)
+    const { projects, isLoading: projectsLoading } = useSelector((state) => state.projects)
+    const { projectDetails, isLoading: projectDetailsLoading } = useSelector((state) => state.projectDetails)
 
     const [state, setState] = useState({
         dataVilla: [],
@@ -32,7 +36,8 @@ const HomePage = () => {
         datafurniture: [],
         subDataVilla: [
             {
-                title: 'Biệt Thự Bán Cổ Điển'
+                title: 'Biệt Thự Bán Cổ Điển',
+
             },
             {
                 title: 'Biệt Thự Cổ Điển'
@@ -74,9 +79,29 @@ const HomePage = () => {
         ],
     })
 
+    const [data, setData] = useState({})
+
     useEffect(() => {
-        dispatch(getProjectDetails())
+        Promise.all([dispatch(getPortfolios()), dispatch(getProjects()), dispatch(getProjectDetails())])
     }, [dispatch])
+
+    useEffect(() => {
+
+        if (!!projects && !!portfolios && !!projectDetails) {
+            let data = projects.reduce((r, a) => {
+                const find = portfolios.find(e => e._id === a.portfolioID)
+                const childProjectDetails = projectDetails.filter(e => e.portfolioID == a.portfolioID)
+
+                a.portfolioTitle = !!find && Object.keys(find).length > 0 ? find.title : ''
+                a.child = childProjectDetails || []
+                r[`${a.portfolioID}`] = [...r[`${a.portfolioID}`] || [], a];
+                return r;
+            }, {});
+            console.log('[data]', data)
+            setData(data)
+        }
+
+    }, [projects, portfolios, projectDetails])
 
     useEffect(() => {
         let dataVilla = []
@@ -90,11 +115,11 @@ const HomePage = () => {
         setState(prev => { return { ...prev, dataVilla, dataTownHouse, datafurniture } })
     }, [projectDetails])
 
-    const handleViewDetail = (id) => {
-        navigate(`/chi-tiet-du-an/${id}`)
+    const handleViewDetail = (item) => {
+        navigate(`/chi-tiet-du-an/${item._id}`)
     }
 
-    console.log('[projectDetails]-HOME', projectDetails, isLoading)
+    console.log('[projectDetails]-HOME', projectDetails)
 
     return (
         <Box sx={{ pt: 10, backgroundColor: 'transparent' }}>
@@ -107,37 +132,29 @@ const HomePage = () => {
                     justifyContent: { sx: 'center' }
                 }}>
                     {(!projectDetails || projectDetails.length <= 0) ?
-                        <>
-                            {!!isLoading ?
+                        <Box>
+                            {!!projectDetailsLoading ?
                                 <CircularProgress />
                                 : <Typography variant='h3' component={'h2'}>
                                     {`Không có dữ liệu`}
                                 </Typography>}
-                        </>
+                        </Box>
                         :
-                        <>
-                            <CardList
-                                title={'Thiết Kế Biệt Thự'}
-                                itemCount={4}
-                                data={state.dataVilla}
-                                subData={state.subDataVilla}
-                                onViewDetail={handleViewDetail}
-                            />
-                            <CardList
-                                title={'Thiết Kế Nhà Phố'}
-                                itemCount={4}
-                                data={state.dataTownHouse}
-                                subData={state.subDataTownHouse}
-                                onViewDetail={handleViewDetail}
-                            />
-                            <CardList
-                                title={'Thiết Kế Nội Thất'}
-                                itemCount={4}
-                                data={state.datafurniture}
-                                subData={state.subDatafurniture}
-                                onViewDetail={handleViewDetail}
-                            />
-                        </>
+                        <Box>
+                            {Object.keys(data).map(function (key) {
+                                return (
+                                    <Box key={key}>
+                                        < CardList
+                                            title={`Thiết Kế ${data[key][0].portfolioTitle}`}
+                                            itemCount={4}
+                                            data={data[key][0].child}
+                                            subData={data[key]}
+                                            onViewDetail={handleViewDetail}
+                                        />
+                                    </Box>
+                                )
+                            })}
+                        </Box>
                     }
                 </Box>
             </Container>

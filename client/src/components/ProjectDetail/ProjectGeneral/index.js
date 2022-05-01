@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import lazyload from 'react-lazyload';
 
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -9,40 +10,89 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
+import CircularProgress from '@mui/material/CircularProgress'
 import FolderIcon from '@mui/icons-material/Folder';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import CommentIcon from '@mui/icons-material/Comment';
 import GroupIcon from '@mui/icons-material/Group';
 
+const dataSource = [
+	{
+		name: 'investor',
+		title: 'Chủ Đầu Tư',
+	},
+	{
+		name: 'address',
+		title: 'Địa Điểm',
+	},
+	{
+		name: 'scale',
+		title: 'Diện Tích',
+	},
+	{
+		name: 'function',
+		title: 'Quy Mô Dự Án',
+	},
+	{
+		name: 'designTeam',
+		title: 'Nhóm Thiết Kế',
+	},
+	{
+		name: 'designYear',
+		title: 'Năm Thiết Kế',
+	},
+	{
+		name: 'estimatedTime',
+		title: 'Thời Gian Hoàn Thiện',
+	},
+]
+
 const ProjectGeneral = () => {
 
 	const { projectDetails, projectDetail, isLoading } = useSelector((state) => state.projectDetails)
 
+	const [state, setState] = useState({
+		title: '',
+		createdAt: '',
+		imageUrl: ''
+	})
+	const [data, setData] = useState([])
+
 	console.log('[ProjectGeneral]', projectDetails, projectDetail)
+
+	useEffect(() => {
+		if (!!projectDetail && Object.keys(projectDetail).length > 0) {
+			const data = dataSource.map(e => {
+				return {
+					name: e.name,
+					title: e.title,
+					value: projectDetail[e.name]
+				}
+			})
+			// console.log('[data]', data)
+			setData(data)
+			setState({
+				title: projectDetail.title,
+				createdAt: moment(new Date(projectDetail.createdAt)).format('HH:MM MMM DD, YYYY'),
+				imageUrl: projectDetail.imageUrl
+			})
+		}
+	}, [projectDetail])
 
 	if (!projectDetail || Object.keys(projectDetail).length <= 0) return null
 
 	return (
-		<>
+		<Box>
 			<Typography component='div' variant='h5' sx={{ mb: 2 }}>
-				{projectDetail.title}
+				{state.title}
 			</Typography>
-
-			{/* <Breadcrumbs aria-label="breadcrumb" >
-				<Box sx={{ display: 'flex', alignItems: 'center' }}>
-					<FolderIcon fontSize='small' color='primary' sx={{ mr: 1 }} />
-					<Typography color="primary">{`Thiết Kế Nhà Phố`}</Typography>
-				</Box>
-				<Typography color="primary">{`Nhà Phố 3 Tầng`}</Typography>
-				<Typography color="primary">{`Nhà Phố Hiện Đại`}</Typography>
-			</Breadcrumbs> */}
 			<Box sx={{ mt: 2, mb: 2 }}>
 				<Breadcrumbs aria-label="breadcrumb" >
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
 						<ApartmentIcon fontSize='small' color='text.primary' sx={{ mr: 1 }} />
 						<Typography color="text.primary">{`SundayTV.vn`}</Typography>
 					</Box>
-					<Typography color="text.primary">{moment(new Date(projectDetail.createdAt)).format('HH:MM MMM DD, YYYY')}</Typography>
+					<Typography color="text.primary">{state.createdAt}</Typography>
 					<Link
 						underline="hover"
 						sx={{ display: 'flex', alignItems: 'center' }}
@@ -60,12 +110,14 @@ const ProjectGeneral = () => {
 			</Box>
 			<Box>
 				<Card sx={{ display: 'flex', flexDirection: 'column', }}>
-					<CardMedia
-						component='img'
-						height='500'
-						image='https://images.pexels.com/photos/7363949/pexels-photo-7363949.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
-						alt='image'
-					/>
+					<lazyload placeholder={<CircularProgress />}>
+						<CardMedia
+							component='img'
+							height='500'
+							image={state.imageUrl}
+							alt='image'
+						/>
+					</lazyload>
 					<Box sx={{
 						display: 'flex', flexDirection: 'column',
 						justifyContent: 'center',
@@ -74,116 +126,30 @@ const ProjectGeneral = () => {
 							display: 'flex', flexDirection: 'column',
 							flex: '1 0', justifyContent: 'space-between',
 						}}>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Chủ Đầu Tư`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }}
-								>
-									{projectDetail.investor}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Địa điểm`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }} >
-									{projectDetail.address}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Diện Tích`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }} >
-									{projectDetail.scale}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Quy Mô Dự Án`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }} >
-									{projectDetail.function}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Kinh Phí`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }} >
-									{projectDetail.expense}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Nhóm Thiết Kế`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }} >
-									{projectDetail.designTeam}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Năm Thiết Kế`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }} >
-									{projectDetail.designYear}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Typography component="div" variant="subtitle1"
-									sx={{ width: 160, fontWeight: 'bold' }}>
-									{`Thời Gian Hoàn Thiện`}
-								</Typography>
-								<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
-									&nbsp;{`:`}&nbsp;
-								</Typography>
-								<Typography variant="subtitle1" color="text.secondary" component="div"
-									sx={{ flex: 1, overflow: 'hidden' }} >
-									{projectDetail.estimatedTime}
-								</Typography>
-							</Box>
+							{data.map(e => {
+								console.log('[dataSource-e]', e)
+								return (
+									<Box key={e.name} sx={{ display: 'flex', alignItems: 'center' }}>
+										<Typography component="div" variant="subtitle1"
+											sx={{ width: 160, fontWeight: 'bold' }}>
+											{e.title}
+										</Typography>
+										<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
+											&nbsp;{`:`}&nbsp;
+										</Typography>
+										<Typography variant="subtitle1" color="text.secondary" component="div"
+											sx={{ flex: 1, overflow: 'hidden' }}
+										>
+											{e.value}
+										</Typography>
+									</Box>
+								)
+							})}
 						</CardContent>
 					</Box>
 				</Card>
 			</Box>
-		</>
+		</Box>
 	)
 }
 

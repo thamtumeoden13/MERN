@@ -1,7 +1,7 @@
 import * as api from '../../api'
 import {
     START_LOADING_PROJECT_DETAIL, END_LOADING_PROJECT_DETAIL,
-    FETCH_ALL_PROJECT_DETAIL, FETCH_PROJECT_DETAIL,
+    FETCH_ALL_PROJECT_DETAIL, FETCH_PROJECT_DETAIL, FETCH_PROJECT_DETAIL_BY_SEARCH,
     FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, FETCH_PROJECT_DETAIL_BY_PROJECT_ID,
     CREATE_PROJECT_DETAIL, UPDATE_PROJECT_DETAIL, DELETE_PROJECT_DETAIL,
 } from '../constants/actionType';
@@ -68,9 +68,25 @@ export const getProjectDetailSearchByPortfolioName = (searchQuery) => async (dis
 
         const { data } = await api.fetchProjectDetailSearchByPortfolioName(searchQuery);
 
-        console.log('[data]', data)
+        console.log('[getProjectDetailSearchByPortfolioName-data]', data)
 
-        dispatch({ type: FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, payload: data })
+        dispatch({ type: FETCH_PROJECT_DETAIL_BY_SEARCH, payload: data })
+    } catch (error) {
+        console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
+    }
+}
+
+export const getProjectDetailSearchByProjectName = (searchQuery) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING_PROJECT_DETAIL })
+
+        const { data } = await api.fetchProjectDetailSearchByProjectName(searchQuery);
+
+        console.log('[getProjectDetailSearchByProjectName-data]', data)
+
+        dispatch({ type: FETCH_PROJECT_DETAIL_BY_SEARCH, payload: data })
     } catch (error) {
         console.error(error.message)
     } finally {

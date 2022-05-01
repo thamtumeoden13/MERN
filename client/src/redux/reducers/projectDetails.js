@@ -1,6 +1,6 @@
 import {
     START_LOADING_PROJECT_DETAIL, END_LOADING_PROJECT_DETAIL,
-    FETCH_ALL_PROJECT_DETAIL, FETCH_PROJECT_DETAIL,
+    FETCH_ALL_PROJECT_DETAIL, FETCH_PROJECT_DETAIL, FETCH_PROJECT_DETAIL_BY_SEARCH,
     FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, FETCH_PROJECT_DETAIL_BY_PROJECT_ID,
     CREATE_PROJECT_DETAIL, UPDATE_PROJECT_DETAIL, DELETE_PROJECT_DETAIL
 } from '../constants/actionType';
@@ -8,6 +8,7 @@ import {
 const initState = {
     isLoading: false,
     projectDetails: [],
+    projectDetailsBySearch: [],
     projectDetailsByPortfolioID: [],
     projectDetailsByProjectID: [],
     projectDetail: null,
@@ -38,22 +39,29 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 projectDetail: action.payload.data,
-                projectDetailsByPortfolioID: [],
-                projectDetailsByProjectID: [],
+                // projectDetailsByPortfolioID: [],
+                // projectDetailsByProjectID: [],
+            }
+        case FETCH_PROJECT_DETAIL_BY_SEARCH:
+            return {
+                ...state,
+                projectDetailsBySearch: action.payload.data,
+                // projectDetailsByProjectID: [],
+                // projectDetail: [],
             }
         case FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID:
             return {
                 ...state,
                 projectDetailsByPortfolioID: action.payload.data,
-                projectDetailsByProjectID: [],
-                projectDetail: [],
+                // projectDetailsByProjectID: [],
+                // projectDetail: [],
             }
         case FETCH_PROJECT_DETAIL_BY_PROJECT_ID:
             return {
                 ...state,
                 projectDetailsByProjectID: action.payload.data,
-                projectDetailsByPortfolioID: [],
-                projectDetail: [],
+                // projectDetailsByPortfolioID: [],
+                // projectDetail: [],
             }
         case CREATE_PROJECT_DETAIL:
             console.log('[CREATE_PROJECT_DETAIL]', state.projectDetails, action.payload)

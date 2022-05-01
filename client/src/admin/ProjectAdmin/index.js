@@ -49,8 +49,8 @@ const ProjectAdmin = () => {
         setCurrentId(id)
     }
 
-    const handleDetail = (id) => {
-        navigate(`/han-muc-du-an/chi-tiet-du-an/${id}`)
+    const handleDetail = (item) => {
+        navigate(`/han-muc-du-an/chi-tiet-du-an/${item._id}`)
     }
 
     const handleRemove = (ids) => {

@@ -14,18 +14,26 @@ import SearchIcon from '@mui/icons-material/Search';
 import Portfolios from '../../components/Portfolios'
 import QuiltedImageList from '../../components/common/Imagelist/ImageQuilted'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
+import NavBar from '../../components/NavBar';
+import AppFooter from '../../components/AppFooter';
 
 import {
     getProjectDetails, getProjectDetail,
     getProjectDetailsByPortfolioID, getProjectDetailsByProjectID,
-    getProjectDetailSearchByPortfolioName
+    getProjectDetailSearchByPortfolioName,
+    getProjectDetailSearchByProjectName
 } from '../../redux/actions/projectDetails'
-import NavBar from '../../components/NavBar';
-import AppFooter from '../../components/AppFooter';
+import { useQuery } from '../../utils';
 
 const PortfolioPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const query = useQuery()
+    const searchQueryPortfolioName = query.get('portfolioName')
+    const searchQueryprojectName = query.get('projectName')
+
+    console.log('[searchQueryPortfolioName]', searchQueryPortfolioName)
+    console.log('[searchQueryprojectName]', searchQueryprojectName)
 
     const { id, projectID, projectDetailID } = useParams()
 
@@ -46,13 +54,23 @@ const PortfolioPage = () => {
             dispatch(getProjectDetailsByProjectID(projectDetailID))
             return
         }
-
-        dispatch(getProjectDetails())
-
     }, [dispatch, id, projectID, projectDetailID])
 
-    const handleViewDetail = (id) => {
-        navigate(`/chi-tiet-du-an/${id}`)
+    useEffect(() => {
+        if (!!searchQueryPortfolioName) {
+            dispatch(getProjectDetailSearchByPortfolioName(searchQueryPortfolioName))
+            return
+        }
+        if (!!searchQueryprojectName) {
+            dispatch(getProjectDetailSearchByProjectName(searchQueryprojectName))
+            return
+        }
+        console.log('[dispatch(getProjectDetails())]')
+        dispatch(getProjectDetails())
+    }, [dispatch, searchQueryPortfolioName, searchQueryprojectName])
+
+    const handleViewDetail = (item) => {
+        navigate(`/chi-tiet-du-an/${item._id}`)
     }
 
     const handleChangeValue = (event) => {

@@ -305,7 +305,7 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
     const handleViewDetail = (event, row) => {
         console.log('handleViewDetail', row)
         if (onViewDetail) {
-            onViewDetail(row._id)
+            onViewDetail(row)
         }
 
     }

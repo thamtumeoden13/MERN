@@ -8,13 +8,20 @@ import { Box } from '@mui/material';
 
 import CardList from '../CardList';
 
+import { useQuery } from '../../utils';
 import useStyles from './styles'
 
 const Portfolios = ({ onViewDetail }) => {
 
     const { id, projectID, projectDetailID } = useParams()
-    const { projectDetails, projectDetailsByPortfolioID, projectDetailsByProjectID, isLoading } = useSelector((state) => state.projectDetails)
+    const { projectDetails, projectDetailsBySearch, projectDetailsByPortfolioID, projectDetailsByProjectID, isLoading } = useSelector((state) => state.projectDetails)
 
+    const query = useQuery()
+    const searchQueryPortfolioName = query.get('portfolioName')
+    const searchQueryprojectName = query.get('projectName')
+
+    console.log('[searchQueryPortfolioName]', searchQueryPortfolioName)
+    console.log('[searchQueryprojectName]', searchQueryprojectName)
     const [data, setData] = useState([])
 
     console.log('PortfolioPage', projectDetails, projectDetailsByPortfolioID, projectDetailsByProjectID)
@@ -35,14 +42,20 @@ const Portfolios = ({ onViewDetail }) => {
                     break;
 
             }
-        } else {
-            setData(projectDetails || [])
         }
     }, [id, projectID, projectDetailID, projectDetails, projectDetailsByPortfolioID, projectDetailsByProjectID,])
 
-    const handleViewDetail = (id) => {
+    useEffect(() => {
+        if (!!searchQueryPortfolioName || !!searchQueryprojectName) {
+            setData(projectDetailsBySearch || [])
+            return
+        }
+        setData(projectDetails || [])
+    }, [searchQueryPortfolioName, searchQueryprojectName, projectDetailsBySearch, projectDetails])
+
+    const handleViewDetail = (item) => {
         if (onViewDetail) {
-            onViewDetail(id)
+            onViewDetail(item)
         }
     }
 

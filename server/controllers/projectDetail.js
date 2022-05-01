@@ -87,14 +87,20 @@ export const getProjectDetailsByProjectID = async (req, res) => {
     }
 }
 
-export const getProjectDetailsBySearchPortfolioName = async (req, res) => {
-    const { searchQuery } = req.query
+export const getProjectDetailsBySearch = async (req, res) => {
+    const { portfolioName, projectName } = req.query
+    let projectDetailsResult
     try {
-        const portfolioName = searchQuery
+        console.log('[portfolioName, projectName]', portfolioName, projectName)
+        if (!!portfolioName) {
+            projectDetailsResult = await ProjectDetailModel.find({ portfolioName })
+        }
 
-        const projectDetailsBySearchPortfolioName = await ProjectDetailModel.find({ portfolioName })
-
-        res.status(200).json({ data: projectDetailsBySearchPortfolioName })
+        if (!!projectName) {
+            projectDetailsResult = await ProjectDetailModel.find({ projectName })
+        }
+        console.log('[getProjectDetailsBySearch-server]', projectDetailsResult)
+        res.status(200).json({ data: projectDetailsResult })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }

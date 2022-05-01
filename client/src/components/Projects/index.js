@@ -1,7 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import LazyLoad from 'react-lazyload'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import ProjectItem from './Project'
 
@@ -17,7 +19,9 @@ const Projects = () => {
             {projectData.map((project, index) => {
                 return (
                     <Grid item key={`item-${index}`} xs={12} sm={12} md={6} lg={3} >
-                        <ProjectItem project={project} />
+                        <LazyLoad placeholder={<CircularProgress />} offset={100} once>
+                            <ProjectItem project={project} />
+                        </LazyLoad>
                     </Grid>
                 )
             })}
