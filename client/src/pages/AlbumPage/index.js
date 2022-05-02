@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
+import NavBar from '../../components/NavBar';
+import AppFooter from '../../components/AppFooter';
 
 function Copyright() {
     return (
@@ -28,7 +30,8 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album() {
     return (
-        <>
+        <Box sx={{ pt: 10, }}>
+            <NavBar />
             <Box
                 sx={{
                     bgcolor: 'background.paper',
@@ -62,7 +65,7 @@ export default function Album() {
                     </Stack>
                 </Container>
             </Box>
-            <Container sx={{ py: 8,}} maxWidth="md">
+            <Container maxWidth={'lg'} sx={{ py: 8, minHeight: '100vh' }}>
                 {/* End hero unit */}
                 <Grid container spacing={4}>
                     {cards.map((card) => (
@@ -97,6 +100,7 @@ export default function Album() {
                     ))}
                 </Grid>
             </Container>
-        </>
+            <AppFooter />
+        </Box>
     );
 }

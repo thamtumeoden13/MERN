@@ -30,8 +30,8 @@ const PortfolioPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const query = useQuery()
-    const searchQueryPortfolioName = query.get('portfolioName')
-    const searchQueryprojectName = query.get('projectName')
+    const searchQueryPortfolioName = query.get('portfolioname')
+    const searchQueryprojectName = query.get('projectname')
 
     const { id, projectID, projectDetailID } = useParams()
     console.log('[id, projectID, projectDetailID]', id, projectID, projectDetailID)

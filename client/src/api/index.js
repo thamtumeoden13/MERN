@@ -31,6 +31,8 @@ export const commentProduct = (value, id) => API.patch(`/products/${id}/commentP
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)
 
+export const fetchRoute = () => API.get(`/route`)
+
 //portfolio
 export const fetchPortfolios = () => API.get(`/portfolios`)
 export const fetchPortfolio = (id) => API.get(`/portfolios/${id}`)

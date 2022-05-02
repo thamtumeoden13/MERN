@@ -8,7 +8,7 @@ import CategoryItem from './Category'
 
 import categories from '../../constants/tour.json'
 
-const Tours = () => {
+const Categories = () => {
 
     return (
         <Box>
@@ -42,4 +42,4 @@ const Tours = () => {
     )
 }
 
-export default Tours
+export default Categories

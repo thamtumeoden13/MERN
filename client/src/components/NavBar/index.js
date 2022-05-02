@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import decode from 'jwt-decode'
+import { v4 as uuidv4 } from 'uuid';
 
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
@@ -18,6 +19,7 @@ import NavBarMenuMobile from './NavBarMenuMobile';
 import NavBarDrawerMobile from './NavBarDrawerMobile'
 
 import { LOGOUT } from '../../redux/constants/actionType';
+import { getRoutes } from '../../redux/actions/routes';
 
 import useStyles from './styles'
 
@@ -27,12 +29,15 @@ const NavBar = (props) => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const { portfolios, isLoading: portfoliosLoading } = useSelector((state) => state.portfolios)
-    const { projects, isLoading: projectsLoading } = useSelector((state) => state.projects)
+    const { routes, isLoading } = useSelector((state) => state.routes)
 
     const [user, setUser] = useState(null)
+    const [routesNav, setRoutesNav] = useState([])
     const [drawer, setDrawer] = useState(false);
-    const [routes, setRoutes] = useState([])
+
+    useEffect(() => {
+        dispatch(getRoutes())
+    }, [dispatch])
 
     useEffect(() => {
         const token = user?.token
@@ -48,27 +53,81 @@ const NavBar = (props) => {
     }, [location, user?.token])
 
     useEffect(() => {
-        console.log('[router-navbar]', projects, portfolios)
-        if (!!projects && !!portfolios) {
-            const portfoliosCopy = JSON.parse(JSON.stringify(portfolios))
-            const routes = portfoliosCopy.reduce((r, a) => {
-                const projectsChild = projects.filter(e => e.portfolioID === a._id)
-                a.route = !!projectsChild && projectsChild.length > 0 ? '' : `han-muc-du-an/tim-kiem?portfolioName=${a.name}`
-                const child = projectsChild.map(e => {
-                    return {
-                        ...e,
-                        route: `han-muc-du-an/tim-kiem?projectname=${e.name}`
+        if (!!routes) {
+            let routesCopy = JSON.parse(JSON.stringify(routes))
+            const routesNav =
+                [
+                    {
+                        _id: uuidv4(),
+                        title: 'Giới Thiêu',
+                        name: 'gioi-thieu',
+                        // route: 'gioi-thieu',
+                        child: [
+                            {
+                                _id: uuidv4(),
+                                title: 'Giới Thiêu',
+                                name: 'gioi-thieu',
+                                route: 'gioi-thieu',
+                            },
+                            {
+                                _id: uuidv4(),
+                                title: 'Nhân Sự',
+                                name: 'nhan-su',
+                                route: 'nhan-su',
+                            },
+                            {
+                                _id: uuidv4(),
+                                title: 'Văn Phòng',
+                                name: 'van-phong',
+                                route: 'van-phong',
+                            },
+                            {
+                                id: 4,
+                                title: 'Liên Hệ',
+                                name: 'lien-he',
+                                route: 'lien-he',
+                            },
+                        ]
+                    },
+                    ...routesCopy,
+                    {
+                        _id: uuidv4(),
+                        title: 'Tin Tức',
+                        name: 'tin-tuc',
+                        // route: 'tin-tuc',
+                        child: [
+                            {
+                                _id: uuidv4(),
+                                title: 'Tin Tức',
+                                name: 'tin-tuc',
+                                route: 'tin-tuc',
+                            },
+                            {
+                                _id: uuidv4(),
+                                title: 'Cẩm nang xây nhà',
+                                name: 'cam-nang-xay-nha',
+                                route: 'cam-nang-xay-nha',
+                            },
+                            {
+                                _id: uuidv4(),
+                                title: 'Hoạt động-Sự kiện',
+                                name: 'hoat-dong-su-kien',
+                                route: 'hoat-dong-su-kien',
+                            },
+                            {
+                                _id: uuidv4(),
+                                title: 'Tuyển Dụng',
+                                name: 'tuyen-dung',
+                                route: 'tuyen-dung',
+                            },
+                        ]
                     }
-                })
-                a.child = [...child]
-                r = [...r || [], a]
-                return r
-            }, [])
-            console.log('[router-navbar-2]', routes)
-            setRoutes(routes)
-        }
+                ]
 
-    }, [portfolios, projects])
+            console.log('[routesNav]', routesNav)
+            setRoutesNav(routesNav)
+        }
+    }, [routes])
 
     const handleLogout = useCallback(() => {
         dispatch({ type: LOGOUT })
@@ -89,6 +148,8 @@ const NavBar = (props) => {
         // setDrawer(open, event);
     };
 
+    console.log('[routesNav]', routesNav)
+
     return (
         <HideOnScroll {...props}>
             <AppBar position="fixed" className={classes.appBar} color='inherit' sx={{ top: 0, bottom: 'auto' }}>
@@ -96,7 +157,7 @@ const NavBar = (props) => {
                     <NavBarMenuIconComponent toggleDrawer={toggleDrawer} />
                     <NavBarLogoComponent />
                     <NavBarMenuMobile />
-                    <NavBarMenu routes={routes} />
+                    <NavBarMenu routes={routesNav} />
                     <NavBarDrawerMobile drawer={drawer} toggleDrawer={toggleDrawer} />
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{

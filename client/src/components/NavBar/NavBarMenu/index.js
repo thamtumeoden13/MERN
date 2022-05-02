@@ -8,7 +8,6 @@ import Menu from '@mui/material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-// import { routes } from '../../../constants/routers';
 import useStyles from './styles'
 
 const NavBarMenu = ({ routes }) => {
@@ -37,7 +36,6 @@ const NavBarMenu = ({ routes }) => {
             handleRouteMenu(routeMenuChild.route)
         }
     };
-
 
     const handleRouteMenu = (route) => {
         navigate(`/${route.toLowerCase()}`)

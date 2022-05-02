@@ -17,8 +17,8 @@ const Portfolios = ({ onViewDetail }) => {
     const { projectDetails, projectDetailsBySearch, projectDetailsByPortfolioID, projectDetailsByProjectID, isLoading } = useSelector((state) => state.projectDetails)
 
     const query = useQuery()
-    const searchQueryPortfolioName = query.get('portfolioName')
-    const searchQueryprojectName = query.get('projectName')
+    const searchQueryPortfolioName = query.get('portfolioname')
+    const searchQueryprojectName = query.get('projectname')
 
     console.log('[searchQueryPortfolioName]', searchQueryPortfolioName)
     console.log('[searchQueryprojectName]', searchQueryprojectName)

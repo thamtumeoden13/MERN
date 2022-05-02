@@ -5,6 +5,10 @@ import Auth from '../pages/AuthPage';
 import Home from '../pages/HomePage'
 import NotFound from '../pages/404Page'
 
+import ProductPage from '../pages/ProductPage';
+import AlbumPage from '../pages/AlbumPage';
+import CategoryPage from '../pages/CategoryPage';
+
 import Portfolio from '../pages/PortfolioPage'
 import PortfolioList from '../pages/PortfolioPage/PortfolioList'
 
@@ -69,6 +73,17 @@ const Router = () => {
                 <Route path='/quan-ly/han-muc-du-an' element={<RequireAuth><PortfolioAdmin /></RequireAuth>} />
                 <Route path='/quan-ly/du-an' element={<RequireAuth><ProjectAdmin /></RequireAuth>} />
                 <Route path='/quan-ly/chi-tiet-du-an' element={<RequireAuth><ProjectDetailAdmin /></RequireAuth>} />
+
+
+                <Route path='/gioi-thieu' exact element={<CategoryPage />} />
+                <Route path='/nhan-su' exact element={<CategoryPage />} />
+                <Route path='/van-phong' exact element={<CategoryPage />} />
+                <Route path='/lien-he' exact element={<CategoryPage />} />
+
+                <Route path='/tin-tuc' exact element={<AlbumPage />} />
+                <Route path='/cam-nang-xay-nha' exact element={<AlbumPage />} />
+                <Route path='/hoat-dong-su-kien' exact element={<AlbumPage />} />
+                <Route path='/tuyen-dung' exact element={<AlbumPage />} />
 
                 <Route path='/auth' element={<Auth />} />
                 <Route path='/404' element={<NotFound />} />

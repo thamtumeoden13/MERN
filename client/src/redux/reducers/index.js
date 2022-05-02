@@ -8,9 +8,11 @@ import products from './products'
 import portfolios from './portfolios'
 import projects from './projects'
 import projectDetails from './projectDetails'
+import routes from './routes'
 
 export default combineReducers({
     auth,
+    routes,
     toast,
     modal,
     posts,

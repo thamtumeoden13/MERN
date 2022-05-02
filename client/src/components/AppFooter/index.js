@@ -32,7 +32,7 @@ const AppFooter = () => {
     const handleClick = (project) => {
         console.info('You clicked the Chip.', project);
         // navigate(`/han-muc-du-an/chi-tiet-du-an/${project._id}`)
-        navigate(`/han-muc-du-an/tim-kiem?projectname=${project.name}`)
+        navigate(`/han-muc-du-an/tim-kiem?projectName=${project.name}`)
     };
 
     console.log('[AppFooter]', projects)
