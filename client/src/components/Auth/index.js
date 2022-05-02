@@ -92,7 +92,7 @@ const Auth = () => {
                     component="h1"
                     variant='h5'
                 >
-                    {isSignup ? `Sign Up` : `Sign In`}
+                    {isSignup ? `Đăng Ký` : `Đăng Nhập`}
                 </Typography>
                 <form
                     className={classes.form}
@@ -106,14 +106,14 @@ const Auth = () => {
                             <>
                                 <Input
                                     name='firstName'
-                                    label='First Name'
+                                    label='Họ'
                                     autoFocus
                                     half
                                     handleChange={handleChange}
                                 />
                                 <Input
                                     name='lastName'
-                                    label='Last Name'
+                                    label='Tên'
                                     half
                                     handleChange={handleChange}
                                 />
@@ -121,13 +121,13 @@ const Auth = () => {
                         )}
                         <Input
                             name='email'
-                            label='Email Address'
+                            label='Đia chỉ mail'
                             type='emai;'
                             handleChange={handleChange}
                         />
                         <Input
                             name='password'
-                            label='Password'
+                            label='Mật khẩu'
                             type={showPassword ? 'text' : 'password'}
                             handleChange={handleChange}
                             handleShowPassword={handleShowPassword}
@@ -135,7 +135,7 @@ const Auth = () => {
                         {isSignup &&
                             <Input
                                 name='confirmPassword'
-                                label='Repeat Password'
+                                label='Nhập lại mật khẩu'
                                 type='password'
                                 handleChange={handleChange}
                             />
@@ -148,7 +148,7 @@ const Auth = () => {
                         color='primary'
                         className={classes.googleButton}
                     >
-                        {isSignup ? 'Sign Up' : ' Sign In'}
+                        {isSignup ? 'Đăng Ký' : 'Đăng Nhập'}
                     </Button>
                     <GoogleLogin
                         clientId='711608998315-74dlgofriutfd2h0k2dovspne0mqqg6q.apps.googleusercontent.com'

@@ -1,20 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import decode from 'jwt-decode'
 
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
-import IconButton from '@mui/material/IconButton';
-
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import GoogleIcon from '@mui/icons-material/Google';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 
 import HideOnScroll from './HideOnScroll'
 import ElevationScroll from './ElevationScroll'
@@ -36,8 +27,12 @@ const NavBar = (props) => {
     const navigate = useNavigate()
     const location = useLocation()
 
+    const { portfolios, isLoading: portfoliosLoading } = useSelector((state) => state.portfolios)
+    const { projects, isLoading: projectsLoading } = useSelector((state) => state.projects)
+
     const [user, setUser] = useState(null)
     const [drawer, setDrawer] = useState(false);
+    const [routes, setRoutes] = useState([])
 
     useEffect(() => {
         const token = user?.token
@@ -51,6 +46,29 @@ const NavBar = (props) => {
 
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location, user?.token])
+
+    useEffect(() => {
+        console.log('[router-navbar]', projects, portfolios)
+        if (!!projects && !!portfolios) {
+            const portfoliosCopy = JSON.parse(JSON.stringify(portfolios))
+            const routes = portfoliosCopy.reduce((r, a) => {
+                const projectsChild = projects.filter(e => e.portfolioID === a._id)
+                a.route = !!projectsChild && projectsChild.length > 0 ? '' : `han-muc-du-an/tim-kiem?portfolioName=${a.name}`
+                const child = projectsChild.map(e => {
+                    return {
+                        ...e,
+                        route: `han-muc-du-an/tim-kiem?projectname=${e.name}`
+                    }
+                })
+                a.child = [...child]
+                r = [...r || [], a]
+                return r
+            }, [])
+            console.log('[router-navbar-2]', routes)
+            setRoutes(routes)
+        }
+
+    }, [portfolios, projects])
 
     const handleLogout = useCallback(() => {
         dispatch({ type: LOGOUT })
@@ -78,7 +96,7 @@ const NavBar = (props) => {
                     <NavBarMenuIconComponent toggleDrawer={toggleDrawer} />
                     <NavBarLogoComponent />
                     <NavBarMenuMobile />
-                    <NavBarMenu />
+                    <NavBarMenu routes={routes} />
                     <NavBarDrawerMobile drawer={drawer} toggleDrawer={toggleDrawer} />
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{

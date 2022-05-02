@@ -23,6 +23,7 @@ import {
     getProjectDetailSearchByPortfolioName,
     getProjectDetailSearchByProjectName
 } from '../../redux/actions/projectDetails'
+
 import { useQuery } from '../../utils';
 
 const PortfolioPage = () => {
@@ -32,25 +33,22 @@ const PortfolioPage = () => {
     const searchQueryPortfolioName = query.get('portfolioName')
     const searchQueryprojectName = query.get('projectName')
 
-    console.log('[searchQueryPortfolioName]', searchQueryPortfolioName)
-    console.log('[searchQueryprojectName]', searchQueryprojectName)
-
     const { id, projectID, projectDetailID } = useParams()
-
+    console.log('[id, projectID, projectDetailID]', id, projectID, projectDetailID)
     const [search, setSearch] = useState('')
 
     useEffect(() => {
-        if (id) {
+        if (!!id) {
             dispatch(getProjectDetail(id))
             return
         }
 
-        if (projectID) {
+        if (!!projectID) {
             dispatch(getProjectDetailsByPortfolioID(projectID))
             return
         }
 
-        if (projectDetailID) {
+        if (!!projectDetailID) {
             dispatch(getProjectDetailsByProjectID(projectDetailID))
             return
         }
@@ -65,7 +63,6 @@ const PortfolioPage = () => {
             dispatch(getProjectDetailSearchByProjectName(searchQueryprojectName))
             return
         }
-        console.log('[dispatch(getProjectDetails())]')
         dispatch(getProjectDetails())
     }, [dispatch, searchQueryPortfolioName, searchQueryprojectName])
 

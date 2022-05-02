@@ -14,7 +14,7 @@ import CardItem from './CardItem'
 import useStyles from './styles'
 import ListTitle from '../ListTitle';
 
-const CardList = ({ title, data, subData, itemCount = 3, onViewDetail }) => {
+const CardList = ({ title, data, subData, itemCount = 3, onViewDetail, onViewSubDetail }) => {
 
     const [state, setState] = useState({ xs: 12, sm: 12, md: 6, lg: 4 })
 
@@ -29,6 +29,13 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail }) => {
         console.log('handleClickItem', item)
         if (onViewDetail) {
             onViewDetail(item)
+        }
+    }
+
+    const handleClickSubItem = (item) => {
+        console.log('handleClickSubItem', item)
+        if (onViewSubDetail) {
+            onViewSubDetail(item)
         }
     }
 
@@ -47,7 +54,7 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail }) => {
                     <Divider light sx={{ width: 160, height: 1, backgroundColor: 'orange' }} />
                 </Box>
             }
-            <ListTitle data={subData} />
+            <ListTitle data={subData} onClick={handleClickSubItem} />
             <Grid container spacing={2}>
                 {data.map((item, index) => {
                     return (

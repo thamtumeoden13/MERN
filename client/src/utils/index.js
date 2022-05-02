@@ -48,7 +48,8 @@ export const useTarget = (initial = null) => {
 }
 
 export const useQuery = () => {
-    return new URLSearchParams(useLocation().search)
+    const location = useLocation();
+    return new URLSearchParams(location.search)
 }
 
 

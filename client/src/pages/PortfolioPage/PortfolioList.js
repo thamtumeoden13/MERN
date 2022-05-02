@@ -20,7 +20,6 @@ const PorfolioListPage = () => {
 
     useEffect(() => {
         dispatch(getPortfolios())
-
     }, [dispatch])
 
     const handleViewDetail = (item) => {

@@ -12,7 +12,7 @@ const MenuLogoComponent = ({}) => {
     const classes = useStyles()
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
             <Link to="/" className={classes.brandContainer} >
                 <Paper
                     elevation={4}

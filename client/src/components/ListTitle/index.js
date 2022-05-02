@@ -6,9 +6,15 @@ import CardItem from './TitleItem'
 
 import useStyles from './styles'
 
-const ListTitle = ({ data = [] }) => {
+const ListTitle = ({ data = [], onClick }) => {
 
     const classes = useStyles()
+
+    const handleClickItem = (item) => {
+        if (onClick) {
+            onClick(item)
+        }
+    }
 
     if (!data || data.length <= 0) return null
 
@@ -17,7 +23,7 @@ const ListTitle = ({ data = [] }) => {
             <List className={classes.listContainer}>
                 {data.map((item, i) => (
                     <Fragment key={i.toString()}>
-                        <CardItem item={item} />
+                        <CardItem item={item} onClick={handleClickItem} />
                     </Fragment>
                 ))}
             </List>
