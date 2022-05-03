@@ -12,8 +12,11 @@ import NavBar from '../../components/NavBar';
 import AppFooter from '../../components/AppFooter';
 
 import { getProjects } from '../../redux/actions/projects'
+import { useTitle } from '../../utils';
 
 const ProjectPage = () => {
+
+    useTitle('Art-Sunday | Dự Án');
 
     const dispatch = useDispatch()
 
@@ -29,19 +32,10 @@ const ProjectPage = () => {
         <Box sx={{ pt: 10 }}>
             <NavBar />
             <Grow in>
-                <Container sx={{ marginY: 5, }}>
+                <Container sx={{ marginY: 5, }} maxWidth={'xl'}>
                     <Box sx={{ mb: 2 }}>
                         <BreadcrumbComponent />
                     </Box>
-                    <Typography
-                        component="h1"
-                        variant="h2"
-                        align="center"
-                        color="text.primary"
-                        gutterBottom
-                    >
-                        {`Danh Sách Dự Án`}
-                    </Typography>
                     <ProjectComponent />
                 </Container>
             </Grow>

@@ -4,6 +4,7 @@ import { Navigate, Routes, Route } from 'react-router-dom';
 import Auth from '../pages/AuthPage';
 import Home from '../pages/HomePage'
 import NotFound from '../pages/404Page'
+import SearchList from '../pages/SearchPage'
 
 import ProductPage from '../pages/ProductPage';
 import AlbumPage from '../pages/AlbumPage';
@@ -51,6 +52,8 @@ const Router = () => {
         <React.Fragment>
             <Routes>
                 <Route path='/' exact element={<Home />} />
+                <Route path='/tim-kiem' exact element={<SearchList />} />
+
                 <Route path='/han-muc-du-an' exact element={<Portfolio />} />
                 <Route path='/han-muc-du-an/tim-kiem' element={<Portfolio />} />
                 <Route path='/han-muc-du-an/:id' element={<Portfolio />} />

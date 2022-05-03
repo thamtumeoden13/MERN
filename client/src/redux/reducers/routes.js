@@ -1,11 +1,12 @@
 import {
     START_LOADING_ROUTE, END_LOADING_ROUTE,
-    FETCH_ROUTE,
+    FETCH_ROUTE, SELECTED_ROUTE,
 } from '../constants/actionType';
 
 const initState = {
     isLoading: false,
     routes: [],
+    selectedRoute: {}
 }
 
 const reducer = (state = initState, action) => {
@@ -24,6 +25,11 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 routes: action.payload.data,
+            };
+        case SELECTED_ROUTE:
+            return {
+                ...state,
+                selectedRoute: action.payload,
             };
         default:
             return state;

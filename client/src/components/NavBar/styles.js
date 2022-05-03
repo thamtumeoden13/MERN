@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		padding: '10px 10px',
+		padding: '0 10px',
 		backgroundColor: '#202530',
 		[theme.breakpoints.down('sm')]: {
 			padding: 0
@@ -25,18 +25,5 @@ export default makeStyles((theme) => ({
 		[theme.breakpoints.down('sm')]: {
 			width: 'auto',
 		},
-	},
-	appBar2: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		padding: '10px 10px',
-		backgroundColor: '#202530',
-		[theme.breakpoints.down('sm')]: {
-			padding: 0
-		},
-		[theme.breakpoints.down('md')]: {
-			padding: 0
-		},
-	},
+	}
 }));

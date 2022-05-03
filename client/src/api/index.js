@@ -58,6 +58,7 @@ export const fetchProjectDetailByProjects = (id) => API.get(`/projectDetails/pro
 
 export const fetchProjectDetailSearchByPortfolioName = (portfolioName) => API.get(`/projectDetails/search?portfolioName=${portfolioName || 'none'}`)
 export const fetchProjectDetailSearchByProjectName = (projectName) => API.get(`/projectDetails/search?projectName=${projectName || 'none'}`)
+export const fetchProjectDetailSearchByName = (searchQuery) => API.get(`/projectDetails/search?name=${searchQuery || 'none'}`)
 
 export const createProjectDetail = (payload) => API.post(`/projectDetails`, payload)
 export const updateProjectDetail = (id, payload) => API.patch(`/projectDetails/${id}`, payload)

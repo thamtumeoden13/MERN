@@ -9,21 +9,25 @@ import { Box } from '@mui/material';
 import CardList from '../CardList';
 import SearchNotFound from '../SearchNotFound';
 
-import useStyles from './styles'
+import { useQuery, useTitle } from '../../utils';
 
-const PorfolioList = ({ onViewDetail }) => {
+const SearchList = ({ onViewDetail }) => {
 
-    const { portfolios, isLoading } = useSelector((state) => state.portfolios)
+    const query = useQuery()
+    const searchQuery = query.get('searchQuery')
+
+    const { projectDetailsBySearch, isLoading } = useSelector((state) => state.projectDetails)
 
     const [data, setData] = useState([])
 
-    console.log('PorfolioList', portfolios)
+    console.log('ProjectDetailList', projectDetailsBySearch)
 
     useEffect(() => {
-        setData(portfolios || [])
-    }, [portfolios])
+        setData(projectDetailsBySearch || [])
+    }, [projectDetailsBySearch])
 
     const handleViewDetail = (item) => {
+        console.log('[item]', item)
         if (onViewDetail) {
             onViewDetail(item)
         }
@@ -32,7 +36,7 @@ const PorfolioList = ({ onViewDetail }) => {
     if (!isLoading && !data.length) {
         return (
             <SearchNotFound
-                searchQuery={'state.searchQuery'}
+                searchQuery={searchQuery || ''}
                 sx={{ minHeight: '50vh' }}
             />
         )
@@ -42,6 +46,7 @@ const PorfolioList = ({ onViewDetail }) => {
         <Box>
             <CardList
                 data={data}
+                // title={e.title}
                 itemCount={4}
                 onViewDetail={handleViewDetail}
             />
@@ -49,4 +54,4 @@ const PorfolioList = ({ onViewDetail }) => {
     )
 }
 
-export default PorfolioList
+export default SearchList

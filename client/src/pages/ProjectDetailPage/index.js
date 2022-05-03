@@ -16,13 +16,18 @@ import { getProjectDetail, getProjectDetailsByProjectID, getProjectDetailsByPort
 import { getProject } from '../../redux/actions/projects'
 import { getPortfolio } from '../../redux/actions/portfolios'
 
+import { useTitle } from '../../utils';
+
 const ProjectDetail = () => {
+
     const dispatch = useDispatch()
 
     const { id } = useParams()
 
     const { projectDetail, isLoading } = useSelector((state) => state.projectDetails)
     console.log('[ProjectDetail-id]', id)
+    useTitle('Art-Sunday | Chi Tiết Dự Án');
+
     useEffect(() => {
         if (id) {
             dispatch(getProjectDetail(id))

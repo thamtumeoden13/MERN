@@ -20,7 +20,7 @@ import AppFooter from '../../components/AppFooter';
 
 const HomePage = () => {
 
-    useTitle('Art | Sunday');
+    useTitle('Art-Sunday | Trang Chủ');
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -61,14 +61,14 @@ const HomePage = () => {
     }
 
     return (
-        <Box sx={{ pt: 10, backgroundColor: 'transparent' }}>
+        <Box sx={{ pt: 6, backgroundColor: 'transparent' }}>
             <NavBar />
             <Header />
-            <Container sx={{ paddingY: 0, mt: 10, minHeight: '100vh' }}>
+            <Container sx={{ paddingY: 0, mt: 10, minHeight: '100vh' }} maxWidth='xl'>
                 <Box sx={{
                     minHeight: '100vh',
                     flexDirection: 'column',
-                    justifyContent: { sx: 'center' }
+                    // justifyContent: { sm: 'center', sx: 'center' },
                 }}>
                     {(!data || data.length <= 0) ?
                         <Box>

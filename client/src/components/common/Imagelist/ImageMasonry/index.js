@@ -2,19 +2,21 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 const MasonryImageList = () => {
     return (
-        <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }}>
-            <ImageList variant="masonry" cols={3} gap={8}>
+        <Box sx={{ height: '100vh', overflowY: 'scroll' }}>
+            <ImageList variant="masonry" cols={3} gap={1}>
                 {itemData.map((item) => (
                     <ImageListItem key={item.img}>
                         <img
-                            src={`${item.img}?w=248&fit=crop&auto=format`}
-                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                            src={`${item.img}?w=350&fit=crop&auto=format`}
+                            srcSet={`${item.img}?w=350&fit=crop&auto=format&dpr=2 2x`}
                             alt={item.title}
                             loading="lazy"
                         />
+                        <ImageListItemBar position="below" title={item.title} />
                     </ImageListItem>
                 ))}
             </ImageList>
@@ -26,7 +28,7 @@ export default MasonryImageList
 
 const itemData = [
     {
-        img: 'https://images.unsplash.com/photo-1549388604-817d15aa0110',
+        img: 'https://images.pexels.com/photos/3673316/pexels-photo-3673316.jpeg',
         title: 'Bed',
     },
     {

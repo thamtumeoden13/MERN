@@ -7,13 +7,13 @@ export const getRoutes = async (req, res) => {
         const [portfolios, projects] = await Promise.all([getPortfolios(), getProjects()])
         const portfoliosCopy = JSON.parse(JSON.stringify(portfolios))
         const routes = portfoliosCopy.reduce((r, a) => {
-            const element = { _id: a._id, nam: a.name, title: a.title }
+            const element = { _id: a._id, name: a.name, title: a.title }
             const projectsChild = projects.filter(e => e.portfolioID === element._id)
             element.route = !!projectsChild && projectsChild.length > 0 ? '' : `han-muc-du-an/tim-kiem?portfolioname=${element.name}`
             const child = projectsChild.map(e => {
                 return {
                     _id: e._id,
-                    nam: e.name,
+                    name: e.name,
                     title: e.title,
                     route: `han-muc-du-an/tim-kiem?projectname=${e.name}`
                 }

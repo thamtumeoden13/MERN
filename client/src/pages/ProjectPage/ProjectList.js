@@ -8,58 +8,45 @@ import Grow from '@mui/material/Grow'
 
 import ProjectListComponent from '../../components/Projects/ProjectList'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
-
-import { getProjects } from '../../redux/actions/projects'
-
 import NavBar from '../../components/NavBar';
 import AppFooter from '../../components/AppFooter';
 
+import { getPortfolios } from '../../redux/actions/portfolios'
+import { getProjects } from '../../redux/actions/projects'
+
+import { useTitle } from '../../utils';
+
 const ProjectListPage = () => {
+
+    useTitle('Art-Sunday | Danh Sách Dự Án');
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
 
-    const [state, setState] = useState({
-        title: 'Danh Sách Dự Án'
-    })
+    const { id } = useParams()
+
 
     useEffect(() => {
+        dispatch(getPortfolios())
         dispatch(getProjects())
     }, [dispatch])
 
-    useEffect(() => {
-
-        if (!!location && !!location.state) {
-            console.log('[location.state]', location.state)
-            const title = location.state.title || state.title
-            console.log('[title]', title)
-            setState({ ...state, title: `${title}` })
-        }
-    }, [location])
 
     const handleViewDetail = (item) => {
         console.log('[ProjectListPage-item]', item)
-        navigate(`/danh-sach-du-an/${item._id}`, { state: { title: item.title } })
+        navigate(`/danh-sach-du-an/${item._id}`)
     }
 
     return (
         <Box sx={{ pt: 10, }}>
             <NavBar />
             <Grow in>
-                <Container maxWidth={'lg'} sx={{ minHeight: '100vh' }}>
+                <Container maxWidth={'xl'} sx={{ minHeight: '100vh' }}>
                     <Box sx={{ marginY: 4 }}>
                         <BreadcrumbComponent />
                     </Box>
                     <Box>
-                        <Typography
-                            variant="h4"
-                            component="div"
-                            align="center"
-                            color="text.primary"
-                            gutterBottom
-                        >
-                            {state.title}
-                        </Typography>
                         <ProjectListComponent onViewDetail={handleViewDetail} />
                     </Box>
                 </Container>

@@ -4,9 +4,11 @@ export default makeStyles((theme) => ({
 	menu: {
 		color: 'white',
 		display: 'flex',
+		borderRadius: '0',
 		"&:hover": {
-			background: 'linear-gradient(45deg, #56BBF1 30%, #4D77FF 90%)',
-			boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)'
+			background: 'linear-gradient(45deg, #f37121 30%, #f37121 100%)',
+			boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+
 		},
 	}
 }));

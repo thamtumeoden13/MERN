@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { jsx } from 'slate-hyperscript'
 import { Transforms, createEditor, Descendant } from 'slate'
 import { withHistory } from 'slate-history'
-import { css } from '@emotion/css'
 import {
     Slate,
     Editable,
@@ -12,7 +11,11 @@ import {
     useFocused,
 } from 'slate-react'
 
+import CardMedia from '@mui/material/CardMedia'
+import { css } from '@emotion/css'
+
 import { initialValueSmall as initialValue } from '../../../constants/dataEditor'
+import { Box } from '@mui/system';
 
 const ELEMENT_TAGS = {
     A: el => ({ type: 'link', url: el.getAttribute('href') }),
@@ -88,11 +91,6 @@ export const deserialize = el => {
 
 const PasteHtmlComponent = (props) => {
 
-    const { projectDetail, isLoading } = useSelector((state) => state.projectDetails)
-    // const initialValue = useMemo(() => { return !!projectDetail && !!projectDetail.description ? JSON.parse(projectDetail.description) : null }, [projectDetail])
-
-    console.log('[PasteHtmlComponent]', projectDetail)
-
     const [value, setValue] = useState(initialValue)
 
     const [state, setState] = useState({
@@ -112,9 +110,9 @@ const PasteHtmlComponent = (props) => {
 
     useEffect(() => {
         setValue(null)
-        if (!!projectDetail && Object.keys(projectDetail).length > 0) {
+        if (!!props.initialValue && props.initialValue.length > 0) {
             const timeoutRef = setTimeout(() => {
-                setValue(JSON.parse(projectDetail.description))
+                setValue(props.initialValue)
             }, 1000);
             return () => {
                 clearTimeout(timeoutRef)
@@ -122,21 +120,7 @@ const PasteHtmlComponent = (props) => {
         } else {
             setValue(initialValue)
         }
-    }, [projectDetail])
-
-    // useEffect(() => {
-    //     setValue(null)
-    //     if (!!props.initialValue && props.initialValue.length > 0) {
-    //         const timeoutRef = setTimeout(() => {
-    //             setValue(props.initialValue)
-    //         }, 1000);
-    //         return () => {
-    //             clearTimeout(timeoutRef)
-    //         }
-    //     } else {
-    //         setValue(initialValue)
-    //     }
-    // }, [props.initialValue])
+    }, [props.initialValue])
 
     const handleChange = (value) => {
         console.log('[handleChange]', value)
@@ -228,20 +212,26 @@ const Element = props => {
 }
 
 const ImageElement = ({ attributes, children, element }) => {
-    const selected = useSelected()
-    const focused = useFocused()
+
     return (
         <div {...attributes}>
             {children}
-            <img
-                src={element.url}
-                className={css`
-          display: block;
-          max-width: 100%;
-          max-height: 20em;
-          box-shadow: ${selected && focused ? '0 0 0 2px blue;' : 'none'};
-        `}
-            />
+            <Box sx={{
+                display: 'flex', flexDirection: 'column',
+                height: '90vh',
+                marginY: 2,
+            }}>
+                <CardMedia
+                    component='img'
+                    image={element.url}
+                    alt='image'
+                    className={css`
+                            object-fit: contain;
+                            max-width: 100%;
+                            height: 100%;
+                        `}
+                />
+            </Box>
         </div>
     )
 }

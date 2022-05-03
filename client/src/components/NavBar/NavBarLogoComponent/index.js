@@ -3,45 +3,40 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import { css } from '@emotion/css'
 
 import imageLogo_Green from '../../../assets/imageLogo_Green.jpeg'
+import logo_artsunday from '../../../assets/logo-artsunday-1.png'
 
 import useStyles from './styles'
 
-const MenuLogoComponent = ({}) => {
+const MenuLogoComponent = ({ }) => {
     const classes = useStyles()
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
             <Link to="/" className={classes.brandContainer} >
                 <Paper
-                    elevation={4}
                     sx={{
-                        display: { xs: 'none', md: 'block', sm: 'block' },
+                        display: 'block',
                         mr: 1,
-                        width: {
-                            sm: 48, // theme.breakpoints.up('sm')
-                            md: 64, // theme.breakpoints.up('md')
-                        },
-                        height: {
-                            sm: 48, // theme.breakpoints.up('sm')
-                            md: 64, // theme.breakpoints.up('md')
-                        },
-                        borderRadius: 5
+                        backgroundColor: 'transparent'
                     }}
+                    elevation={0}
                 >
-                    <img src={imageLogo_Green} alt="iconLogo" height="100%" style={{ borderRadius: 5 }} />
+                    <img
+                        src={logo_artsunday}
+                        className={css`
+                            display: block;
+                            max-width: 200px;
+                            max-height: 10em;
+                            `
+                        }
+                    />
                 </Paper>
             </Link>
-            <Typography
-                variant="h6"
-                component="h5"
-                noWrap
-                sx={{ display: { xs: 'none', md: 'block' }, color: '#56BBF1' }}
-            >
-                {`SUNDAY-TV`}
-            </Typography>
-        </Box>
+        </Box >
     )
 }
 

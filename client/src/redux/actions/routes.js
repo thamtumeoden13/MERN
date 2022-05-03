@@ -1,7 +1,7 @@
 import * as api from '../../api'
 import {
     START_LOADING_ROUTE, END_LOADING_ROUTE,
-    FETCH_ROUTE,
+    FETCH_ROUTE, SELECTED_ROUTE
 } from '../constants/actionType';
 
 export const getRoutes = () => async (dispatch) => {
@@ -17,4 +17,9 @@ export const getRoutes = () => async (dispatch) => {
     } finally {
         dispatch({ type: END_LOADING_ROUTE })
     }
+}
+
+
+export const selectedRoute = (route) => async (dispatch) => {
+    dispatch({ type: SELECTED_ROUTE, payload: route })
 }

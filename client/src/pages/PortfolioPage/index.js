@@ -9,6 +9,10 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import ListSubheader from '@mui/material/ListSubheader';
+import Select from '@mui/material/Select';
+
 import SearchIcon from '@mui/icons-material/Search';
 
 import Portfolios from '../../components/Portfolios'
@@ -16,6 +20,9 @@ import QuiltedImageList from '../../components/common/Imagelist/ImageQuilted'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
 import NavBar from '../../components/NavBar';
 import AppFooter from '../../components/AppFooter';
+import PasteHtmlComponent from '../../components/common/PasteHtml';
+import SearchTextInput from '../../components/common/SearchTextInput';
+import SearchSelect from '../../components/common/SearchSelect';
 
 import {
     getProjectDetails, getProjectDetail,
@@ -24,20 +31,30 @@ import {
     getProjectDetailSearchByProjectName
 } from '../../redux/actions/projectDetails'
 
-import { useQuery } from '../../utils';
+import { useQuery, useTitle } from '../../utils';
 
 const PortfolioPage = () => {
+
+    useTitle('Art-Sunday | Hạn Mục Dự Án');
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const query = useQuery()
     const searchQueryPortfolioName = query.get('portfolioname')
     const searchQueryprojectName = query.get('projectname')
 
+    const { projects, } = useSelector((state) => state.projects)
+    const { projectDetails, } = useSelector((state) => state.projectDetails)
+
     const { id, projectID, projectDetailID } = useParams()
     console.log('[id, projectID, projectDetailID]', id, projectID, projectDetailID)
-    const [search, setSearch] = useState('')
+
+    const [description, setDescription] = useState(null)
+    const [selectResult, setSelectResult] = useState([])
+    const [selectValue, setSelectValue] = useState('')
 
     useEffect(() => {
+        dispatch(getProjectDetails())
         if (!!id) {
             dispatch(getProjectDetail(id))
             return
@@ -63,26 +80,58 @@ const PortfolioPage = () => {
             dispatch(getProjectDetailSearchByProjectName(searchQueryprojectName))
             return
         }
-        dispatch(getProjectDetails())
     }, [dispatch, searchQueryPortfolioName, searchQueryprojectName])
+
+    useEffect(() => {
+        if (!!searchQueryprojectName) {
+            setSelectValue(searchQueryprojectName)
+            const find = projects.find(e => e.name === searchQueryprojectName)
+            if (!!find) {
+                setDescription(JSON.parse(find.description))
+            }
+            return
+        }
+        setSelectValue('')
+    }, [searchQueryprojectName, projects])
+
+    useEffect(() => {
+        if (!!projectDetails && !!projects) {
+            const selectResult = projects.map(e => {
+                const element = { ...e }
+                const child = projectDetails.filter(f => f.projectID == e._id)
+                return {
+                    ...element,
+                    count: child.length
+                }
+            })
+            setSelectResult([...selectResult])
+        }
+    }, [projects, projectDetails])
 
     const handleViewDetail = (item) => {
         navigate(`/chi-tiet-du-an/${item._id}`)
     }
 
-    const handleChangeValue = (event) => {
-        console.log('[handleChangeValue]', event.target.value)
-        setSearch(event.target.value)
+    const handleSearch = (search) => {
+        console.log('[handleSearch]', search)
+        navigate(`/tim-kiem?searchQuery=${search}`)
     }
 
-    const handleSearch = () => {
-        console.log('[handleSearch]')
-    }
+    const handleChange = (f) => {
+        if (f.target.value == 'tat-ca-du-an') {
+            setDescription(null)
+            navigate(`/han-muc-du-an`)
+            return
+        }
+        navigate(`/han-muc-du-an/tim-kiem?projectname=${f.target.value}`)
+    };
+
+    console.log('[selectResult]', selectResult)
 
     return (
         <Box sx={{ pt: 10, }}>
             <NavBar />
-            <Container maxWidth={'lg'} sx={{ minHeight: '100vh' }}>
+            <Container maxWidth={'xl'} sx={{ minHeight: '100vh' }}>
                 <Box>
                     <QuiltedImageList data={data} />
                 </Box>
@@ -90,42 +139,33 @@ const PortfolioPage = () => {
                     <BreadcrumbComponent />
                 </Box>
                 <Box>
-                    <Grid container spacing={3} sx={{ minHeight: '100vh' }}>
+                    <Grid container spacing={3} sx={{ minHeight: '100vh', }}>
                         <Box sx={{
                             display: { xs: 'none', sm: 'none', md: 'flex' }, flexDirection: 'column',
                             padding: 2,
                         }}>
-                            <Grid item md={3}>
-                                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                                    <InputLabel htmlFor="outlined-adornment-password">{`Tìm kiếm`}</InputLabel>
-                                    <OutlinedInput
-                                        id="outlined-adornment-password"
-                                        type={'text'}
-                                        value={search}
-                                        onChange={handleChangeValue}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleSearch}
-                                                    edge="end"
-                                                >
-                                                    <SearchIcon />
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        label="Tìm kiếm..."
-                                        placeholder='Nhập tên dự án...'
+                            <Grid item md={3} >
+                                <Box sx={{
+                                    display: 'flex', flexDirection: 'column',
+                                    width: 240
+                                }}>
+                                    <SearchTextInput
+                                        onSearch={handleSearch}
                                     />
-                                </FormControl>
+                                    <SearchSelect
+                                        result={selectResult}
+                                        count={projectDetails.length}
+                                    />
+                                </Box>
                             </Grid>
                         </Box>
                         <Grid item xs={12} sm={12} md={9}>
                             <Portfolios onViewDetail={handleViewDetail} />
                         </Grid>
                     </Grid>
+                    {!!description && <PasteHtmlComponent initialValue={description} readOnly={true} />}
                 </Box>
-            </Container>
+            </Container >
             <AppFooter />
         </Box >
     )

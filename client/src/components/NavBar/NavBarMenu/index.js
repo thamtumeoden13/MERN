@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+
 import Box from '@mui/material/Box';
+import Grow from '@mui/material/Grow';
+import Slide from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
@@ -8,11 +12,14 @@ import Menu from '@mui/material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
+import { selectedRoute } from '../../../redux/actions/routes';
+
 import useStyles from './styles'
 
 const NavBarMenu = ({ routes }) => {
     const classes = useStyles()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [menuActived, setMenuActived] = useState(-1);
@@ -24,7 +31,7 @@ const NavBarMenu = ({ routes }) => {
             setMenuActived(menu._id)
         }
         if (!!menu.route) {
-            handleRouteMenu(menu.route)
+            handleRouteMenu(menu)
         }
     };
 
@@ -33,25 +40,27 @@ const NavBarMenu = ({ routes }) => {
         setAnchorEl(null);
         setMenuActived(-1)
         if (!!routeMenuChild && !!routeMenuChild.route) {
-            handleRouteMenu(routeMenuChild.route)
+            handleRouteMenu(routeMenuChild)
         }
     };
 
-    const handleRouteMenu = (route) => {
-        navigate(`/${route.toLowerCase()}`)
+    const handleRouteMenu = (item) => {
+        navigate(`/${item.route.toLowerCase()}`)
+        dispatch(selectedRoute(item))
     }
 
     return (
-        <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex', }, }}>
+        <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex', }, height: '100%' }}>
             {routes.map((route) => (
-                <Box key={`NavBarMenu-${route._id}`} sx={{ mr: 1 }}>
+                <Box key={`NavBarMenu-${route._id}`} sx={{ mr: 1 }} >
                     <Button
+                        id="fade-button"
                         className={classes.menu}
                         sx={{
-                            background: menuActived === route._id ? 'linear-gradient(45deg, #56BBF1 30%, #4D77FF 90%)' : null,
+                            background: menuActived === route._id ? 'linear-gradient(45deg, #f37121 30%, #f37121 90%)' : null,
                             boxShadow: menuActived === route._id ? '0 3px 5px 2px rgba(33, 203, 243, .3)' : null,
+                            height: '100%'
                         }}
-                        id="fade-button"
                         aria-controls={menuActived === route._id ? 'fade-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={menuActived === route._id ? 'true' : undefined}
@@ -72,7 +81,7 @@ const NavBarMenu = ({ routes }) => {
                         anchorEl={anchorEl}
                         open={menuActived === route._id}
                         onClose={handleClose}
-                        // TransitionComponent={Fade}
+                        TransitionComponent={Fade}
                         PaperProps={{
                             elevation: 0,
                             sx: {
@@ -102,8 +111,19 @@ const NavBarMenu = ({ routes }) => {
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
-                        {!!route.child && route.child.map((routeChild) => (
-                            <MenuItem key={`NavBarMenuItem-${routeChild._id}`} onClick={() => handleClose(routeChild)}>{routeChild.title}</MenuItem>
+                        {!!route.child && route.child.map((routeChild, index) => (
+                            <Grow
+                                in={true}
+                                style={{ transformOrigin: '0 0 0' }}
+                                {... { timeout: 500 + index * 500 }}
+                            >
+                                <MenuItem
+                                    key={`NavBarMenuItem-${routeChild._id}`}
+                                    onClick={() => handleClose(routeChild)}
+                                >
+                                    {routeChild.title}
+                                </MenuItem>
+                            </Grow>
                         ))}
                     </Menu>
                 </Box>

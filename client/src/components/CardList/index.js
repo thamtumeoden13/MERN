@@ -20,8 +20,8 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail, onViewSub
 
     useEffect(() => {
         const baseSize = 12 / itemCount
-        const size = { xs: baseSize * 3, sm: baseSize * 3, md: baseSize * 1.5, lg: baseSize }
-
+        const size = { xs: baseSize * 4, sm: baseSize * 3, md: baseSize * 2, lg: baseSize }
+        console.log('[size]', size)
         setState(size)
     }, [itemCount])
 
@@ -58,7 +58,7 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail, onViewSub
             <Grid container spacing={2}>
                 {data.map((item, index) => {
                     return (
-                        <Grid item key={`item-${index}`} xs={state.xs} sm={state.sm} md={state.md} lg={state.lg} >
+                        <Grid item key={`item-${index}`} xs={12} sm={state.sm} md={state.md} lg={state.lg} >
                             <LazyLoad placeholder={<CircularProgress />} offset={100} once>
                                 <CardItem item={item} onClick={handleClickItem} />
                             </LazyLoad>

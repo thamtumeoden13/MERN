@@ -6,6 +6,7 @@ export const LOGOUT = 'LOGOUT'
 export const START_LOADING_ROUTE = 'START_LOADING_ROUTE'
 export const END_LOADING_ROUTE = 'END_LOADING_ROUTE'
 export const FETCH_ROUTE = 'FETCH_ROUTE'
+export const SELECTED_ROUTE = 'SELECTED_ROUTE'
 
 //toast
 export const TOAST_SHOW = 'TOAST_SHOW'

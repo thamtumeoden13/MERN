@@ -6,15 +6,14 @@ import Box from '@mui/material/Box'
 import { Container, Grid, Typography } from '@mui/material'
 import Grow from '@mui/material/Grow'
 
-import ProjectDetailListComponent from '../../components/ProjectDetail/ProjectDetailList'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
 import NavBar from '../../components/NavBar';
 import AppFooter from '../../components/AppFooter';
+import SearchList from '../../components/SearchList';
 
-import { getProjects } from '../../redux/actions/projects'
-import { getProjectDetails } from '../../redux/actions/projectDetails'
+import { getProjectDetailSearchByName } from '../../redux/actions/projectDetails'
 
-import { useTitle } from '../../utils';
+import { useQuery, useTitle } from '../../utils';
 
 const ProjectDetailListPage = () => {
 
@@ -22,12 +21,14 @@ const ProjectDetailListPage = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const location = useLocation()
+    const query = useQuery()
+    const searchQuery = query.get('searchQuery')
 
     useEffect(() => {
-        dispatch(getProjects())
-        dispatch(getProjectDetails())
-    }, [dispatch])
+        if (!!searchQuery) {
+            dispatch(getProjectDetailSearchByName(searchQuery))
+        }
+    }, [dispatch, searchQuery])
 
     const handleViewDetail = (item) => {
         navigate(`/chi-tiet-du-an/${item._id}`)
@@ -42,7 +43,7 @@ const ProjectDetailListPage = () => {
                         <BreadcrumbComponent />
                     </Box>
                     <Box>
-                        <ProjectDetailListComponent onViewDetail={handleViewDetail} />
+                        <SearchList onViewDetail={handleViewDetail} />
                     </Box>
                 </Container>
             </Grow>

@@ -16,6 +16,8 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import CommentIcon from '@mui/icons-material/Comment';
 import GroupIcon from '@mui/icons-material/Group';
 
+import { useTitle } from '../../../utils';
+
 const dataSource = [
 	{
 		name: 'investor',
@@ -60,6 +62,8 @@ const ProjectGeneral = () => {
 
 	console.log('[ProjectGeneral]', projectDetails, projectDetail)
 
+	useTitle(projectDetail?.title || '');
+
 	useEffect(() => {
 		if (!!projectDetail && Object.keys(projectDetail).length > 0) {
 			const data = dataSource.map(e => {
@@ -90,7 +94,7 @@ const ProjectGeneral = () => {
 				<Breadcrumbs aria-label="breadcrumb" >
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
 						<ApartmentIcon fontSize='small' color='text.primary' sx={{ mr: 1 }} />
-						<Typography color="text.primary">{`SundayTV.vn`}</Typography>
+						<Typography color="text.primary">{`artsunday.vn`}</Typography>
 					</Box>
 					<Typography color="text.primary">{state.createdAt}</Typography>
 					<Link
@@ -113,7 +117,7 @@ const ProjectGeneral = () => {
 					<lazyload placeholder={<CircularProgress />}>
 						<CardMedia
 							component='img'
-							height='500'
+							height='500px'
 							image={state.imageUrl}
 							alt='image'
 						/>

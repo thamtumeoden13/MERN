@@ -10,13 +10,13 @@ function srcset(image, size, rows = 1, cols = 1) {
     };
 }
 
-const QuiltedImageList = ({ data = [] }) => {
+const QuiltedImageList = ({ data = [], cols = 4, height = 325, rowHeight = 121 }) => {
     return (
         <ImageList
-            sx={{ height: 325, }}
+            sx={{ height }}
             variant="quilted"
-            cols={4}
-            rowHeight={121}
+            cols={cols}
+            rowHeight={rowHeight}
             width={'100%'}
         >
             {data.map((item) => (
@@ -33,4 +33,3 @@ const QuiltedImageList = ({ data = [] }) => {
 }
 
 export default QuiltedImageList
-

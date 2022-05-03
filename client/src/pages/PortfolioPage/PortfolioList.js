@@ -8,13 +8,17 @@ import Grow from '@mui/material/Grow'
 
 import PorfolioListComponent from '../../components/Portfolios/PorfolioList'
 import BreadcrumbComponent from '../../components/Breadcrumbs';
-
-import { getPortfolios } from '../../redux/actions/portfolios'
-
 import NavBar from '../../components/NavBar';
 import AppFooter from '../../components/AppFooter';
 
+import { getPortfolios } from '../../redux/actions/portfolios'
+
+import { useTitle } from '../../utils';
+
 const PorfolioListPage = () => {
+
+    useTitle('Art-Sunday | Danh Sách Hạn Mục Dự Án');
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -30,20 +34,11 @@ const PorfolioListPage = () => {
         <Box sx={{ pt: 10, }}>
             <NavBar />
             <Grow in>
-                <Container maxWidth={'lg'} sx={{ minHeight: '100vh' }}>
+                <Container maxWidth={'xl'} sx={{ minHeight: '100vh' }}>
                     <Box sx={{ marginY: 4 }}>
                         <BreadcrumbComponent />
                     </Box>
                     <Box>
-                        <Typography
-                            variant="h4"
-                            component="div"
-                            align="center"
-                            color="text.primary"
-                            gutterBottom
-                        >
-                            {`Danh Sách Hạn Mục Dự Án`}
-                        </Typography>
                         <PorfolioListComponent onViewDetail={handleViewDetail} />
                     </Box>
                 </Container>

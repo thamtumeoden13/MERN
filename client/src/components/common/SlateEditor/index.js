@@ -16,7 +16,9 @@ import { withHistory } from 'slate-history'
 import { css } from '@emotion/css'
 
 import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
+import CardMedia from '@mui/material/CardMedia'
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
@@ -113,7 +115,7 @@ const SlateEditor = (props) => {
             setValue(initialValue)
         }
         setIsLoading(false)
-        
+
     }, [props.initialValue, props.isEdit])
 
     useEffect(() => {
@@ -449,28 +451,33 @@ const Image = ({ attributes, children, element }) => {
                 contentEditable={false}
                 className={css`position: relative;  `}
             >
-                <img
-                    src={element.url}
-                    className={
-                        css`
-                            display: block;
+                <Box sx={{
+                    display: 'flex', flexDirection: 'column',
+                    height: '90vh',
+                    marginY: 2,
+                }}>
+                    <CardMedia
+                        component='img'
+                        image={element.url}
+                        alt='image'
+                        className={css`
+                            object-fit: contain;
                             max-width: 100%;
-                            max-height: 20em;
+                            height: 100%;
                             box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-                        `
-                    }
-                    alt='img'
-                />
+                        `}
+                    />
+                </Box>
                 <Button
                     active
                     onClick={() => Transforms.removeNodes(editor, { at: path })}
                     className={css`
-              display: ${selected && focused ? 'inline' : 'none'};
-              position: absolute;
-              top: 0.5em;
-              left: 0.5em;
-              background-color: white;
-            `}
+                        display: ${selected && focused ? 'inline' : 'none'};
+                        position: absolute;
+                        top: 0.5em;
+                        left: 0.5em;
+                        background-color: white;
+                        `}
                 >
                     <DeleteIcon />
                 </Button>

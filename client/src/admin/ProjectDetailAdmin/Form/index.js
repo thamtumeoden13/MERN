@@ -28,14 +28,14 @@ const initProjectDetailData = {
     portfolio: '',
     portfolioID: '',
     portfolioName: '',
-    investor: 'Chú xuân',
-    address: 'Làng nhà mẫu khu đô thị Mỹ Gia, đường Phong châu, thôn Vĩnh Xuân, xã Vĩnh Thái, Tp. Nha Trang',
-    scale: '5 Tầng',
-    function: '4 Tầng + 1 Tum',
-    expense: '2.800.000.000 VNĐ',
-    designTeam: 'Sunday Art',
-    designYear: '2022',
-    estimatedTime: '6 Tháng',
+    investor: '',
+    address: '',
+    scale: '',
+    function: '',
+    expense: '',
+    designTeam: '',
+    designYear: '',
+    estimatedTime: '',
 }
 
 const dataTexfield = [

@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import ProjectDetailModel from "../models/projectDetailModel.js"
 
+
 export const getProjectDetails = async (req, res) => {
     try {
         const projectDetails = await ProjectDetailModel.find().sort({ _id: -1 })
@@ -88,10 +89,10 @@ export const getProjectDetailsByProjectID = async (req, res) => {
 }
 
 export const getProjectDetailsBySearch = async (req, res) => {
-    const { portfolioName, projectName } = req.query
+    const { portfolioName, projectName, name } = req.query
     let projectDetailsResult
     try {
-        console.log('[portfolioName, projectName]', portfolioName, projectName)
+        console.log('[portfolioName, projectName, name]', portfolioName, projectName, name)
         if (!!portfolioName) {
             projectDetailsResult = await ProjectDetailModel.find({ portfolioName })
         }
@@ -99,6 +100,12 @@ export const getProjectDetailsBySearch = async (req, res) => {
         if (!!projectName) {
             projectDetailsResult = await ProjectDetailModel.find({ projectName })
         }
+        if (!!name) {
+            const query = { $text: { $search: name } };
+
+            projectDetailsResult = await ProjectDetailModel.find(query)
+        }
+
         console.log('[getProjectDetailsBySearch-server]', projectDetailsResult)
         res.status(200).json({ data: projectDetailsResult })
     } catch (error) {

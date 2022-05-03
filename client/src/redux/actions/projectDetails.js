@@ -94,6 +94,22 @@ export const getProjectDetailSearchByProjectName = (searchQuery) => async (dispa
     }
 }
 
+export const getProjectDetailSearchByName = (searchQuery) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING_PROJECT_DETAIL })
+
+        const { data } = await api.fetchProjectDetailSearchByName(searchQuery);
+
+        console.log('[fetchProjectDetailSearchByName-data]', data)
+
+        dispatch({ type: FETCH_PROJECT_DETAIL_BY_SEARCH, payload: data })
+    } catch (error) {
+        console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
+    }
+}
+
 export const createProjectDetail = (projectDetail) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROJECT_DETAIL })

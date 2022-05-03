@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import LazyLoad from 'react-lazyload'
 import moment from 'moment'
 
@@ -23,7 +23,9 @@ const ProjectAlbums = () => {
     const theme = useTheme();
     const navigate = useNavigate()
 
-    const { projectDetails, projectDetailsByProjectID, projectDetailsByPortfolioID, isLoading } = useSelector((state) => state.projectDetails)
+    const { id } = useParams()
+
+    const { projectDetailsByProjectID, projectDetailsByPortfolioID, isLoading } = useSelector((state) => state.projectDetails)
     const { project } = useSelector((state) => state.projects)
     const { portfolio } = useSelector((state) => state.portfolios)
 
@@ -31,9 +33,6 @@ const ProjectAlbums = () => {
         title: '',
         data: []
     })
-
-    console.log('[ProjectAlbums-projectDetailsByProjectID]', projectDetailsByProjectID)
-    console.log('[ProjectAlbums-project]', project)
 
     useEffect(() => {
         if (!!project && !!projectDetailsByProjectID && projectDetailsByProjectID.length > 0) {
@@ -50,7 +49,7 @@ const ProjectAlbums = () => {
             })
             return
         }
-    }, [project, portfolio, projectDetails, projectDetailsByProjectID, projectDetailsByPortfolioID])
+    }, [id, project, portfolio, projectDetailsByProjectID, projectDetailsByPortfolioID])
 
     const handleViewDetail = (item) => {
         navigate(`/chi-tiet-du-an/${item._id}`)
@@ -59,7 +58,7 @@ const ProjectAlbums = () => {
     if (!!isLoading) return null
 
     return (
-        <>
+        <Box>
             <Typography component={'div'} variant={'h6'}
                 sx={{ m: 2, pl: 1, borderLeft: '5px solid orange' }}
             >
@@ -104,7 +103,7 @@ const ProjectAlbums = () => {
                     ))}
                 </Grid>
             </Container>
-        </>
+        </Box>
     )
 }
 

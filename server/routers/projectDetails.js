@@ -9,7 +9,7 @@ import {
     createProjectDetail,
     updateProjectDetail,
     deleteProjectDetail,
-} from '../controllers/projectDetail.js';
+} from '../controllers/projectDetails.js';
 
 import auth from '../middleware/auth.js';
 

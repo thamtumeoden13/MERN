@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box } from '@mui/material';
 // components
 import Page from '../../components/common/Page';
+import { useTitle } from '../../utils';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const Page404 = () => {
+
+    useTitle('Art-Sunday | 404 Not Found');
+
     return (
         <Page title="404 Page Not Found">
             <Container>
