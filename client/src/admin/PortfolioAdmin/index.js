@@ -52,16 +52,16 @@ const PortfolioAdmin = () => {
     }
 
     const handleRemove = (ids) => {
-        console.log('[handleRemove-ids]', ids.toString())
+        // console.log('[handleRemove-ids]', ids.toString())
         dispatch(deletePortfolio(ids.toString()))
     }
 
     const handleSubmitForm = (data) => {
         if (!!currentId) {
-            console.log('[updatePortfolio]', data)
+            // console.log('[updatePortfolio]', data)
             dispatch(updatePortfolio(currentId, { ...data, description: description, createdByName: user?.result?.name }))
         } else {
-            console.log('[createPortfolio]', data)
+            // console.log('[createPortfolio]', data)
             dispatch(createPortfolio({ ...data, description: description, createdByName: user?.result?.name }))
         }
     }
@@ -71,7 +71,7 @@ const PortfolioAdmin = () => {
         setDescription(description)
     }
 
-    console.log('[portfolios]', portfolios)
+    // console.log('[portfolios]', portfolios)
 
     return (
         <Box sx={{ pt: 10 }}>

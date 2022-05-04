@@ -26,7 +26,7 @@ const ProjectPage = () => {
         dispatch(getProjects())
     }, [dispatch])
 
-    console.log('[ProjectPage]', projects)
+    // console.log('[ProjectPage]', projects)
 
     return (
         <Box sx={{ pt: 10 }}>

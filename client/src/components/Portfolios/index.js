@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import LazyLoad from 'react-lazyload'
 
-import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid'
 import { Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress'
 
@@ -12,14 +10,14 @@ import CardList from '../CardList';
 import SearchNotFound from '../SearchNotFound';
 
 import { useQuery, useTitle } from '../../utils';
+
 import useStyles from './styles'
 
 const Portfolios = ({ onViewDetail }) => {
 
     const { id, projectID, projectDetailID } = useParams()
     const { projectDetails, projectDetailsBySearch, projectDetailsByPortfolioID, projectDetailsByProjectID, isLoading } = useSelector((state) => state.projectDetails)
-
-    const { selectedRoute } = useSelector((state) => state.routes)
+    const { projects, } = useSelector((state) => state.projects)
 
     const query = useQuery()
     const searchQueryPortfolioName = query.get('portfolioname')
@@ -31,7 +29,7 @@ const Portfolios = ({ onViewDetail }) => {
         searchQuery: ''
     })
 
-    useTitle(`Art-Sunday | ${selectedRoute.title || ''}`);
+    useTitle(`Art-Sunday | ${state.title || ''}`);
 
     useEffect(() => {
         if (!!id || !!projectID || !!projectDetailID) {
@@ -54,7 +52,6 @@ const Portfolios = ({ onViewDetail }) => {
 
     useEffect(() => {
         if (!!searchQueryPortfolioName || !!searchQueryprojectName) {
-            console.log('[projectDetailsBySearch]', projectDetailsBySearch, projectDetails)
             setData(projectDetailsBySearch || [])
             return
         }
@@ -65,20 +62,28 @@ const Portfolios = ({ onViewDetail }) => {
         setState(prev => {
             return {
                 ...prev,
-                title: selectedRoute?.title || '',
                 searchQuery: !!searchQueryPortfolioName ? searchQueryPortfolioName : !!searchQueryprojectName ? searchQueryprojectName : ''
             }
         })
-    }, [selectedRoute, searchQueryPortfolioName, searchQueryprojectName])
+    }, [searchQueryPortfolioName, searchQueryprojectName])
+
+    useEffect(() => {
+        if (!!searchQueryprojectName && !!projects) {
+            const find = projects.find(e => e.name === searchQueryprojectName)
+            setState(prev => {
+                return {
+                    ...prev,
+                    title: find?.title || '',
+                }
+            })
+        }
+    }, [searchQueryprojectName, projects])
 
     const handleViewDetail = (item) => {
         if (onViewDetail) {
             onViewDetail(item)
         }
     }
-
-    console.log('[selectedRoute]', selectedRoute)
-    console.log('[state.title]', state.title)
 
     if (!isLoading && !data.length) {
         return (
@@ -91,13 +96,11 @@ const Portfolios = ({ onViewDetail }) => {
 
     return (
         <Box>
-            <LazyLoad placeholder={<CircularProgress />} once>
-                <CardList
-                    title={state.title}
-                    data={data}
-                    onViewDetail={handleViewDetail}
-                />
-            </LazyLoad>
+            <CardList
+                title={state.title}
+                data={data}
+                onViewDetail={handleViewDetail}
+            />
         </Box>
     )
 }

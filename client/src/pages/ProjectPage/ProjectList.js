@@ -34,7 +34,7 @@ const ProjectListPage = () => {
 
 
     const handleViewDetail = (item) => {
-        console.log('[ProjectListPage-item]', item)
+        // console.log('[ProjectListPage-item]', item)
         navigate(`/danh-sach-du-an/${item._id}`)
     }
 

@@ -53,7 +53,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
     }, [formData, state])
 
     const handleChangeTag = useCallback((values) => {
-        console.log('handleChangeTag', values)
+        // console.log('handleChangeTag', values)
         setFormData({ ...formData, 'tags': values })
         setTags(values)
         setState({ ...state, isValidate: false })

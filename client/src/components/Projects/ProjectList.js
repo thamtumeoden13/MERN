@@ -20,7 +20,7 @@ const ProjectList = ({ onViewDetail }) => {
 
     const [data, setData] = useState([])
 
-    console.log('ProjectList', projects, data)
+    // console.log('ProjectList', projects, data)
 
     useEffect(() => {
 
@@ -50,7 +50,7 @@ const ProjectList = ({ onViewDetail }) => {
     }, [portfolios, projects, id])
 
     const handleViewDetail = (item) => {
-        console.log('[item]', item)
+        // console.log('[item]', item)
         if (onViewDetail) {
             onViewDetail(item)
         }
@@ -72,7 +72,6 @@ const ProjectList = ({ onViewDetail }) => {
                     <CardList
                         data={e.child}
                         title={e.title}
-                        itemCount={4}
                         onViewDetail={handleViewDetail}
                     />
                 </Box>

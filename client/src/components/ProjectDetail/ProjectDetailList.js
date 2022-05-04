@@ -20,8 +20,8 @@ const ProjectDetailList = ({ onViewDetail }) => {
 
     const [data, setData] = useState([])
 
-    console.log('ProjectDetailList', projectDetails)
-    console.log('projects', projects)
+    // console.log('ProjectDetailList', projectDetails)
+    // console.log('projects', projects)
 
     useEffect(() => {
 
@@ -51,13 +51,13 @@ const ProjectDetailList = ({ onViewDetail }) => {
     }, [projects, projectDetails, id])
 
     const handleViewDetail = (item) => {
-        console.log('[item]', item)
+        // console.log('[item]', item)
         if (onViewDetail) {
             onViewDetail(item)
         }
     }
 
-    console.log('data', data)
+    // console.log('data', data)
     if (!isLoading && (!data.length || !data.find(e => e.child.length > 0))) {
         return (
             <SearchNotFound
@@ -74,7 +74,6 @@ const ProjectDetailList = ({ onViewDetail }) => {
                     <CardList
                         data={e.child}
                         title={e.title}
-                        itemCount={4}
                         onViewDetail={handleViewDetail}
                     />
                 </Box>

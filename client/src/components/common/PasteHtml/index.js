@@ -123,7 +123,7 @@ const PasteHtmlComponent = (props) => {
     }, [props.initialValue])
 
     const handleChange = (value) => {
-        console.log('[handleChange]', value)
+        // console.log('[handleChange]', value)
         setValue(value)
     }
 

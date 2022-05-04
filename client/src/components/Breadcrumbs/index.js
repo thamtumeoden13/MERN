@@ -44,14 +44,14 @@ const BreadcrumbComponent = () => {
                     value: pathname,
                 }
             })
-            console.log('[pathnames]', pathnames)
-            console.log('[pathnamesModifier]', pathnamesModifier)
+            // console.log('[pathnames]', pathnames)
+            // console.log('[pathnamesModifier]', pathnamesModifier)
             setPathnames(pathnamesModifier)
         }
     }, [location])
 
     const handleClick = (to) => {
-        console.log('You clicked a breadcrumb.', to);
+        // console.log('You clicked a breadcrumb.', to);
         navigate(to)
     }
 

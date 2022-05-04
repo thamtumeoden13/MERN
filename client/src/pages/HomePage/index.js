@@ -84,7 +84,6 @@ const HomePage = () => {
                                 <Box key={e._id}>
                                     <CardList
                                         title={`Thiết Kế ${e.title}`}
-                                        itemCount={4}
                                         subData={e.child}
                                         data={e.childDetail}
                                         onViewDetail={handleViewProjectDetail}

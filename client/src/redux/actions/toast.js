@@ -26,6 +26,6 @@ export const toastHide = () => async (dispatch) => {
 }
 
 export const toastConfig = (data) => async (dispatch) => {
-    console.log('[toastConfig-data]', data)
+    // console.log('[toastConfig-data]', data)
     dispatch({ type: TOAST_CONFIG, payload: data })
 }

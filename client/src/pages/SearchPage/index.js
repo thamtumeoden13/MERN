@@ -37,7 +37,7 @@ const ProjectDetailListPage = () => {
     }
 
     const handleSearch = (search) => {
-        console.log('[handleSearch]', search)
+        // console.log('[handleSearch]', search)
         navigate(`/tim-kiem?searchQuery=${search}`)
     }
 

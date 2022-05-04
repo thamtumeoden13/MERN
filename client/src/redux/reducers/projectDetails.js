@@ -64,7 +64,7 @@ const reducer = (state = initState, action) => {
                 // projectDetail: [],
             }
         case CREATE_PROJECT_DETAIL:
-            console.log('[CREATE_PROJECT_DETAIL]', state.projectDetails, action.payload)
+            // console.log('[CREATE_PROJECT_DETAIL]', state.projectDetails, action.payload)
             return {
                 ...state,
                 projectDetails: [...state.projectDetails, action.payload]

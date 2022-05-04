@@ -10,7 +10,6 @@ import ProjectGeneral from './ProjectGeneral'
 import PasteHtmlComponent from '../common/PasteHtml'
 
 import useStyles from './styles'
-import { initialValueLarge as initialValue } from '../../constants/dataEditor'
 
 const ProjectDetailComponent = () => {
 

@@ -48,7 +48,7 @@ const ProjectAlbums = () => {
     const handleViewDetail = (item) => {
         navigate(`/chi-tiet-du-an/${item._id}`)
     }
-    console.log('[dataRelated]', state.dataRelated)
+    // console.log('[dataRelated]', state.dataRelated)
 
     return (
         <Box sx={{ mb: 4 }}>
@@ -58,7 +58,6 @@ const ProjectAlbums = () => {
                 {`DỰ ÁN LIÊN QUAN`}
             </Typography>
             <CardList
-                itemCount={4}
                 data={state.dataRelated}
                 onViewDetail={handleViewDetail}
             />

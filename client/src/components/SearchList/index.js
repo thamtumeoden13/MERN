@@ -20,14 +20,14 @@ const SearchList = ({ onViewDetail }) => {
 
     const [data, setData] = useState([])
 
-    console.log('ProjectDetailList', projectDetailsBySearch)
+    // console.log('ProjectDetailList', projectDetailsBySearch)
 
     useEffect(() => {
         setData(projectDetailsBySearch || [])
     }, [projectDetailsBySearch])
 
     const handleViewDetail = (item) => {
-        console.log('[item]', item)
+        // console.log('[item]', item)
         if (onViewDetail) {
             onViewDetail(item)
         }
@@ -46,8 +46,6 @@ const SearchList = ({ onViewDetail }) => {
         <Box>
             <CardList
                 data={data}
-                // title={e.title}
-                itemCount={4}
                 onViewDetail={handleViewDetail}
             />
         </Box>

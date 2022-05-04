@@ -39,7 +39,7 @@ const AppFooter = () => {
         navigate(`/han-muc-du-an/tim-kiem?projectname=${project.name}`)
     };
 
-    console.log('[AppFooter]', projects)
+    // console.log('[AppFooter]', projects)
 
     return (
         <Typography

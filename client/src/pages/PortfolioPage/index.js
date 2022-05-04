@@ -37,7 +37,7 @@ const PortfolioPage = () => {
     const { projectDetails, } = useSelector((state) => state.projectDetails)
 
     const { id, projectID, projectDetailID } = useParams()
-    console.log('[id, projectID, projectDetailID]', id, projectID, projectDetailID)
+    // console.log('[id, projectID, projectDetailID]', id, projectID, projectDetailID)
 
     const [description, setDescription] = useState(null)
     const [selectResult, setSelectResult] = useState([])
@@ -102,7 +102,7 @@ const PortfolioPage = () => {
     useEffect(() => {
         if (!!projectDetails) {
             const imageQuiltedList = projectDetails.slice(0, 6)
-            console.log('[imageQuiltedList]', imageQuiltedList)
+            // console.log('[imageQuiltedList]', imageQuiltedList)
             const newImageQuiltedList = imageQuiltedList.map((e, i) => {
                 return {
                     _id: e._id,
@@ -113,7 +113,7 @@ const PortfolioPage = () => {
                     cols: i == 3 ? 1 : 1
                 }
             })
-            console.log('[newImageQuiltedList]', newImageQuiltedList)
+            // console.log('[newImageQuiltedList]', newImageQuiltedList)
             setImageQuiltedList(newImageQuiltedList)
         }
     }, [projectDetails])
@@ -123,7 +123,7 @@ const PortfolioPage = () => {
     }
 
     const handleSearch = (search) => {
-        console.log('[handleSearch]', search)
+        // console.log('[handleSearch]', search)
         navigate(`/tim-kiem?searchQuery=${search}`)
     }
 
@@ -138,27 +138,23 @@ const PortfolioPage = () => {
                     <BreadcrumbComponent />
                 </Box>
                 <Box>
-                    <Grid container spacing={3} sx={{ minHeight: '100vh', }}>
-                        <Box sx={{
-                            display: { xs: 'none', sm: 'none', md: 'flex' }, flexDirection: 'column',
-                            padding: 2,
-                        }}>
-                            <Grid item md={3} >
-                                <Box sx={{
-                                    display: 'flex', flexDirection: 'column',
-                                    width: 240
-                                }}>
-                                    <SearchTextInput
-                                        onSearch={handleSearch}
-                                    />
-                                    <SearchSelect
-                                        result={selectResult}
-                                        count={projectDetails.length}
-                                    />
-                                </Box>
-                            </Grid>
-                        </Box>
-                        <Grid item xs={12} sm={12} md={9}>
+                    <Grid container sx={{ minHeight: '100vh' }}>
+
+                        <Grid item md={3} >
+                            <Box sx={{
+                                display: { xs: 'none', sm: 'none', md: 'flex' }, flexDirection: 'column',
+                                padding: 2,
+                            }}>
+                                <SearchTextInput
+                                    onSearch={handleSearch}
+                                />
+                                <SearchSelect
+                                    result={selectResult}
+                                    count={projectDetails.length}
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={9} >
                             <Portfolios onViewDetail={handleViewDetail} />
                         </Grid>
                     </Grid>

@@ -9,7 +9,7 @@ export const getRoutes = () => async (dispatch) => {
         dispatch({ type: START_LOADING_ROUTE })
 
         const { data } = await api.fetchRoute();
-        console.log('[getRoutes-action]', data)
+        // console.log('[getRoutes-action]', data)
 
         dispatch({ type: FETCH_ROUTE, payload: data })
     } catch (error) {

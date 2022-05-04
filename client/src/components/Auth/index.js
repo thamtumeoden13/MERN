@@ -62,7 +62,7 @@ const Auth = () => {
     }
 
     const googleSuccess = async (res) => {
-        console.log('googleSuccess', res)
+        // console.log('googleSuccess', res)
 
         const result = res?.profileObj
         const token = res?.tokenId
@@ -76,7 +76,7 @@ const Auth = () => {
     }
 
     const googleFailure = async (err) => {
-        console.log('Google Sign In was unsuccessful, Try Again Later')
+        // console.log('Google Sign In was unsuccessful, Try Again Later')
     }
 
     return (
@@ -162,7 +162,7 @@ const Auth = () => {
                                 startIcon={<Icon />}
                                 variant='contained'
                             >
-                                {`Google Sign In`}
+                                {`Tài Khoản GooGle`}
                             </Button>
                         )}
                         onSuccess={googleSuccess}
@@ -172,7 +172,7 @@ const Auth = () => {
                     <Grid container justifyContent='flex-end'>
                         <Grid item>
                             <Button onClick={switchMode}>
-                                {isSignup ? 'Already have an account? Sign In' : "Don't Have an account? Sign Up"}
+                                {isSignup ? 'Bạn đã có tài khoản? Đăng nhập' : "Bạn chưa có tài khoản? Đăng ký"}
                             </Button>
                         </Grid>
                     </Grid>

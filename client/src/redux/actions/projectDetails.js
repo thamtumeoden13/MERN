@@ -68,7 +68,7 @@ export const getProjectDetailSearchByPortfolioName = (searchQuery) => async (dis
 
         const { data } = await api.fetchProjectDetailSearchByPortfolioName(searchQuery);
 
-        console.log('[getProjectDetailSearchByPortfolioName-data]', data)
+        // console.log('[getProjectDetailSearchByPortfolioName-data]', data)
 
         dispatch({ type: FETCH_PROJECT_DETAIL_BY_SEARCH, payload: data })
     } catch (error) {
@@ -84,7 +84,7 @@ export const getProjectDetailSearchByProjectName = (searchQuery) => async (dispa
 
         const { data } = await api.fetchProjectDetailSearchByProjectName(searchQuery);
 
-        console.log('[getProjectDetailSearchByProjectName-data]', data)
+        // console.log('[getProjectDetailSearchByProjectName-data]', data)
 
         dispatch({ type: FETCH_PROJECT_DETAIL_BY_SEARCH, payload: data })
     } catch (error) {
@@ -100,7 +100,7 @@ export const getProjectDetailSearchByName = (searchQuery) => async (dispatch) =>
 
         const { data } = await api.fetchProjectDetailSearchByName(searchQuery);
 
-        console.log('[getProjectDetailSearchByProjectName-data]', data)
+        // console.log('[getProjectDetailSearchByProjectName-data]', data)
 
         dispatch({ type: FETCH_PROJECT_DETAIL_BY_SEARCH, payload: data })
     } catch (error) {

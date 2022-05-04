@@ -303,7 +303,7 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
     const isSelected = (_id) => selected.indexOf(_id) !== -1;
 
     const handleViewDetail = (event, row) => {
-        console.log('handleViewDetail', row)
+        // console.log('handleViewDetail', row)
         if (onViewDetail) {
             onViewDetail(row)
         }
@@ -311,14 +311,14 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
     }
 
     const handleEdit = (event, row) => {
-        console.log('handleEdit', row)
+        // console.log('handleEdit', row)
         if (onEdit) {
             onEdit(row._id)
         }
     }
 
     const handleRemove = (isSelected) => {
-        console.log('[handleRemove]', isSelected, selected)
+        // console.log('[handleRemove]', isSelected, selected)
         if (onRemove) {
             onRemove(selected)
         }

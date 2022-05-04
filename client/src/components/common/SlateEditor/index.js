@@ -132,11 +132,11 @@ const SlateEditor = (props) => {
     }, [value, props])
 
     const handleChange = (value) => {
-        console.log('[handleChange]', value)
+        // console.log('[handleChange]', value)
         setValue(value)
     }
 
-    console.log('[value]', value)
+    // console.log('[value]', value)
 
     if (!!isLoading || (!isLoading && (!value || value.length <= 0))) {
         return (
@@ -230,7 +230,7 @@ const toggleMark = (editor, format) => {
 }
 
 const insertImage = (editor, url) => {
-    console.log('[insertImage]', editor, url)
+    // console.log('[insertImage]', editor, url)
     const text = { text: '' }
     const image = { type: 'image', url, children: [text] }
     Transforms.insertNodes(editor, image)

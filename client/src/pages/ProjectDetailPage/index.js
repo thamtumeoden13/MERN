@@ -27,7 +27,7 @@ const ProjectDetail = () => {
     const { id } = useParams()
 
     const { projectDetail, projectDetails } = useSelector((state) => state.projectDetails)
-    console.log('[ProjectDetail-id]', id)
+    // console.log('[ProjectDetail-id]', id)
     useTitle('Art-Sunday | Chi Tiết Dự Án');
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const ProjectDetail = () => {
         }
     }, [dispatch, projectDetail])
 
-    console.log('[ProjectDetail-projectDetail]', projectDetail, projectDetails)
+    // console.log('[ProjectDetail-projectDetail]', projectDetail, projectDetails)
 
     return (
         <Box sx={{ pt: 10 }}>

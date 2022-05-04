@@ -28,7 +28,7 @@ const CarouselImage = ({ data = [], onViewDetail }) => {
     }, [data])
 
     const handleChange = (now, previous) => {
-        console.log('[handlechange-image]', now, previous)
+        // console.log('[handlechange-image]', now, previous)
         setState(prev => { return { ...prev, itemSelected: null } })
         setTimeout(() => {
             setState(prev => { return { ...prev, itemSelected: state.data[now] } })

@@ -101,7 +101,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                 portfolioID: formData.portfolio,
                 portfolioName: findPortfolio.name,
             }
-            console.log('[handleSubmit-data]', data)
+            // console.log('[handleSubmit-data]', data)
             onSubmit(data)
         }
 

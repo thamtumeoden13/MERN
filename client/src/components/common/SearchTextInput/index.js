@@ -17,7 +17,7 @@ const SearchTextInput = ({ searchQuery, onSearch }) => {
     }, [searchQuery])
 
     const handleChangeValue = (event) => {
-        console.log('[handleChangeValue]', event.target.value)
+        // console.log('[handleChangeValue]', event.target.value)
         setSearch(event.target.value)
     }
 

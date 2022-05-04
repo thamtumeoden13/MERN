@@ -53,16 +53,16 @@ const ProjectDetailAdmin = () => {
     }
 
     const handleRemove = (ids) => {
-        console.log('[handleRemove-ids]', ids.toString())
+        // console.log('[handleRemove-ids]', ids.toString())
         dispatch(deleteProjectDetail(ids.toString()))
     }
 
     const handleSubmitForm = (data) => {
         if (!!currentId) {
-            console.log('[updateProjectDetail]', data)
+            // console.log('[updateProjectDetail]', data)
             dispatch(updateProjectDetail(currentId, { ...data, description: description, createdByName: user?.result?.name }))
         } else {
-            console.log('[createProjectDetail]', data)
+            // console.log('[createProjectDetail]', data)
             dispatch(createProjectDetail({ ...data, description: description, createdByName: user?.result?.name }))
         }
     }
@@ -72,7 +72,7 @@ const ProjectDetailAdmin = () => {
         setDescription(description)
     }
 
-    console.log('[projectDetails]', projectDetails)
+    // console.log('[projectDetails]', projectDetails)
 
     return (
         <Box sx={{ mt: 10 }}>

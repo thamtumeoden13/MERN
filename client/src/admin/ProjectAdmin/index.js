@@ -54,16 +54,16 @@ const ProjectAdmin = () => {
     }
 
     const handleRemove = (ids) => {
-        console.log('[handleRemove-ids]', ids.toString())
+        // console.log('[handleRemove-ids]', ids.toString())
         dispatch(deleteProject(ids.toString()))
     }
 
     const handleSubmitForm = (data) => {
         if (!!currentId) {
-            console.log('[updateProject]', data)
+            // console.log('[updateProject]', data)
             dispatch(updateProject(currentId, { ...data, description: description, createdByName: user?.result?.name }))
         } else {
-            console.log('[createProject]', data)
+            // console.log('[createProject]', data)
             dispatch(createProject({ ...data, description: description, createdByName: user?.result?.name }))
         }
     }
@@ -73,7 +73,7 @@ const ProjectAdmin = () => {
         setDescription(description)
     }
 
-    console.log('[projects]', projects, initialValue)
+    // console.log('[projects]', projects, initialValue)
 
     return (
         <Box sx={{ mt: 10 }}>

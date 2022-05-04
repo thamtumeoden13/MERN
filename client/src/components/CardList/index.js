@@ -14,7 +14,7 @@ import CardItem from './CardItem'
 import useStyles from './styles'
 import ListTitle from '../ListTitle';
 
-const CardList = ({ title, data, subData, itemCount = 3, onViewDetail, onViewSubDetail }) => {
+const CardList = ({ title, data, subData, itemCount = 4, onViewDetail, onViewSubDetail }) => {
 
     const [state, setState] = useState({ xs: 12, sm: 12, md: 6, lg: 4 })
 
@@ -26,14 +26,14 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail, onViewSub
     }, [itemCount])
 
     const handleClickItem = (item) => {
-        console.log('handleClickItem', item)
+        // console.log('handleClickItem', item)
         if (onViewDetail) {
             onViewDetail(item)
         }
     }
 
     const handleClickSubItem = (item) => {
-        console.log('handleClickSubItem', item)
+        // console.log('handleClickSubItem', item)
         if (onViewSubDetail) {
             onViewSubDetail(item)
         }
@@ -42,7 +42,7 @@ const CardList = ({ title, data, subData, itemCount = 3, onViewDetail, onViewSub
     if (!data.length) return null
 
     return (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 2, }}>
             {!!title &&
                 <Box sx={{ mb: 2 }}>
                     <Typography

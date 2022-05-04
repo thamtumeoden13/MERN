@@ -11,7 +11,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import { routes } from '../../../constants/routers';
 
 const NavBarMenuMobile = ({ drawer, toggleDrawer }) => {
-    console.log('[drawer]', drawer)
+    // console.log('[drawer]', drawer)
     const List = () => {
         return (
             <Box

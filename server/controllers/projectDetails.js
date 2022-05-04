@@ -68,7 +68,6 @@ export const getProjectDetailsByPortfolioID = async (req, res) => {
     const { id } = req.params
     try {
         const projectDetailByPortfolio = await ProjectDetailModel.find({ portfolio: id })
-        console.log('projectDetailByPortfolio', projectDetailByPortfolio)
 
         res.status(200).json({ data: projectDetailByPortfolio })
     } catch (error) {
@@ -80,7 +79,6 @@ export const getProjectDetailsByProjectID = async (req, res) => {
     const { id } = req.params
     try {
         const projectDetailByProject = await ProjectDetailModel.find({ project: id })
-        console.log('projectDetailByProject', projectDetailByProject)
 
         res.status(200).json({ data: projectDetailByProject })
     } catch (error) {
@@ -92,7 +90,6 @@ export const getProjectDetailsBySearch = async (req, res) => {
     const { portfolioName, projectName, name } = req.query
     let projectDetailsResult
     try {
-        console.log('[portfolioName, projectName, name]', portfolioName, projectName, name)
         if (!!portfolioName) {
             projectDetailsResult = await ProjectDetailModel.find({ portfolioName })
         }
@@ -106,7 +103,6 @@ export const getProjectDetailsBySearch = async (req, res) => {
             projectDetailsResult = await ProjectDetailModel.find(query)
         }
 
-        console.log('[getProjectDetailsBySearch-server]', projectDetailsResult)
         res.status(200).json({ data: projectDetailsResult })
     } catch (error) {
         res.status(404).json({ message: error.message })

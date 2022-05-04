@@ -25,7 +25,7 @@ const NavBarMenu = ({ routes }) => {
     const [menuActived, setMenuActived] = useState(-1);
 
     const handleClick = (event, menu) => {
-        console.log('[handleClick-NavBarMenu]', menu)
+        // console.log('[handleClick-NavBarMenu]', menu)
         if (!!menu.child && menu.child.length > 0) {
             setAnchorEl(event.currentTarget);
             setMenuActived(menu._id)
@@ -36,7 +36,7 @@ const NavBarMenu = ({ routes }) => {
     };
 
     const handleClose = (routeMenuChild) => {
-        console.log('routeMenuChild', routeMenuChild)
+        // console.log('routeMenuChild', routeMenuChild)
         setAnchorEl(null);
         setMenuActived(-1)
         if (!!routeMenuChild && !!routeMenuChild.route) {

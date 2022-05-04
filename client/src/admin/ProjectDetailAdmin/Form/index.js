@@ -124,7 +124,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 
     useEffect(() => {
         if (projectDetailsSelected) {
-            console.log('[projects]')
+            // console.log('[projects]')
             const find = projects.find(e => { return e._id === projectDetailsSelected.project })
             if (!!find && Object.keys(find).length > 0) {
                 setDefaultValue({ label: find.name, value: find._id })
@@ -158,7 +158,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 
         if (onSubmit) {
             const findproject = projects.find(project => project._id === formData.project)
-            console.log('[handleSubmit-findproject]', findproject)
+            // console.log('[handleSubmit-findproject]', findproject)
             const data = {
                 ...formData,
                 tags: tags,
@@ -229,7 +229,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         )
     }
 
-    console.log('[formData]', formData)
+    // console.log('[formData]', formData)
 
     return (
         <Box>

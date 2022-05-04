@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
+import Grow from '@mui/material/Grow';
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
@@ -32,7 +33,7 @@ const ProjectAlbums = () => {
 
     useEffect(() => {
         if (!!projectDetails) {
-            console.log('[projectDetails]', projectDetails)
+            // console.log('[projectDetails]', projectDetails)
             const dataVilla = projectDetails.filter(e => e.portfolioName == 'biet-thu')
             const dataTownHouse = projectDetails.filter(e => e.portfolioName == 'nha-pho')
             const dataFurniture = projectDetails.filter(e => e.portfolioName == 'noi-that')
@@ -41,8 +42,8 @@ const ProjectAlbums = () => {
             const dataTownHouseSlice = dataTownHouse.slice(0, 5)
             const dataFurnitureSlice = dataFurniture.slice(0, 5)
 
-            console.log('[dataVilla,dataTownHouse,dataFurniture]', dataVilla, dataTownHouse, dataFurniture)
-            console.log('[dataVillaSlice,dataTownHouseSlice,dataFurnitureSlice]', dataVillaSlice, dataTownHouseSlice, dataFurnitureSlice)
+            // console.log('[dataVilla,dataTownHouse,dataFurniture]', dataVilla, dataTownHouse, dataFurniture)
+            // console.log('[dataVillaSlice,dataTownHouseSlice,dataFurnitureSlice]', dataVillaSlice, dataTownHouseSlice, dataFurnitureSlice)
             setState(prev => {
                 return {
                     ...prev,
@@ -58,7 +59,9 @@ const ProjectAlbums = () => {
         navigate(`/chi-tiet-du-an/${item._id}`)
     }
 
-    console.log('[ProjectAlbum-state]', state)
+    // console.log('[ProjectAlbum-state]', state)
+
+    if (!!isLoading) return null
 
     return (
         <Container >
@@ -71,37 +74,43 @@ const ProjectAlbums = () => {
                             {`Biệt Thự`}
                         </Typography>
                         {state.dataVilla.map((item, index) => (
-                            <Grid item xs={12} key={index} sx={{ mb: 1 }}>
+                            <Grid item xs={12} key={`dataVillaItem-${index}`} sx={{ mb: 1 }}>
                                 <LazyLoad placeholder={<CircularProgress />} offset={100} once>
-                                    <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
-                                        <CardMedia
-                                            component="img"
-                                            sx={{ width: 120, }}
-                                            image={item.thumbnail}
-                                            alt="thumbnail"
-                                        />
-                                        <Box sx={{
-                                            display: 'flex', flexDirection: 'column',
-                                            justifyContent: 'center',
-                                        }}>
-                                            <CardContent sx={{
+                                    <Grow
+                                        in={true}
+                                        style={{ transformOrigin: '0 0 0' }}
+                                        {... { timeout: 500 + index * 500 }}
+                                    >
+                                        <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
+                                            <CardMedia
+                                                component="img"
+                                                sx={{ width: 120, }}
+                                                image={item.thumbnail}
+                                                alt="thumbnail"
+                                            />
+                                            <Box sx={{
                                                 display: 'flex', flexDirection: 'column',
-                                                flex: '1 0', justifyContent: 'space-between',
+                                                justifyContent: 'center',
                                             }}>
-                                                <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                                    {item.title}
-                                                </Typography>
-                                                <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                                    {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                                </Typography>
-                                            </CardContent>
-                                            <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
-                                                <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
-                                                    <MoreHorizIcon />
-                                                </IconButton>
-                                            </CardActions>
-                                        </Box>
-                                    </Card>
+                                                <CardContent sx={{
+                                                    display: 'flex', flexDirection: 'column',
+                                                    flex: '1 0', justifyContent: 'space-between',
+                                                }}>
+                                                    <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
+                                                        {item.title}
+                                                    </Typography>
+                                                    <Typography variant="subtitle1" color="text.secondary" component="div" >
+                                                        {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
+                                                    <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
+                                                        <MoreHorizIcon />
+                                                    </IconButton>
+                                                </CardActions>
+                                            </Box>
+                                        </Card>
+                                    </Grow>
                                 </LazyLoad>
                             </Grid>
                         ))}
@@ -115,37 +124,43 @@ const ProjectAlbums = () => {
                             {`Nội Thất`}
                         </Typography>
                         {state.dataFurniture.map((item, index) => (
-                            <Grid item xs={12} key={index} spacing={2} sx={{ mb: 1 }}>
+                            <Grid item xs={12} key={`dataFurniture-${index}`} spacing={2} sx={{ mb: 1 }}>
                                 <LazyLoad placeholder={<CircularProgress />} offset={100} once>
-                                    <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
-                                        <CardMedia
-                                            component="img"
-                                            sx={{ width: 120, }}
-                                            image={item.thumbnail}
-                                            alt="thumbnail"
-                                        />
-                                        <Box sx={{
-                                            display: 'flex', flexDirection: 'column',
-                                            justifyContent: 'center',
-                                        }}>
-                                            <CardContent sx={{
+                                    <Grow
+                                        in={true}
+                                        style={{ transformOrigin: '0 0 0' }}
+                                        {... { timeout: 500 + index * 500 }}
+                                    >
+                                        <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
+                                            <CardMedia
+                                                component="img"
+                                                sx={{ width: 120, }}
+                                                image={item.thumbnail}
+                                                alt="thumbnail"
+                                            />
+                                            <Box sx={{
                                                 display: 'flex', flexDirection: 'column',
-                                                flex: '1 0', justifyContent: 'space-between',
+                                                justifyContent: 'center',
                                             }}>
-                                                <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                                    {item.title}
-                                                </Typography>
-                                                <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                                    {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                                </Typography>
-                                            </CardContent>
-                                            <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
-                                                <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
-                                                    <MoreHorizIcon />
-                                                </IconButton>
-                                            </CardActions>
-                                        </Box>
-                                    </Card>
+                                                <CardContent sx={{
+                                                    display: 'flex', flexDirection: 'column',
+                                                    flex: '1 0', justifyContent: 'space-between',
+                                                }}>
+                                                    <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
+                                                        {item.title}
+                                                    </Typography>
+                                                    <Typography variant="subtitle1" color="text.secondary" component="div" >
+                                                        {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
+                                                    <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
+                                                        <MoreHorizIcon />
+                                                    </IconButton>
+                                                </CardActions>
+                                            </Box>
+                                        </Card>
+                                    </Grow>
                                 </LazyLoad>
                             </Grid>
                         ))}
@@ -159,37 +174,43 @@ const ProjectAlbums = () => {
                             {`Nhà Phố`}
                         </Typography>
                         {state.dataTownHouse.map((item, index) => (
-                            <Grid item xs={12} key={index} spacing={2} sx={{ mb: 1 }}>
+                            <Grid item xs={12} key={`dataTownHouse-${index}`} spacing={2} sx={{ mb: 1 }}>
                                 <LazyLoad placeholder={<CircularProgress />} offset={100} once>
-                                    <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
-                                        <CardMedia
-                                            component="img"
-                                            sx={{ width: 120, }}
-                                            image={item.thumbnail}
-                                            alt="thumbnail"
-                                        />
-                                        <Box sx={{
-                                            display: 'flex', flexDirection: 'column',
-                                            justifyContent: 'center',
-                                        }}>
-                                            <CardContent sx={{
+                                    <Grow
+                                        in={true}
+                                        style={{ transformOrigin: '0 0 0' }}
+                                        {... { timeout: 500 + index * 500 }}
+                                    >
+                                        <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
+                                            <CardMedia
+                                                component="img"
+                                                sx={{ width: 120, }}
+                                                image={item.thumbnail}
+                                                alt="thumbnail"
+                                            />
+                                            <Box sx={{
                                                 display: 'flex', flexDirection: 'column',
-                                                flex: '1 0', justifyContent: 'space-between',
+                                                justifyContent: 'center',
                                             }}>
-                                                <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                                    {item.title}
-                                                </Typography>
-                                                <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                                    {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                                </Typography>
-                                            </CardContent>
-                                            <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
-                                                <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
-                                                    <MoreHorizIcon />
-                                                </IconButton>
-                                            </CardActions>
-                                        </Box>
-                                    </Card>
+                                                <CardContent sx={{
+                                                    display: 'flex', flexDirection: 'column',
+                                                    flex: '1 0', justifyContent: 'space-between',
+                                                }}>
+                                                    <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
+                                                        {item.title}
+                                                    </Typography>
+                                                    <Typography variant="subtitle1" color="text.secondary" component="div" >
+                                                        {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
+                                                    <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
+                                                        <MoreHorizIcon />
+                                                    </IconButton>
+                                                </CardActions>
+                                            </Box>
+                                        </Card>
+                                    </Grow>
                                 </LazyLoad>
                             </Grid>
                         ))}

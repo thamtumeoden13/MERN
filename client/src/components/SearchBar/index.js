@@ -53,7 +53,7 @@ const SearchAppBar = ({ onSearch }) => {
     const [search, setSearch] = useState('')
 
     const handleChange = (event) => {
-        console.log('[handleChange]', event.target.value)
+        // console.log('[handleChange]', event.target.value)
         setSearch(event.target.value)
     }
 
@@ -84,7 +84,7 @@ const SearchAppBar = ({ onSearch }) => {
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={handleChange}
                 onKeyDown={(event) => {
-                    console.log('[onKeyDown]', event.key)
+                    // console.log('[onKeyDown]', event.key)
                     if (event.key === 'Enter') {
                         // Prevent's default 'Enter' behavior.
                         event.defaultMuiPrevented = true;

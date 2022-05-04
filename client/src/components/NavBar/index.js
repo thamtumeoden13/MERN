@@ -124,7 +124,7 @@ const NavBar = (props) => {
                     }
                 ]
 
-            console.log('[routesNav]', routesNav)
+            // console.log('[routesNav]', routesNav)
             setRoutesNav(routesNav)
         }
     }, [routes])
@@ -152,7 +152,7 @@ const NavBar = (props) => {
         navigate(`/tim-kiem?searchQuery=${search}`)
     }
 
-    console.log('[routesNav]', routesNav)
+    // console.log('[routesNav]', routesNav)
 
     return (
         <HideOnScroll {...props}>
