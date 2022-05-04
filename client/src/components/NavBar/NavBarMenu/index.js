@@ -113,12 +113,12 @@ const NavBarMenu = ({ routes }) => {
                     >
                         {!!route.child && route.child.map((routeChild, index) => (
                             <Grow
+                                key={`NavBarMenuItem-${routeChild._id}`}
                                 in={true}
                                 style={{ transformOrigin: '0 0 0' }}
                                 {... { timeout: 500 + index * 500 }}
                             >
                                 <MenuItem
-                                    key={`NavBarMenuItem-${routeChild._id}`}
                                     onClick={() => handleClose(routeChild)}
                                 >
                                     {routeChild.title}

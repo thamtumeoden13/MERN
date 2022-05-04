@@ -65,7 +65,7 @@ const dataTexfield = [
     },
     {
         name: 'expense',
-        label: 'Chủ đầu tư',
+        label: 'Kinh phí',
         variant: 'outlined',
         fullWidth: true,
     },
@@ -171,7 +171,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
             onSubmit(data)
         }
 
-        clear()
+        // clear()
     }
 
     const valiDateFormInput = () => {

@@ -14,6 +14,7 @@ import SearchList from '../../components/SearchList';
 import { getProjectDetailSearchByName } from '../../redux/actions/projectDetails'
 
 import { useQuery, useTitle } from '../../utils';
+import SearchTextInput from '../../components/common/SearchTextInput';
 
 const ProjectDetailListPage = () => {
 
@@ -21,6 +22,7 @@ const ProjectDetailListPage = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const query = useQuery()
     const searchQuery = query.get('searchQuery')
 
@@ -34,6 +36,11 @@ const ProjectDetailListPage = () => {
         navigate(`/chi-tiet-du-an/${item._id}`)
     }
 
+    const handleSearch = (search) => {
+        console.log('[handleSearch]', search)
+        navigate(`/tim-kiem?searchQuery=${search}`)
+    }
+
     return (
         <Box sx={{ pt: 10, }}>
             <NavBar />
@@ -41,6 +48,12 @@ const ProjectDetailListPage = () => {
                 <Container maxWidth={'xl'} sx={{ minHeight: '100vh' }}>
                     <Box sx={{ marginY: 4 }}>
                         <BreadcrumbComponent />
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <SearchTextInput
+                            searchQuery={searchQuery}
+                            onSearch={handleSearch}
+                        />
                     </Box>
                     <Box>
                         <SearchList onViewDetail={handleViewDetail} />

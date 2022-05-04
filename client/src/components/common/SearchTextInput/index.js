@@ -8,9 +8,13 @@ import IconButton from '@mui/material/IconButton';
 
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchTextInput = ({ onSearch }) => {
+const SearchTextInput = ({ searchQuery, onSearch }) => {
 
     const [search, setSearch] = useState('')
+
+    useEffect(() => {
+        setSearch(searchQuery || '')
+    }, [searchQuery])
 
     const handleChangeValue = (event) => {
         console.log('[handleChangeValue]', event.target.value)

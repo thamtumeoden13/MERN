@@ -148,6 +148,10 @@ const NavBar = (props) => {
         // setDrawer(open, event);
     };
 
+    const handleSearch = (search) => {
+        navigate(`/tim-kiem?searchQuery=${search}`)
+    }
+
     console.log('[routesNav]', routesNav)
 
     return (
@@ -164,7 +168,7 @@ const NavBar = (props) => {
                         justifyContent: 'center',
                         display: { xs: 'none', sm: 'flex', md: 'flex' }
                     }}>
-                        <SearchAppBar />
+                        <SearchAppBar onSearch={handleSearch} />
                     </Box>
                 </Toolbar>
             </AppBar>

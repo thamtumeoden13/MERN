@@ -7,12 +7,14 @@ import Container from '@mui/material/Container'
 import Grow from '@mui/material/Grow'
 import Grid from '@mui/material/Grid'
 
-import ProjectDetailComponent from '../../components/ProjectDetail'
 import BreadcrumbComponent from '../../components/Breadcrumbs'
 import NavBar from '../../components/NavBar';
 import AppFooter from '../../components/AppFooter';
 
-import { getProjectDetail, getProjectDetailsByProjectID, getProjectDetailsByPortfolioID } from '../../redux/actions/projectDetails'
+import ProjectDetailComponent from '../../components/ProjectDetail'
+import ProjectDetailRelatedComponent from '../../components/ProjectDetail/ProjectDetailRelated'
+
+import { getProjectDetails, getProjectDetail, getProjectDetailsByProjectID, getProjectDetailsByPortfolioID } from '../../redux/actions/projectDetails'
 import { getProject } from '../../redux/actions/projects'
 import { getPortfolio } from '../../redux/actions/portfolios'
 
@@ -24,9 +26,13 @@ const ProjectDetail = () => {
 
     const { id } = useParams()
 
-    const { projectDetail, isLoading } = useSelector((state) => state.projectDetails)
+    const { projectDetail, projectDetails } = useSelector((state) => state.projectDetails)
     console.log('[ProjectDetail-id]', id)
     useTitle('Art-Sunday | Chi Tiết Dự Án');
+
+    useEffect(() => {
+        dispatch(getProjectDetails())
+    }, [dispatch])
 
     useEffect(() => {
         if (id) {
@@ -45,7 +51,8 @@ const ProjectDetail = () => {
 
         }
     }, [dispatch, projectDetail])
-    console.log('[ProjectDetail-projectDetail]', projectDetail)
+
+    console.log('[ProjectDetail-projectDetail]', projectDetail, projectDetails)
 
     return (
         <Box sx={{ pt: 10 }}>
@@ -57,6 +64,7 @@ const ProjectDetail = () => {
                     </Box>
                     <Box sx={{ mt: 2, minHeight: '100vh' }}>
                         <ProjectDetailComponent />
+                        <ProjectDetailRelatedComponent />
                     </Box>
                 </Container>
             </Grow>

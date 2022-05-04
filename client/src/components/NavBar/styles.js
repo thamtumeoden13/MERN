@@ -6,14 +6,8 @@ export default makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		padding: '0 10px',
+		padding: 0,
 		backgroundColor: '#202530',
-		[theme.breakpoints.down('sm')]: {
-			padding: 0
-		},
-		[theme.breakpoints.down('md')]: {
-			padding: 0
-		},
 	},
 	toolbar: {
 		display: 'flex',

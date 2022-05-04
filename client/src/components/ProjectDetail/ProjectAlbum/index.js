@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import LazyLoad from 'react-lazyload'
 import moment from 'moment'
 
@@ -17,93 +17,186 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import { useTheme } from '@mui/material/styles';
-
 const ProjectAlbums = () => {
-    const theme = useTheme();
     const navigate = useNavigate()
 
     const { id } = useParams()
 
-    const { projectDetailsByProjectID, projectDetailsByPortfolioID, isLoading } = useSelector((state) => state.projectDetails)
-    const { project } = useSelector((state) => state.projects)
-    const { portfolio } = useSelector((state) => state.portfolios)
+    const { projectDetails, isLoading } = useSelector((state) => state.projectDetails)
 
     const [state, setState] = useState({
-        title: '',
-        data: []
+        dataVilla: [],
+        dataTownHouse: [],
+        dataFurniture: [],
     })
 
     useEffect(() => {
-        if (!!project && !!projectDetailsByProjectID && projectDetailsByProjectID.length > 0) {
-            setState({
-                title: project.title,
-                data: projectDetailsByProjectID
+        if (!!projectDetails) {
+            console.log('[projectDetails]', projectDetails)
+            const dataVilla = projectDetails.filter(e => e.portfolioName == 'biet-thu')
+            const dataTownHouse = projectDetails.filter(e => e.portfolioName == 'nha-pho')
+            const dataFurniture = projectDetails.filter(e => e.portfolioName == 'noi-that')
+
+            const dataVillaSlice = dataVilla.slice(0, 5)
+            const dataTownHouseSlice = dataTownHouse.slice(0, 5)
+            const dataFurnitureSlice = dataFurniture.slice(0, 5)
+
+            console.log('[dataVilla,dataTownHouse,dataFurniture]', dataVilla, dataTownHouse, dataFurniture)
+            console.log('[dataVillaSlice,dataTownHouseSlice,dataFurnitureSlice]', dataVillaSlice, dataTownHouseSlice, dataFurnitureSlice)
+            setState(prev => {
+                return {
+                    ...prev,
+                    dataVilla: dataVillaSlice,
+                    dataTownHouse: dataTownHouseSlice,
+                    dataFurniture: dataFurnitureSlice,
+                }
             })
-            return
         }
-        if (!!portfolio && !!projectDetailsByPortfolioID && projectDetailsByPortfolioID.length > 0) {
-            setState({
-                title: portfolio.title,
-                data: projectDetailsByPortfolioID
-            })
-            return
-        }
-    }, [id, project, portfolio, projectDetailsByProjectID, projectDetailsByPortfolioID])
+    }, [projectDetails])
 
     const handleViewDetail = (item) => {
         navigate(`/chi-tiet-du-an/${item._id}`)
     }
 
-    if (!!isLoading) return null
+    console.log('[ProjectAlbum-state]', state)
 
     return (
-        <Box>
-            <Typography component={'div'} variant={'h6'}
-                sx={{ m: 2, pl: 1, borderLeft: '5px solid orange' }}
-            >
-                {state.title}
-            </Typography>
-            <Container maxWidth='sm'>
-                <Grid container spacing={1}>
-                    {state.data.map((item, index) => (
-                        <Grid item xs={12} key={index}>
-                            <LazyLoad placeholder={<CircularProgress />} offset={100} once>
-                                <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
-                                    <CardMedia
-                                        component="img"
-                                        sx={{ width: 120, }}
-                                        image={item.thumbnail}
-                                        alt="thumbnail"
-                                    />
-                                    <Box sx={{
-                                        display: 'flex', flexDirection: 'column',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <CardContent sx={{
+        <Container >
+            <Grid container >
+                {!!state.dataVilla &&
+                    <Box sx={{ mb: 10 }}>
+                        <Typography variant={'h5'} component={'div'}
+                            sx={{ mb: 1, pl: 1, borderLeft: '5px solid orange' }}
+                        >
+                            {`Biệt Thự`}
+                        </Typography>
+                        {state.dataVilla.map((item, index) => (
+                            <Grid item xs={12} key={index} sx={{ mb: 1 }}>
+                                <LazyLoad placeholder={<CircularProgress />} offset={100} once>
+                                    <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
+                                        <CardMedia
+                                            component="img"
+                                            sx={{ width: 120, }}
+                                            image={item.thumbnail}
+                                            alt="thumbnail"
+                                        />
+                                        <Box sx={{
                                             display: 'flex', flexDirection: 'column',
-                                            flex: '1 0', justifyContent: 'space-between',
+                                            justifyContent: 'center',
                                         }}>
-                                            <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                                {item.title}
-                                            </Typography>
-                                            <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                                {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
-                                            <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
-                                                <MoreHorizIcon />
-                                            </IconButton>
-                                        </CardActions>
-                                    </Box>
-                                </Card>
-                            </LazyLoad>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Container>
-        </Box>
+                                            <CardContent sx={{
+                                                display: 'flex', flexDirection: 'column',
+                                                flex: '1 0', justifyContent: 'space-between',
+                                            }}>
+                                                <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
+                                                    {item.title}
+                                                </Typography>
+                                                <Typography variant="subtitle1" color="text.secondary" component="div" >
+                                                    {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
+                                                <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
+                                                    <MoreHorizIcon />
+                                                </IconButton>
+                                            </CardActions>
+                                        </Box>
+                                    </Card>
+                                </LazyLoad>
+                            </Grid>
+                        ))}
+                    </Box>
+                }
+                {!!state.dataFurniture &&
+                    <Box sx={{ mb: 10 }}>
+                        <Typography variant={'h5'} component={'div'}
+                            sx={{ mb: 1, pl: 1, borderLeft: '5px solid orange' }}
+                        >
+                            {`Nội Thất`}
+                        </Typography>
+                        {state.dataFurniture.map((item, index) => (
+                            <Grid item xs={12} key={index} spacing={2} sx={{ mb: 1 }}>
+                                <LazyLoad placeholder={<CircularProgress />} offset={100} once>
+                                    <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
+                                        <CardMedia
+                                            component="img"
+                                            sx={{ width: 120, }}
+                                            image={item.thumbnail}
+                                            alt="thumbnail"
+                                        />
+                                        <Box sx={{
+                                            display: 'flex', flexDirection: 'column',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <CardContent sx={{
+                                                display: 'flex', flexDirection: 'column',
+                                                flex: '1 0', justifyContent: 'space-between',
+                                            }}>
+                                                <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
+                                                    {item.title}
+                                                </Typography>
+                                                <Typography variant="subtitle1" color="text.secondary" component="div" >
+                                                    {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
+                                                <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
+                                                    <MoreHorizIcon />
+                                                </IconButton>
+                                            </CardActions>
+                                        </Box>
+                                    </Card>
+                                </LazyLoad>
+                            </Grid>
+                        ))}
+                    </Box>
+                }
+                {!!state.dataTownHouse &&
+                    <Box sx={{ mb: 10 }}>
+                        <Typography variant={'h5'} component={'div'}
+                            sx={{ mb: 1, pl: 1, borderLeft: '5px solid orange' }}
+                        >
+                            {`Nhà Phố`}
+                        </Typography>
+                        {state.dataTownHouse.map((item, index) => (
+                            <Grid item xs={12} key={index} spacing={2} sx={{ mb: 1 }}>
+                                <LazyLoad placeholder={<CircularProgress />} offset={100} once>
+                                    <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
+                                        <CardMedia
+                                            component="img"
+                                            sx={{ width: 120, }}
+                                            image={item.thumbnail}
+                                            alt="thumbnail"
+                                        />
+                                        <Box sx={{
+                                            display: 'flex', flexDirection: 'column',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <CardContent sx={{
+                                                display: 'flex', flexDirection: 'column',
+                                                flex: '1 0', justifyContent: 'space-between',
+                                            }}>
+                                                <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
+                                                    {item.title}
+                                                </Typography>
+                                                <Typography variant="subtitle1" color="text.secondary" component="div" >
+                                                    {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
+                                                <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
+                                                    <MoreHorizIcon />
+                                                </IconButton>
+                                            </CardActions>
+                                        </Box>
+                                    </Card>
+                                </LazyLoad>
+                            </Grid>
+                        ))}
+                    </Box>
+                }
+            </Grid>
+        </Container>
     )
 }
 

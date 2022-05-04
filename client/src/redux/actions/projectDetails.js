@@ -100,7 +100,7 @@ export const getProjectDetailSearchByName = (searchQuery) => async (dispatch) =>
 
         const { data } = await api.fetchProjectDetailSearchByName(searchQuery);
 
-        console.log('[fetchProjectDetailSearchByName-data]', data)
+        console.log('[getProjectDetailSearchByProjectName-data]', data)
 
         dispatch({ type: FETCH_PROJECT_DETAIL_BY_SEARCH, payload: data })
     } catch (error) {
@@ -112,7 +112,6 @@ export const getProjectDetailSearchByName = (searchQuery) => async (dispatch) =>
 
 export const createProjectDetail = (projectDetail) => async (dispatch) => {
     try {
-        dispatch({ type: START_LOADING_PROJECT_DETAIL })
 
         const { data } = await api.createProjectDetail(projectDetail);
 

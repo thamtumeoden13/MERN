@@ -19,8 +19,11 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 
 import { getProjects, } from '../../redux/actions/projects'
 
+import useStyles from './styles'
+
 const AppFooter = () => {
 
+    const classes = useStyles()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -89,8 +92,6 @@ const AppFooter = () => {
                                     sx={{
                                         display: 'flex',
                                         flexDirection: 'row',
-                                        // justifyContent: 'center',
-                                        // alignItems: 'center',
                                         flexWrap: 'wrap',
                                         listStyle: 'none',
                                         p: 0.5,
@@ -99,34 +100,34 @@ const AppFooter = () => {
                                     }}
                                     component="ul"
                                 >
-                                    {!!projects &&
-                                        projects.map(project => (
-                                            <Stack key={project._id} direction="column" spacing={1}>
-                                                <Chip
-                                                    label={project.title}
-                                                    style={{ color: 'white' }}
-                                                    variant="outlined"
-                                                    onClick={() => handleClick(project)}
-                                                    icon={<DoubleArrowIcon sx={{ color: 'white' }} />}
-                                                    sx={{ justifyContent: 'flex-start', marginRight: 1, marginBottom: 1 }}
-                                                />
-                                            </Stack>
-                                        ))
+                                    {!!projects && projects.map(project => (
+                                        <Stack key={project._id} direction="column" spacing={1} >
+                                            <Chip
+                                                label={project.title}
+                                                variant="outlined"
+                                                onClick={() => handleClick(project)}
+                                                icon={<DoubleArrowIcon sx={{ color: 'white' }} />}
+                                                sx={{ justifyContent: 'flex-start', marginRight: 1, marginBottom: 1 }}
+                                                className={classes.cardContainer}
+                                            />
+                                        </Stack>
+                                    ))
                                     }
                                 </Box>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={12} lg={3}>
+                            <Grid item xs={12} sm={12} md={12} lg={3} >
                                 <Box sx={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    height: '100%'
+                                    height: '100%',
+                                    paddingY: 1,
                                 }}>
                                     <Link to="/" >
                                         <img
                                             src={logo_round_artsunday}
                                             style={{
                                                 width: '100%',
-                                                maxWidth: '200px'
+                                                maxWidth: '150px',
                                             }}
                                         />
                                     </Link>
