@@ -136,37 +136,27 @@ const NavBar = (props) => {
         setUser(null)
     }, [navigate, dispatch])
 
-    const toggleDrawer = (open, event) => {
-        // if (
-        //     event &&
-        //     event.type === 'keydown' &&
-        //     (event.key === 'Tab' || event.key === 'Shift')
-        // ) {
-        //     return;
-        // }
-        // console.log('[toggleDrawer]', open, event)
-        // setDrawer(open, event);
+    const toggleDrawer = () => {
+        setDrawer(!drawer);
     };
 
     const handleSearch = (search) => {
         navigate(`/tim-kiem?searchQuery=${search}`)
     }
 
-    // console.log('[routesNav]', routesNav)
-
     return (
         <HideOnScroll {...props}>
             <AppBar position="fixed" className={classes.appBar} color='inherit' sx={{ top: 0, bottom: 'auto' }}>
                 <Toolbar className={classes.toolbar}>
                     <NavBarMenuIconComponent toggleDrawer={toggleDrawer} />
+                    <NavBarDrawerMobile routes={routesNav} drawer={drawer} toggleDrawer={toggleDrawer} />
                     <NavBarLogoComponent />
                     <NavBarMenuMobile />
                     <NavBarMenu routes={routesNav} />
-                    <NavBarDrawerMobile drawer={drawer} toggleDrawer={toggleDrawer} />
-                    <Box sx={{ flexGrow: 1 }} />
+                    {/* <Box sx={{ flexGrow: 1 }} /> */}
                     <Box sx={{
                         justifyContent: 'center',
-                        display: { xs: 'none', sm: 'flex', md: 'flex' }
+                        display: { xs: 'none', sm: 'none', md: 'flex' }
                     }}>
                         <SearchAppBar onSearch={handleSearch} />
                     </Box>

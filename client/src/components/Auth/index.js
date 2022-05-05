@@ -62,7 +62,7 @@ const Auth = () => {
     }
 
     const googleSuccess = async (res) => {
-        // console.log('googleSuccess', res)
+        console.log('googleSuccess', res)
 
         const result = res?.profileObj
         const token = res?.tokenId
@@ -76,7 +76,7 @@ const Auth = () => {
     }
 
     const googleFailure = async (err) => {
-        // console.log('Google Sign In was unsuccessful, Try Again Later')
+        console.log('Google Sign In was unsuccessful, Try Again Later', err)
     }
 
     return (

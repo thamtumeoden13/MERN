@@ -13,7 +13,6 @@ const Search = styled('div')(({ theme }) => ({
         backgroundColor: alpha(theme.palette.common.white, 0.9),
     },
     marginLeft: 0,
-    // marginRight: '10px',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(1),
@@ -40,9 +39,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: '12ch',
+            width: '10ch',
             '&:focus': {
-                width: '20ch',
+                width: '16ch',
             },
         },
     },

@@ -50,7 +50,7 @@ const NavBarMenu = ({ routes }) => {
     }
 
     return (
-        <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex', }, height: '100%' }}>
+        <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex', }, height: '100%', flex: 1 }}>
             {routes.map((route) => (
                 <Box key={`NavBarMenu-${route._id}`} sx={{ mr: 1 }} >
                     <Button
@@ -59,7 +59,7 @@ const NavBarMenu = ({ routes }) => {
                         sx={{
                             background: menuActived === route._id ? 'linear-gradient(45deg, #f37121 30%, #f37121 90%)' : null,
                             boxShadow: menuActived === route._id ? '0 3px 5px 2px rgba(33, 203, 243, .3)' : null,
-                            height: '100%'
+                            height: '100%',
                         }}
                         aria-controls={menuActived === route._id ? 'fade-menu' : undefined}
                         aria-haspopup="true"

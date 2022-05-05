@@ -7,11 +7,12 @@ export default makeStyles((theme) => ({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		padding: 0,
+		flex: 1,
 		backgroundColor: '#202530',
 	},
 	toolbar: {
 		display: 'flex',
-		justifyContent: 'space-between',
+		// justifyContent: 'space-between',
 		flex: 1,
 		[theme.breakpoints.down('md')]: {
 			width: 'auto',
