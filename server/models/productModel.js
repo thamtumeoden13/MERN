@@ -18,6 +18,10 @@ const productSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date()
+    },
+    orderIndex: {
+        type: Number,
+        default: 1
     }
 })
 

@@ -105,6 +105,10 @@ const projectSchema = mongoose.Schema({
         type: String,
         default: ''
     },
+    orderIndex: {
+        type: Number,
+        default: 1
+    }
 })
 
 const projectModel = mongoose.model('ProjectDetail', projectSchema)

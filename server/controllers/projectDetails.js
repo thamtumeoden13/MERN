@@ -4,7 +4,7 @@ import ProjectDetailModel from "../models/projectDetailModel.js"
 
 export const getProjectDetails = async (req, res) => {
     try {
-        const projectDetails = await ProjectDetailModel.find().sort({ _id: -1 })
+        const projectDetails = await ProjectDetailModel.find().sort({ orderIndex: 'asc' })
 
         res.status(200).json({ data: projectDetails })
     } catch (error) {

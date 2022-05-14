@@ -36,6 +36,10 @@ const portfolioSchema = mongoose.Schema({
         type: String,
         default: 'anonymous'
     },
+    orderIndex: {
+        type: Number,
+        default: 1
+    }
 
 })
 

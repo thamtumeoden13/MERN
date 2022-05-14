@@ -9,7 +9,7 @@ export const getProducts = async (req, res) => {
         const startIndex = (Number(page) - 1) * LIMIT
         const total = await ProductModel.countDocuments({})
 
-        const products = await ProductModel.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex)
+        const products = await ProductModel.find().sort({ orderIndex: 'asc' }).limit(LIMIT).skip(startIndex)
 
         res.status(200).json({ data: products, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) })
     } catch (error) {

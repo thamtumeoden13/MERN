@@ -14,7 +14,7 @@ export const getPortfolio = async (req, res) => {
 
 export const getPortfolios = async (req, res) => {
     try {
-        const portfolios = await PortfolioModel.find().sort({ _id: -1 })
+        const portfolios = await PortfolioModel.find().sort({ orderIndex: 'asc' })
 
         res.status(200).json({ data: portfolios })
     } catch (error) {

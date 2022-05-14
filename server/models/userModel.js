@@ -15,6 +15,14 @@ const userSchema = mongoose.Schema({
     },
     id: {
         type: String
+    },
+    level: {
+        type: Number,
+        default: 1
+    },
+    orderIndex: {
+        type: Number,
+        default: 1
     }
 })
 
