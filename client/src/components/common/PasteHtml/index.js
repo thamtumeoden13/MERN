@@ -218,7 +218,7 @@ const ImageElement = ({ attributes, children, element }) => {
             {children}
             <Box sx={{
                 display: 'flex', flexDirection: 'column',
-                maxheight: '90vh',
+                // maxheight: '90vh',
                 marginY: 2,
             }}>
                 <CardMedia
@@ -228,6 +228,7 @@ const ImageElement = ({ attributes, children, element }) => {
                     className={css`
                             object-fit: contain;
                             max-width: 100%;
+                            max-height: 90vh;
                             height: 100%;
                         `}
                 />

@@ -430,7 +430,7 @@ const Image = ({ attributes, children, element }) => {
             >
                 <Box sx={{
                     display: 'flex', flexDirection: 'column',
-                    maxHeight: '90vh',
+                    // maxHeight: '90vh',
                     marginY: 2,
                 }}>
                     <CardMedia
@@ -440,6 +440,7 @@ const Image = ({ attributes, children, element }) => {
                         className={css`
                             object-fit: contain;
                             max-width: 100%;
+                            max-height: 90vh;
                             height: 100%;
                             box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
                         `}
