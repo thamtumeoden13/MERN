@@ -5,6 +5,8 @@ import {
     CREATE_PROJECT, UPDATE_PROJECT, DELETE_PROJECT,
 } from '../constants/actionType';
 
+import { toastShow } from "./toast";
+
 export const getProject = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROJECT })
@@ -61,6 +63,8 @@ export const updateProject = (id, project) => async (dispatch) => {
 export const deleteProject = (ids) => async (dispatch) => {
     try {
         await api.deleteProject(ids)
+
+        dispatch(toastShow('success','Xoá thành công',''))
 
         dispatch({ type: DELETE_PROJECT, payload: ids })
     } catch (error) {

@@ -218,7 +218,7 @@ const ImageElement = ({ attributes, children, element }) => {
             {children}
             <Box sx={{
                 display: 'flex', flexDirection: 'column',
-                height: '90vh',
+                maxheight: '90vh',
                 marginY: 2,
             }}>
                 <CardMedia

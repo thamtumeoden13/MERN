@@ -7,15 +7,10 @@ export default makeStyles((theme) => ({
         alignItems: 'center',
         maxWidth: 345,
         maxHeight: 324,
-        [theme.breakpoints.down('sm')]: {
-            maxWidth: '100%',
-            maxHeight: '100%',
-            boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)'
-        },
+        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
         transition: `all 0.5s ease-in-out`,
         '&:hover': {
             transform: `scale(1.03)`,
-            boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)'
         },
         cursor: 'pointer',
     },
@@ -23,14 +18,10 @@ export default makeStyles((theme) => ({
         display: 'flex', flexDirection: 'column'
     },
     cardImage: {
-        // height: 500,
-        height: 'auto',
+        // height: 'auto',
     },
     cardContent: {
-        display: 'flex', flexDirection: 'column', height: 80,
-        [theme.breakpoints.down('sm')]: {
-            height: 'auto',
-        },
+        display: 'flex', flexDirection: 'column',
         overflow: 'hidden',
     },
 }))

@@ -77,7 +77,6 @@ const Router = () => {
                 <Route path='/quan-ly/du-an' element={<RequireAuth><ProjectAdmin /></RequireAuth>} />
                 <Route path='/quan-ly/chi-tiet-du-an' element={<RequireAuth><ProjectDetailAdmin /></RequireAuth>} />
 
-
                 <Route path='/gioi-thieu' exact element={<CategoryPage />} />
                 <Route path='/nhan-su' exact element={<CategoryPage />} />
                 <Route path='/van-phong' exact element={<CategoryPage />} />

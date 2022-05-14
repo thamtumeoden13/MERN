@@ -95,7 +95,7 @@ const NavBarDrawerMobile = ({ routes = [], drawer = false, toggleDrawer }) => {
                 <Divider />
                 <List>
                     {routes.map((item, index) => (
-                        <>
+                        <Box key={item._id}>
                             <ListItemButton onClick={() => handleClick(item)}>
                                 {/* <ListItemIcon sx={{ color: 'white' }}>
                                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -123,7 +123,7 @@ const NavBarDrawerMobile = ({ routes = [], drawer = false, toggleDrawer }) => {
                                     </List>
                                 </Collapse>
                             }
-                        </>
+                        </Box>
                     ))}
                 </List>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', flex: 1, mb: 2 }}>

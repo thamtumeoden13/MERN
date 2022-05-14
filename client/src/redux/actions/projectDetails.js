@@ -6,6 +6,8 @@ import {
     CREATE_PROJECT_DETAIL, UPDATE_PROJECT_DETAIL, DELETE_PROJECT_DETAIL,
 } from '../constants/actionType';
 
+import { toastShow } from "./toast";
+
 export const getProjectDetail = (id) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING_PROJECT_DETAIL })
@@ -134,6 +136,8 @@ export const updateProjectDetail = (id, projectDetail) => async (dispatch) => {
 export const deleteProjectDetail = (ids) => async (dispatch) => {
     try {
         await api.deleteProjectDetail(ids)
+
+        dispatch(toastShow('success','Xoá thành công',''))
 
         dispatch({ type: DELETE_PROJECT_DETAIL, payload: ids })
     } catch (error) {

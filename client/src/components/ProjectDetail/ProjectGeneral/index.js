@@ -17,6 +17,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import GroupIcon from '@mui/icons-material/Group';
 
 import { useTitle } from '../../../utils';
+import useStyles from './styles'
 
 const dataSource = [
 	{
@@ -50,6 +51,7 @@ const dataSource = [
 ]
 
 const ProjectGeneral = () => {
+	const classes = useStyles()
 
 	const { projectDetails, projectDetail, isLoading } = useSelector((state) => state.projectDetails)
 
@@ -115,12 +117,14 @@ const ProjectGeneral = () => {
 			<Box>
 				<Card sx={{ display: 'flex', flexDirection: 'column', }}>
 					<lazyload placeholder={<CircularProgress />}>
-						<CardMedia
-							component='img'
-							height='500px'
-							image={state.imageUrl}
-							alt='image'
-						/>
+						<Box sx={{ display: 'flex', flexDirection: 'column' }}>
+							<CardMedia
+								component='img'
+								className={classes.cardImage}
+								image={state.imageUrl}
+								alt='portfolio image'
+							/>
+						</Box>
 					</lazyload>
 					<Box sx={{
 						display: 'flex', flexDirection: 'column',
@@ -131,9 +135,8 @@ const ProjectGeneral = () => {
 							flex: '1 0', justifyContent: 'space-between',
 						}}>
 							{data.map(e => {
-								console.log('[dataSource-e]', e)
 								return (
-									<Box key={e.name} sx={{ display: 'flex', alignItems: 'center' }}>
+									<Box key={e.name} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
 										<Typography component="div" variant="subtitle1"
 											sx={{ width: 160, fontWeight: 'bold' }}>
 											{e.title}
@@ -141,8 +144,8 @@ const ProjectGeneral = () => {
 										<Typography component="div" variant="subtitle1" sx={{ fontWeight: 'bold' }} >
 											&nbsp;{`:`}&nbsp;
 										</Typography>
-										<Typography variant="subtitle1" color="text.secondary" component="div"
-											sx={{ flex: 1, overflow: 'hidden' }}
+										<Typography variant="subtitle1" color="text.primary" component="div"
+											sx={{ flex: 1, overflow: 'hidden', ml: 2 }}
 										>
 											{e.value}
 										</Typography>

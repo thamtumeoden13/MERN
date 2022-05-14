@@ -14,27 +14,16 @@ import CardItem from './CardItem'
 import useStyles from './styles'
 import ListTitle from '../ListTitle';
 
-const CardList = ({ title, data, subData, itemCount = 4, onViewDetail, onViewSubDetail }) => {
+const CardListVertical = ({ title, data, subData, itemCount = 4, onViewDetail, onViewSubDetail }) => {
     const classes = useStyles()
 
-    const [state, setState] = useState({ xs: 12, sm: 6, md: 4, lg: 3 })
-
-    // useEffect(() => {
-    //     const baseSize = 12 / itemCount
-    //     const size = { xs: baseSize * 4, sm: baseSize * 3, md: baseSize * 2, lg: baseSize }
-    //     console.log('[size]', size)
-    //     setState(size)
-    // }, [itemCount])
-
     const handleClickItem = (item) => {
-        // console.log('handleClickItem', item)
         if (onViewDetail) {
             onViewDetail(item)
         }
     }
 
     const handleClickSubItem = (item) => {
-        // console.log('handleClickSubItem', item)
         if (onViewSubDetail) {
             onViewSubDetail(item)
         }
@@ -43,10 +32,7 @@ const CardList = ({ title, data, subData, itemCount = 4, onViewDetail, onViewSub
     if (!data.length) return null
 
     return (
-        <Box sx={{
-            mb: 2,
-            display: 'flex', flexDirection: 'column', flex: 1,
-        }}>
+        <Box sx={{ mb: 2, display: 'flex', flexDirection: 'column', }}>
             {!!title &&
                 <Box sx={{ mb: 2, width: '100%', }}>
                     <Typography
@@ -59,10 +45,10 @@ const CardList = ({ title, data, subData, itemCount = 4, onViewDetail, onViewSub
                 </Box>
             }
             <ListTitle data={subData} onClick={handleClickSubItem} />
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'column' }}>
                 {data.map((item, index) => {
                     return (
-                        <Grid item key={`item-${index}`} xs={12} sm={state.sm} md={state.md} lg={state.lg}>
+                        <Grid item key={`item-${index}`}>
                             <LazyLoad placeholder={<CircularProgress />} offset={100} once>
                                 <CardItem item={item} onClick={handleClickItem} />
                             </LazyLoad>
@@ -74,4 +60,4 @@ const CardList = ({ title, data, subData, itemCount = 4, onViewDetail, onViewSub
     )
 }
 
-export default CardList
+export default CardListVertical

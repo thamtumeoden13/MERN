@@ -14,6 +14,7 @@ import Form from './Form';
 import PortfolioTableList from './PortfolioTableList'
 import SlateEditor from '../../components/common/SlateEditor';
 import NavBarAuth from '../../components/NavBar/NavBarAuth';
+import AlertDialog from '../../components/common/Dialog/AlertDialog';
 
 import useStyles from './styles'
 
@@ -30,6 +31,10 @@ const PortfolioAdmin = () => {
     const [user, setUser] = useState(null)
     const [description, setDescription] = useState('')
     const [isEdit, setIsEdit] = useState(false)
+    const [dialog, setDialog] = useState({
+        open: false,
+        value: ''
+    })
 
     const portfolioSelected = useSelector((state) => currentId ? state.portfolios.portfolios.find((project) => currentId === project._id) : null)
     const initialValue = useMemo(() => !!portfolioSelected && !!portfolioSelected.description ? JSON.parse(portfolioSelected.description) : null, [portfolioSelected])
@@ -51,9 +56,15 @@ const PortfolioAdmin = () => {
         navigate(`/han-muc-du-an/du-an/${item._id}`)
     }
 
-    const handleRemove = (ids) => {
-        // console.log('[handleRemove-ids]', ids.toString())
-        dispatch(deletePortfolio(ids.toString()))
+    const handlePreRemove = (ids) => {
+        // console.log('[handlePreRemove-ids]', ids.toString())
+        setDialog({ open: true, value: ids.toString() })
+    }
+
+    const handleRemove = () => {
+        // console.log('[handleRemove-ids]', dialog.value.toString())
+        dispatch(deletePortfolio(dialog.value.toString()))
+        handleReject()
     }
 
     const handleSubmitForm = (data) => {
@@ -71,11 +82,22 @@ const PortfolioAdmin = () => {
         setDescription(description)
     }
 
+    const handleReject = () => {
+        setDialog(prev => { return { ...prev, open: false } })
+    }
+
     // console.log('[portfolios]', portfolios)
 
     return (
         <Box sx={{ pt: 10 }}>
-            <NavBarAuth />  
+            <AlertDialog
+                title={'Xoá Hạn Mục Dự Án'}
+                description={`Bạn Có Chắc Chắn Muốn Xoá!!!`}
+                open={dialog.open}
+                onAccept={handleRemove}
+                onReject={handleReject}
+            />
+            <NavBarAuth />
             <Grow in>
                 <Container maxWidth='xl'>
                     <Grid container display='flex' flexDirection='column' spacing={3}>
@@ -85,7 +107,7 @@ const PortfolioAdmin = () => {
                                     data={portfolios}
                                     onViewDetail={handleDetail}
                                     onEdit={handleCurrentId}
-                                    onRemove={handleRemove}
+                                    onRemove={handlePreRemove}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6} md={4}>

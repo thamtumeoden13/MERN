@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar'
 
 import ChipInput from '../../../components/common/ChipInput'
 import ComboBox from '../../../components/common/ComboBox'
+import NumberTextField from '../../../components/common/NumberFormatCustom'
 
 import { isImageUrl } from '../../../utils'
 import useStyles from './styles'
@@ -36,6 +37,7 @@ const initProjectDetailData = {
     designTeam: '',
     designYear: '',
     estimatedTime: '',
+    orderIndex: 1,
 }
 
 const dataTexfield = [
@@ -171,7 +173,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
             onSubmit(data)
         }
 
-        // clear()
+        clear()
     }
 
     const valiDateFormInput = () => {
@@ -189,6 +191,9 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
             // case !tags || tags.length === 0:
             //     errors.tags = 'Please Input At Least One Tags!'
             //     break;
+            case !formData?.orderIndex || formData?.orderIndex <= 0:
+                errors.orderIndex = 'Please Input OrderIndex!'
+                break;
             case !formData?.thumbnail || formData?.thumbnail.length === 0:
                 errors.thumbnail = 'Please Chosse A Image!'
                 break;
@@ -293,6 +298,17 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                             </div>
                         }
                     </>
+                    <NumberTextField
+                        name='orderIndex'
+                        variant='outlined'
+                        label="Thứ tự hiển thị"
+                        fullWidth={true}
+                        required={true}
+                        error={(!!state.isValidate && !!errors.orderIndex)}
+                        helperText={errors.orderIndex || ''}
+                        defaultValue={formData.orderIndex}
+                        onChangeValue={handleChangeValue}
+                    />
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{
                             display: 'flex', alignItems: 'center',

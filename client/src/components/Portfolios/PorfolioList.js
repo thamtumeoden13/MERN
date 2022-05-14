@@ -17,7 +17,7 @@ const PorfolioList = ({ onViewDetail }) => {
 
     const [data, setData] = useState([])
 
-    // console.log('PorfolioList', portfolios)
+    console.log('PorfolioList', portfolios)
 
     useEffect(() => {
         setData(portfolios || [])

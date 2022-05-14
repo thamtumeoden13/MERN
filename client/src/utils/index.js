@@ -186,3 +186,8 @@ export const isImageUrl = url => {
     const ext = new URL(url).pathname.split('.').pop()
     return imageExtensions.includes(ext)
 }
+
+export const guidelineBaseHeight = 595;
+export const guidelineBaseWidth = 842;
+
+export const pixelRatioA4 = guidelineBaseHeight / guidelineBaseWidth

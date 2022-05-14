@@ -61,7 +61,7 @@ const HomePage = () => {
     }
 
     return (
-        <Box sx={{ pt: 6, backgroundColor: 'transparent' }}>
+        <Box sx={{ pt: 6, backgroundColor: 'transparent', marginLeft: 'auto', marginRight: 'auto' }}>
             <NavBar />
             <Header />
             <Container sx={{ paddingY: 0, mt: 10, minHeight: '100vh' }} maxWidth='xl'>

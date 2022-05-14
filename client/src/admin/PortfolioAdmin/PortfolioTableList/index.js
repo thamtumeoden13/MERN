@@ -321,6 +321,7 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
         // console.log('[handleRemove]', isSelected, selected)
         if (onRemove) {
             onRemove(selected)
+            setSelected([])
         }
     }
 

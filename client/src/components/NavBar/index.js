@@ -128,7 +128,7 @@ const NavBar = (props) => {
             setRoutesNav(routesNav)
         }
     }, [routes])
-
+    console.log('[routes]',routes)
     const handleLogout = useCallback(() => {
         dispatch({ type: LOGOUT })
 
@@ -145,24 +145,24 @@ const NavBar = (props) => {
     }
 
     return (
-        <HideOnScroll {...props}>
+        <ElevationScroll {...props}>
             <AppBar position="fixed" className={classes.appBar} color='inherit' sx={{ top: 0, bottom: 'auto' }}>
                 <Toolbar className={classes.toolbar}>
                     <NavBarMenuIconComponent toggleDrawer={toggleDrawer} />
-                    <NavBarDrawerMobile routes={routesNav} drawer={drawer} toggleDrawer={toggleDrawer} />
                     <NavBarLogoComponent />
+                    <NavBarDrawerMobile routes={routesNav} drawer={drawer} toggleDrawer={toggleDrawer} />
                     <NavBarMenuMobile />
                     <NavBarMenu routes={routesNav} />
                     {/* <Box sx={{ flexGrow: 1 }} /> */}
-                    <Box sx={{
+                    {/* <Box sx={{
                         justifyContent: 'center',
                         display: { xs: 'none', sm: 'none', md: 'flex' }
                     }}>
                         <SearchAppBar onSearch={handleSearch} />
-                    </Box>
+                    </Box> */}
                 </Toolbar>
             </AppBar>
-        </HideOnScroll>
+        </ElevationScroll>
     )
 }
 

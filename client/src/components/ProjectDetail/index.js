@@ -27,11 +27,11 @@ const ProjectDetailComponent = () => {
 
     return (
         <Grid className={classes.gridContainer} container spacing={3}>
-            <Grid item xs={12} sm={6} md={8}>
+            <Grid item xs={12} sm={12} md={9}>
                 <ProjectGeneral />
                 <PasteHtmlComponent initialValue={description} readOnly={true} />
             </Grid>
-            <Grid item xs={12} sm={6} md={4} >
+            <Grid item xs={12} sm={6} md={3} sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}>
                 <ProjectAlbums />
             </Grid>
         </Grid>

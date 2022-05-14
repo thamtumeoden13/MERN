@@ -1,9 +1,13 @@
+import { toast } from "react-toastify";
+
 import * as api from '../../api'
 import {
     START_LOADING_PORTFOLIO, END_LOADING_PORTFOLIO,
     FETCH_ALL_PORTFOLIO, FETCH_PORTFOLIO,
     CREATE_PORTFOLIO, UPDATE_PORTFOLIO, DELETE_PORTFOLIO,
 } from '../constants/actionType';
+
+import { toastShow } from "./toast";
 
 export const getPortfolio = (id) => async (dispatch) => {
     try {
@@ -61,6 +65,8 @@ export const updatePortfolio = (id, portfolio) => async (dispatch) => {
 export const deletePortfolio = (ids) => async (dispatch) => {
     try {
         await api.deletePortfolio(ids)
+
+        dispatch(toastShow('success','Xoá thành công',''))
 
         dispatch({ type: DELETE_PORTFOLIO, payload: ids })
     } catch (error) {

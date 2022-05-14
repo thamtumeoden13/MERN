@@ -15,6 +15,7 @@ import Form from './Form';
 import ProjectDetailTableList from './ProjectDetailTableList'
 import SlateEditor from '../../components/common/SlateEditor';
 import NavBarAuth from '../../components/NavBar/NavBarAuth';
+import AlertDialog from '../../components/common/Dialog/AlertDialog';
 
 import useStyles from './styles'
 
@@ -29,6 +30,10 @@ const ProjectDetailAdmin = () => {
     const [user, setUser] = useState(null)
     const [description, setDescription] = useState('')
     const [isEdit, setIsEdit] = useState(false)
+    const [dialog, setDialog] = useState({
+        open: false,
+        value: ''
+    })
 
     const { projectDetails, isLoading } = useSelector((state) => state.projectDetails)
     const projectDetailSelected = useSelector((state) => currentId ? state.projectDetails.projectDetails.find((project) => currentId === project._id) : null)
@@ -52,8 +57,13 @@ const ProjectDetailAdmin = () => {
         navigate(`/chi-tiet-du-an/${item._id}`)
     }
 
+    const handlePreRemove = (ids) => {
+        // console.log('[handlePreRemove-ids]', ids.toString())
+        setDialog({ open: true, value: ids.toString() })
+    }
+
     const handleRemove = (ids) => {
-        // console.log('[handleRemove-ids]', ids.toString())
+        // console.log('[handleRemove-dialog.value]', dialog.value.toString())
         dispatch(deleteProjectDetail(ids.toString()))
     }
 
@@ -72,10 +82,21 @@ const ProjectDetailAdmin = () => {
         setDescription(description)
     }
 
+    const handleReject = () => {
+        setDialog(prev => { return { ...prev, open: false } })
+    }
+
     // console.log('[projectDetails]', projectDetails)
 
     return (
         <Box sx={{ mt: 10 }}>
+        <AlertDialog
+            title={'Xoá Chi Tiết Dự Án'}
+            description={`Bạn Có Chắc Chắn Muốn Xoá!!!`}
+            open={dialog.open}
+            onAccept={handleRemove}
+            onReject={handleReject}
+        />
             <NavBarAuth />
             <Grow in>
                 <Container maxWidth='xl' sx={{ mt: 15 }}>
@@ -86,7 +107,7 @@ const ProjectDetailAdmin = () => {
                                     data={projectDetails}
                                     onViewDetail={handleDetail}
                                     onEdit={handleCurrentId}
-                                    onRemove={handleRemove}
+                                    onRemove={handlePreRemove}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6} md={4}>

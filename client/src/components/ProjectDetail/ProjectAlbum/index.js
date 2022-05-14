@@ -18,6 +18,8 @@ import Grow from '@mui/material/Grow';
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
+import CardListVertical from '../../CardListVertical';
+
 const ProjectAlbums = () => {
     const navigate = useNavigate()
 
@@ -67,153 +69,48 @@ const ProjectAlbums = () => {
         <Container >
             <Grid container >
                 {!!state.dataVilla &&
-                    <Box sx={{ mb: 10 }}>
+                    <Box sx={{ mb: 4 }}>
                         <Typography variant={'h5'} component={'div'}
-                            sx={{ mb: 1, pl: 1, borderLeft: '5px solid orange' }}
+                            sx={{ mb: 2, pl: 1, borderLeft: '5px solid orange' }}
                         >
                             {`Biệt Thự`}
                         </Typography>
-                        {state.dataVilla.map((item, index) => (
-                            <Grid item xs={12} key={`dataVillaItem-${index}`} sx={{ mb: 1 }}>
-                                <LazyLoad placeholder={<CircularProgress />} offset={100} once>
-                                    <Grow
-                                        in={true}
-                                        style={{ transformOrigin: '0 0 0' }}
-                                        {... { timeout: 500 + index * 500 }}
-                                    >
-                                        <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
-                                            <CardMedia
-                                                component="img"
-                                                sx={{ width: 120, }}
-                                                image={item.thumbnail}
-                                                alt="thumbnail"
-                                            />
-                                            <Box sx={{
-                                                display: 'flex', flexDirection: 'column',
-                                                justifyContent: 'center',
-                                            }}>
-                                                <CardContent sx={{
-                                                    display: 'flex', flexDirection: 'column',
-                                                    flex: '1 0', justifyContent: 'space-between',
-                                                }}>
-                                                    <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                                        {item.title}
-                                                    </Typography>
-                                                    <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                                        {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                                    </Typography>
-                                                </CardContent>
-                                                <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
-                                                    <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
-                                                        <MoreHorizIcon />
-                                                    </IconButton>
-                                                </CardActions>
-                                            </Box>
-                                        </Card>
-                                    </Grow>
-                                </LazyLoad>
-                            </Grid>
-                        ))}
+                        <Box>
+                            <CardListVertical
+                                data={state.dataVilla}
+                                onViewDetail={handleViewDetail}
+                            />
+                        </Box>
                     </Box>
                 }
                 {!!state.dataFurniture &&
-                    <Box sx={{ mb: 10 }}>
+                    <Box sx={{ mb: 4 }}>
                         <Typography variant={'h5'} component={'div'}
-                            sx={{ mb: 1, pl: 1, borderLeft: '5px solid orange' }}
+                            sx={{ mb: 2, pl: 1, borderLeft: '5px solid orange' }}
                         >
                             {`Nội Thất`}
                         </Typography>
-                        {state.dataFurniture.map((item, index) => (
-                            <Grid item xs={12} key={`dataFurniture-${index}`} spacing={2} sx={{ mb: 1 }}>
-                                <LazyLoad placeholder={<CircularProgress />} offset={100} once>
-                                    <Grow
-                                        in={true}
-                                        style={{ transformOrigin: '0 0 0' }}
-                                        {... { timeout: 500 + index * 500 }}
-                                    >
-                                        <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
-                                            <CardMedia
-                                                component="img"
-                                                sx={{ width: 120, }}
-                                                image={item.thumbnail}
-                                                alt="thumbnail"
-                                            />
-                                            <Box sx={{
-                                                display: 'flex', flexDirection: 'column',
-                                                justifyContent: 'center',
-                                            }}>
-                                                <CardContent sx={{
-                                                    display: 'flex', flexDirection: 'column',
-                                                    flex: '1 0', justifyContent: 'space-between',
-                                                }}>
-                                                    <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                                        {item.title}
-                                                    </Typography>
-                                                    <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                                        {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                                    </Typography>
-                                                </CardContent>
-                                                <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
-                                                    <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
-                                                        <MoreHorizIcon />
-                                                    </IconButton>
-                                                </CardActions>
-                                            </Box>
-                                        </Card>
-                                    </Grow>
-                                </LazyLoad>
-                            </Grid>
-                        ))}
+                        <Box>
+                            <CardListVertical
+                                data={state.dataFurniture}
+                                onViewDetail={handleViewDetail}
+                            />
+                        </Box>
                     </Box>
                 }
                 {!!state.dataTownHouse &&
-                    <Box sx={{ mb: 10 }}>
+                    <Box sx={{ mb: 4 }}>
                         <Typography variant={'h5'} component={'div'}
-                            sx={{ mb: 1, pl: 1, borderLeft: '5px solid orange' }}
+                            sx={{ mb: 2, pl: 1, borderLeft: '5px solid orange' }}
                         >
                             {`Nhà Phố`}
                         </Typography>
-                        {state.dataTownHouse.map((item, index) => (
-                            <Grid item xs={12} key={`dataTownHouse-${index}`} spacing={2} sx={{ mb: 1 }}>
-                                <LazyLoad placeholder={<CircularProgress />} offset={100} once>
-                                    <Grow
-                                        in={true}
-                                        style={{ transformOrigin: '0 0 0' }}
-                                        {... { timeout: 500 + index * 500 }}
-                                    >
-                                        <Card sx={{ display: 'flex' }} onClick={() => handleViewDetail(item)}>
-                                            <CardMedia
-                                                component="img"
-                                                sx={{ width: 120, }}
-                                                image={item.thumbnail}
-                                                alt="thumbnail"
-                                            />
-                                            <Box sx={{
-                                                display: 'flex', flexDirection: 'column',
-                                                justifyContent: 'center',
-                                            }}>
-                                                <CardContent sx={{
-                                                    display: 'flex', flexDirection: 'column',
-                                                    flex: '1 0', justifyContent: 'space-between',
-                                                }}>
-                                                    <Typography component="div" variant="body1" sx={{ maxHeight: 70, overflow: 'hidden' }}>
-                                                        {item.title}
-                                                    </Typography>
-                                                    <Typography variant="subtitle1" color="text.secondary" component="div" >
-                                                        {moment(new Date(item.createdAt)).format('HH:MM MMM DD, YYYY')}
-                                                    </Typography>
-                                                </CardContent>
-                                                <CardActions sx={{ paddingY: 0, display: 'flex', justifyContent: 'flex-end' }}   >
-                                                    <IconButton aria-label="add to favorites" style={{ padding: '0 0' }}>
-                                                        <MoreHorizIcon />
-                                                    </IconButton>
-                                                </CardActions>
-                                            </Box>
-                                        </Card>
-                                    </Grow>
-                                </LazyLoad>
-                            </Grid>
-                        ))}
+                        <Box>
+                            <CardListVertical
+                                data={state.dataTownHouse}
+                                onViewDetail={handleViewDetail}
+                            />
+                        </Box>
                     </Box>
                 }
             </Grid>
