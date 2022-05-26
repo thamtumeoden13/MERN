@@ -1,5 +1,6 @@
-import React, { } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import decode from 'jwt-decode'
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import NavBarAuth from '../components/NavBar/NavBarAuth';
+import AlertDialog from '../components/common/Dialog/AlertDialog';
 
 const tiers = [
     {
@@ -65,12 +67,46 @@ const tiers = [
 
 const PricingContent = () => {
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const [dialog, setDialog] = useState({
+        open: false,
+        value: ''
+    })
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('profile'))
+        const token = user?.token
+
+        if (token) {
+            const decodeToken = decode(token)
+            if (decodeToken.level > 1) {
+                setDialog({ open: true })
+            }
+        }
+    }, [location])
 
     const handleClick = (tier) => {
         navigate(`/${tier.route}`)
     }
+
+    const handleAccept = () => {
+        navigate(`/`)
+    }
+
+    const handleReject = () => {
+        navigate(`/`)
+    }
+
     return (
         <Box sx={{ pt: 10 }}>
+            <AlertDialog
+                title={'Chưa được cấp quyền thao tác!'}
+                description={`Vui lòng liên hệ quản lý!`}
+                open={dialog.open}
+                onAccept={handleAccept}
+                onReject={handleReject}
+            />
             <NavBarAuth />
             <Container disableGutters maxWidth="sm" component="main" sx={{ mt: 5, pt: 8, pb: 6 }}>
                 <Typography

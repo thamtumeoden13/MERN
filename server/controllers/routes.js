@@ -8,15 +8,27 @@ export const getRoutes = async (req, res) => {
         const portfoliosCopy = JSON.parse(JSON.stringify(portfolios))
         const routes = portfoliosCopy.reduce((r, a) => {
             const element = { _id: a._id, name: a.name, title: a.title, orderIndex: a.orderIndex }
+            let route = ''
             const projectsChild = projects.filter(e => e.portfolioID === element._id)
-            element.route = !!projectsChild && projectsChild.length > 0 ? '' : `han-muc-du-an/tim-kiem?portfolioname=${element.name}`
+            route = !!projectsChild && projectsChild.length > 0 ? '' : `han-muc-du-an/tim-kiem?portfolioname=${element.name}`
+
+            if (element.name == 'gioi-thieu' || element.name == 'tin-tuc') {
+                route = !!projectsChild && projectsChild.length > 0 ? '' : `${element.name}`
+            }
+
+            element.route = route
+
             const child = projectsChild.map(e => {
+                let routeChild = `han-muc-du-an/tim-kiem?projectname=${e.name}`
+                if (element.name == 'gioi-thieu' || element.name == 'tin-tuc') {
+                    routeChild = `${e.name}`
+                }
                 return {
                     _id: e._id,
                     name: e.name,
                     title: e.title,
                     orderIndex: e.orderIndex,
-                    route: `han-muc-du-an/tim-kiem?projectname=${e.name}`
+                    route: routeChild
                 }
             })
             element.child = [...child]
@@ -44,7 +56,7 @@ const getPortfolios = async () => {
 
 const getProjects = async () => {
     try {
-        const projects = await ProjectModel.find().sort({ orderIndex: 'asc'  })
+        const projects = await ProjectModel.find().sort({ orderIndex: 'asc' })
 
         return projects
     } catch (error) {

@@ -55,77 +55,8 @@ const NavBar = (props) => {
     useEffect(() => {
         if (!!routes) {
             let routesCopy = JSON.parse(JSON.stringify(routes))
-            const routesNav =
-                [
-                    {
-                        _id: uuidv4(),
-                        title: 'Giới Thiêu',
-                        name: 'gioi-thieu',
-                        // route: 'gioi-thieu',
-                        child: [
-                            {
-                                _id: uuidv4(),
-                                title: 'Giới Thiêu',
-                                name: 'gioi-thieu',
-                                route: 'gioi-thieu',
-                            },
-                            {
-                                _id: uuidv4(),
-                                title: 'Nhân Sự',
-                                name: 'nhan-su',
-                                route: 'nhan-su',
-                            },
-                            {
-                                _id: uuidv4(),
-                                title: 'Văn Phòng',
-                                name: 'van-phong',
-                                route: 'van-phong',
-                            },
-                            {
-                                id: 4,
-                                title: 'Liên Hệ',
-                                name: 'lien-he',
-                                route: 'lien-he',
-                            },
-                        ]
-                    },
-                    ...routesCopy,
-                    {
-                        _id: uuidv4(),
-                        title: 'Tin Tức',
-                        name: 'tin-tuc',
-                        // route: 'tin-tuc',
-                        child: [
-                            {
-                                _id: uuidv4(),
-                                title: 'Tin Tức',
-                                name: 'tin-tuc',
-                                route: 'tin-tuc',
-                            },
-                            {
-                                _id: uuidv4(),
-                                title: 'Cẩm nang xây nhà',
-                                name: 'cam-nang-xay-nha',
-                                route: 'cam-nang-xay-nha',
-                            },
-                            {
-                                _id: uuidv4(),
-                                title: 'Hoạt động-Sự kiện',
-                                name: 'hoat-dong-su-kien',
-                                route: 'hoat-dong-su-kien',
-                            },
-                            {
-                                _id: uuidv4(),
-                                title: 'Tuyển Dụng',
-                                name: 'tuyen-dung',
-                                route: 'tuyen-dung',
-                            },
-                        ]
-                    }
-                ]
-
             // console.log('[routesNav]', routesNav)
-            setRoutesNav(routesNav)
+            setRoutesNav(routesCopy)
         }
     }, [routes])
     console.log('[routes]',routes)

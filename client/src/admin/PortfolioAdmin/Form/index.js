@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import ChipInput from '../../../components/common/ChipInput'
 import ComboBox from '../../../components/common/ComboBox'
@@ -24,6 +26,7 @@ const initPortfolioData = {
     imageUrl: '',
     tags: [],
     orderIndex: 1,
+    onlyShowRouter: false,
 }
 
 const Form = ({ currentId, handleCurrentId, onSubmit }) => {
@@ -185,6 +188,20 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                         defaultValue={formData.orderIndex}
                         onChangeValue={handleChangeValue}
                     />
+                    <Box sx={{ width: '100%' }}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name='onlyShowRouter'
+                                    checked={formData.onlyShowRouter}
+                                    onChange={(e) => handleChangeValue(e.target.name, e.target.checked)}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            }
+                            label="Chỉ hiển thị Menu"
+                            sx={{ marginLeft: '0' }}
+                        />
+                    </Box>
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{
                             display: 'flex', alignItems: 'center',

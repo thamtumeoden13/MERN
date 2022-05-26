@@ -29,6 +29,7 @@ const NavBar = (props) => {
             const decodeToken = decode(token)
             if (decodeToken.exp * 1000 < new Date().getTime()) {
                 handleLogout()
+                return
             }
         }
 

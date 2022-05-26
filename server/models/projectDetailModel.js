@@ -108,6 +108,10 @@ const projectSchema = mongoose.Schema({
     orderIndex: {
         type: Number,
         default: 1
+    },
+    onlyShowRouter: {
+        type: Boolean,
+        default: false
     }
 })
 

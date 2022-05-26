@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
     },
     level: {
         type: Number,
-        default: 1
+        default: 99
     },
     orderIndex: {
         type: Number,

@@ -150,7 +150,7 @@ const Auth = () => {
                     >
                         {isSignup ? 'Đăng Ký' : 'Đăng Nhập'}
                     </Button>
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId='711608998315-74dlgofriutfd2h0k2dovspne0mqqg6q.apps.googleusercontent.com'
                         render={(renderProps) => (
                             <Button
@@ -168,7 +168,7 @@ const Auth = () => {
                         onSuccess={googleSuccess}
                         onFailure={googleFailure}
                         cookiePolicy='single_host_origin'
-                    />
+                    /> */}
                     <Grid container justifyContent='flex-end'>
                         <Grid item>
                             <Button onClick={switchMode}>
