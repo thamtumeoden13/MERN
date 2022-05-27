@@ -13,7 +13,6 @@ import ScrollTop from './components/common/ScrollTop';
 import Router from './routes';
 
 import 'react-toastify/dist/ReactToastify.css';
-import SpeedDialTooltipOpen from './components/common/SpeedDial';
 
 const theme = createTheme();
 
@@ -30,12 +29,6 @@ const App = (props) => {
 					<KeyboardArrowUpIcon />
 				</Fab>
 			</ScrollTop>
-			<Box
-				role="presentation"
-				sx={{ position: 'fixed', zIndex: 99, bottom: 16, left: 16 }}
-			>
-				<SpeedDialTooltipOpen />
-			</Box>
 			<ToastContainer {...toastConfig} />
 			<Router />
 		</ThemeProvider>
