@@ -9,6 +9,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import ScrollToTop from './components/common/ScrollToTop';
 import ScrollTop from './components/common/ScrollTop';
+import SpeedDialTooltipOpen from './components/common/SpeedDial';
 
 import Router from './routes';
 
@@ -29,6 +30,12 @@ const App = (props) => {
 					<KeyboardArrowUpIcon />
 				</Fab>
 			</ScrollTop>
+			<Box
+				role="presentation"
+				sx={{ position: 'fixed', zIndex: 99, bottom: 16, left: 16 }}
+			>
+				<SpeedDialTooltipOpen />
+			</Box>
 			<ToastContainer {...toastConfig} />
 			<Router />
 		</ThemeProvider>
