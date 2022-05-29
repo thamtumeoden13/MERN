@@ -45,7 +45,7 @@ export const getRoutes = async (req, res) => {
 
 const getPortfolios = async () => {
     try {
-        const portfolios = await PortfolioModel.find().sort({ orderIndex: 'asc' })
+        const portfolios = await PortfolioModel.find({ isActived: true, isDeleted: false }).sort({ orderIndex: 'asc' })
 
         return portfolios
     } catch (error) {
@@ -56,7 +56,7 @@ const getPortfolios = async () => {
 
 const getProjects = async () => {
     try {
-        const projects = await ProjectModel.find().sort({ orderIndex: 'asc' })
+        const projects = await ProjectModel.find({ isActived: true, isDeleted: false }).sort({ orderIndex: 'asc' })
 
         return projects
     } catch (error) {

@@ -16,7 +16,9 @@ import ProjectDetailTableList from './ProjectDetailTableList'
 import SlateEditor from '../../components/common/SlateEditor';
 import NavBarAuth from '../../components/NavBar/NavBarAuth';
 import AlertDialog from '../../components/common/Dialog/AlertDialog';
+import ListTitle from '../../components/ListTitle';
 
+import { dataSubMenu } from '../../api/constants'
 import useStyles from './styles'
 
 const ProjectDetailAdmin = () => {
@@ -86,20 +88,27 @@ const ProjectDetailAdmin = () => {
         setDialog(prev => { return { ...prev, open: false } })
     }
 
+    const handleClickItem = (item) => {
+        navigate(`${item.route}`)
+    }
+
     // console.log('[projectDetails]', projectDetails)
 
     return (
         <Box sx={{ mt: 10 }}>
-        <AlertDialog
-            title={'Xoá Chi Tiết Dự Án'}
-            description={`Bạn Có Chắc Chắn Muốn Xoá!!!`}
-            open={dialog.open}
-            onAccept={handleRemove}
-            onReject={handleReject}
-        />
+            <AlertDialog
+                title={'Xoá Chi Tiết Dự Án'}
+                description={`Bạn Có Chắc Chắn Muốn Xoá!!!`}
+                open={dialog.open}
+                onAccept={handleRemove}
+                onReject={handleReject}
+            />
             <NavBarAuth />
+            <Box sx={{ height: 64, marginLeft: 2 }}>
+                <ListTitle data={dataSubMenu} onClick={handleClickItem} />
+            </Box>
             <Grow in>
-                <Container maxWidth='xl' sx={{ mt: 15 }}>
+                <Container maxWidth='xl'>
                     <Grid container display='flex' flexDirection='column' spacing={3}>
                         <Grid className={classes.gridContainer} container item justifyContent='space-between' alignItems='stretch' spacing={3}>
                             <Grid item xs={12} sm={6} md={8} >

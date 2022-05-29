@@ -13,6 +13,11 @@ export default makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
+    paperHeader: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
     form: {
         display: 'flex',
         flexWrap: 'wrap',

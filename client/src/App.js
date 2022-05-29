@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -19,7 +20,20 @@ const theme = createTheme();
 
 const App = (props) => {
 
+	const location = useLocation();
+
+	const [state, setState] = useState({
+		isShowHelpButton: false
+	})
+
 	const toastConfig = useSelector(state => state.toast)
+	useEffect(() => {
+		const pathnames = location.pathname.split('/').filter((x) => x);
+		const isShowHelpButton = !pathnames.includes('quan-ly')
+
+		setState(prev => { return { ...prev, isShowHelpButton } })
+
+	}, [location])
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -30,12 +44,13 @@ const App = (props) => {
 					<KeyboardArrowUpIcon />
 				</Fab>
 			</ScrollTop>
-			<Box
-				role="presentation"
-				sx={{ position: 'fixed', zIndex: 99, bottom: 16, left: 16 }}
-			>
-				<SpeedDialTooltipOpen />
-			</Box>
+			{state.isShowHelpButton &&
+				<Box
+					role="presentation"
+					sx={{ position: 'fixed', zIndex: 99, bottom: 16, left: 16 }}
+				>
+					<SpeedDialTooltipOpen />
+				</Box>}
 			<ToastContainer {...toastConfig} />
 			<Router />
 		</ThemeProvider>

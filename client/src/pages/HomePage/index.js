@@ -12,7 +12,7 @@ import CardList from '../../components/CardList';
 
 import { getPortfolios } from '../../redux/actions/portfolios'
 import { getProjects } from '../../redux/actions/projects'
-import { getProjectDetails } from '../../redux/actions/projectDetails'
+import { getProjectDetails, getProjectDetailForShowHeaders } from '../../redux/actions/projectDetails'
 
 import { sortBy, useToggle, useInput, useTitle } from '../../utils'
 import NavBar from '../../components/NavBar';
@@ -32,7 +32,12 @@ const HomePage = () => {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        Promise.all([dispatch(getPortfolios()), dispatch(getProjects()), dispatch(getProjectDetails())])
+        Promise.all([
+            dispatch(getPortfolios()),
+            dispatch(getProjects()),
+            dispatch(getProjectDetails()),
+            dispatch(getProjectDetailForShowHeaders())
+        ])
     }, [dispatch])
 
     useEffect(() => {

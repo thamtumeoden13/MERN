@@ -30,6 +30,7 @@ const initProjectData = {
     portfolioName: '',
     orderIndex: 1,
     onlyShowRouter: false,
+    isActived: true,
 }
 
 const Form = ({ currentId, handleCurrentId, onSubmit }) => {
@@ -173,15 +174,17 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 
     return (
         <Box>
+            <Paper className={classes.paperHeader} elevation={2} sx={{ mb: 2, py: 1 }} >
+                <Typography variant='h5' component='div'>
+                    {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Dự Án`}
+                </Typography>
+            </Paper>
             <Paper className={classes.paper} elevation={6}>
                 <form
                     autoComplete='off'
                     noValidate
                     className={`${classes.root} ${classes.form}`}
                 >
-                    <Typography variant='h6'>
-                        {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Dự Án`}
-                    </Typography>
                     <TextField
                         name='name'
                         variant='outlined'
@@ -255,6 +258,18 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                                 />
                             }
                             label="Chỉ hiển thị Menu"
+                            sx={{ marginLeft: '0' }}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name='isActived'
+                                    checked={formData.isActived}
+                                    onChange={(e) => handleChangeValue(e.target.name, e.target.checked)}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            }
+                            label="Kích hoạt"
                             sx={{ marginLeft: '0' }}
                         />
                     </Box>

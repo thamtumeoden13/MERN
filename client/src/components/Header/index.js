@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Box from '@mui/material/Box'
 import Grow from '@mui/material/Grow';
@@ -68,13 +69,15 @@ const Header = () => {
     const navigate = useNavigate()
     const classes = useStyle()
 
+    const { projectDetailsForShowHeader } = useSelector((state) => state.projectDetails)
+    console.log('[projectDetailsForShowHeader]', projectDetailsForShowHeader)
     const handleViewDetail = (route) => {
         navigate(`/${route}`)
     }
 
     return (
         <Box className={classes.container}>
-            <CarouselImage data={items} onViewDetail={handleViewDetail} />
+            <CarouselImage data={projectDetailsForShowHeader} onViewDetail={handleViewDetail} />
         </Box>
     )
 }

@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import ChipInput from '../../../components/common/ChipInput'
 import ComboBox from '../../../components/common/ComboBox'
@@ -20,6 +22,7 @@ import useStyles from './styles'
 const initProjectDetailData = {
     name: '',
     title: '',
+    subtitle: '',
     thumbnail: '',
     imageUrl: '',
     tags: [],
@@ -38,6 +41,8 @@ const initProjectDetailData = {
     designYear: '',
     estimatedTime: '',
     orderIndex: 1,
+    isActived: true,
+    isShowHeader: false
 }
 
 const dataTexfield = [
@@ -238,15 +243,17 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
 
     return (
         <Box>
+            <Paper className={classes.paperHeader} elevation={2} sx={{ mb: 2, py: 1 }} >
+                <Typography variant='h5' component='div'>
+                    {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Bài Viết`}
+                </Typography>
+            </Paper>
             <Paper className={classes.paper} elevation={6} sx={{ maxHeight: '60vh', overflow: 'auto' }}>
                 <form
                     autoComplete='off'
                     noValidate
                     className={`${classes.root} ${classes.form}`}
                 >
-                    <Typography variant='h6'>
-                        {`${currentId ? 'Chỉnh Sửa' : 'Tạo Mới'} Bài Viết`}
-                    </Typography>
                     <TextField
                         name='name'
                         variant='outlined'
@@ -267,6 +274,18 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                         error={(!!state.isValidate && !!errors.title)}
                         helperText={errors.title || ''}
                         value={formData.title}
+                        onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
+                    />
+                    <TextField
+                        name='subtitle'
+                        variant='outlined'
+                        label="Mô tả rút gọn"
+                        fullWidth
+                        multiline
+                        minRows={3}
+                        error={(!!state.isValidate && !!errors.subtitle)}
+                        helperText={errors.subtitle || ''}
+                        value={formData.subtitle}
                         onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                     />
                     <>
@@ -309,6 +328,32 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                         defaultValue={formData.orderIndex}
                         onChangeValue={handleChangeValue}
                     />
+                    <Box sx={{ width: '100%' }}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name='isShowHeader'
+                                    checked={formData.isShowHeader}
+                                    onChange={(e) => handleChangeValue(e.target.name, e.target.checked)}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            }
+                            label="Hiển thị đầu trang"
+                            sx={{ marginLeft: '0' }}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name='isActived'
+                                    checked={formData.isActived}
+                                    onChange={(e) => handleChangeValue(e.target.name, e.target.checked)}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            }
+                            label="Kích hoạt"
+                            sx={{ marginLeft: '0' }}
+                        />
+                    </Box>
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{
                             display: 'flex', alignItems: 'center',

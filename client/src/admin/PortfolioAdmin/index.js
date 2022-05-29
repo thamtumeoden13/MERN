@@ -15,7 +15,9 @@ import PortfolioTableList from './PortfolioTableList'
 import SlateEditor from '../../components/common/SlateEditor';
 import NavBarAuth from '../../components/NavBar/NavBarAuth';
 import AlertDialog from '../../components/common/Dialog/AlertDialog';
+import ListTitle from '../../components/ListTitle';
 
+import { dataSubMenu } from '../../api/constants'
 import useStyles from './styles'
 
 const PortfolioAdmin = () => {
@@ -86,6 +88,10 @@ const PortfolioAdmin = () => {
         setDialog(prev => { return { ...prev, open: false } })
     }
 
+    const handleClickItem = (item) => {
+        navigate(`${item.route}`)
+    }
+
     // console.log('[portfolios]', portfolios)
 
     return (
@@ -98,6 +104,9 @@ const PortfolioAdmin = () => {
                 onReject={handleReject}
             />
             <NavBarAuth />
+            <Box sx={{ height: 64, marginLeft: 2 }}>
+                <ListTitle data={dataSubMenu} onClick={handleClickItem} />
+            </Box>
             <Grow in>
                 <Container maxWidth='xl'>
                     <Grid container display='flex' flexDirection='column' spacing={3}>

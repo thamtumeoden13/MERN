@@ -3,6 +3,7 @@ import {
     START_LOADING_PROJECT_DETAIL, END_LOADING_PROJECT_DETAIL,
     FETCH_ALL_PROJECT_DETAIL, FETCH_PROJECT_DETAIL, FETCH_PROJECT_DETAIL_BY_SEARCH,
     FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, FETCH_PROJECT_DETAIL_BY_PROJECT_ID,
+    FETCH_PROJECT_DETAIL_FOR_SHOW_HEADER,
     CREATE_PROJECT_DETAIL, UPDATE_PROJECT_DETAIL, DELETE_PROJECT_DETAIL,
 } from '../constants/actionType';
 
@@ -112,6 +113,20 @@ export const getProjectDetailSearchByName = (searchQuery) => async (dispatch) =>
     }
 }
 
+export const getProjectDetailForShowHeaders = () => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING_PROJECT_DETAIL })
+
+        const { data } = await api.fetchProjectDetailForShowHeaders();
+
+        dispatch({ type: FETCH_PROJECT_DETAIL_FOR_SHOW_HEADER, payload: data })
+    } catch (error) {
+        console.error(error.message)
+    } finally {
+        dispatch({ type: END_LOADING_PROJECT_DETAIL })
+    }
+}
+
 export const createProjectDetail = (projectDetail) => async (dispatch) => {
     try {
 
@@ -137,7 +152,7 @@ export const deleteProjectDetail = (ids) => async (dispatch) => {
     try {
         await api.deleteProjectDetail(ids)
 
-        dispatch(toastShow('success','Xoá thành công',''))
+        dispatch(toastShow('success', 'Xoá thành công', ''))
 
         dispatch({ type: DELETE_PROJECT_DETAIL, payload: ids })
     } catch (error) {

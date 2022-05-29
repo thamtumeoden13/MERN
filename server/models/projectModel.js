@@ -38,7 +38,8 @@ const projectSchema = mongoose.Schema({
     },
     portfolio: {
         type: String,
-        require: true
+        require: true,
+        default: -1
     },
     portfolioID: {
         type: String,
@@ -55,7 +56,15 @@ const projectSchema = mongoose.Schema({
     onlyShowRouter: {
         type: Boolean,
         default: false
-    }
+    },
+    isActived: {
+        type: Boolean,
+        default: false
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
 })
 
 const projectModel = mongoose.model('Project', projectSchema)

@@ -59,7 +59,7 @@ const NavBar = (props) => {
             setRoutesNav(routesCopy)
         }
     }, [routes])
-    console.log('[routes]',routes)
+    console.log('[routes]', routes)
     const handleLogout = useCallback(() => {
         dispatch({ type: LOGOUT })
 

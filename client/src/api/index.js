@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const URL = 'http://localhost:5000'
-const URL = 'https://mern-fullstack-project.herokuapp.com'
+const URL = 'http://localhost:5000'
+// const URL = 'https://mern-fullstack-project.herokuapp.com'
 
 const API = axios.create({ baseURL: URL })
 
@@ -51,6 +51,7 @@ export const deleteProject = (ids) => API.delete(`/projects/${ids}`)
 
 //projectDetail
 export const fetchProjectDetails = () => API.get(`/projectDetails`)
+export const fetchProjectDetailForShowHeaders = () => API.get(`/projectDetails/showHeader`)
 export const fetchProjectDetail = (id) => API.get(`/projectDetails/${id}`)
 
 export const fetchProjectDetailByPortfolios = (id) => API.get(`/projectDetails/portfolio/${id}`)

@@ -3,6 +3,7 @@ import express from 'express';
 import {
     getProjectDetail,
     getProjectDetails,
+    getProjectDetailForShowHeaders,
     getProjectDetailsByPortfolioID,
     getProjectDetailsByProjectID,
     getProjectDetailsBySearch,
@@ -17,6 +18,7 @@ const router = express.Router()
 
 router.get('/search', getProjectDetailsBySearch);
 router.get('/', getProjectDetails);
+router.get('/showHeader', getProjectDetailForShowHeaders);
 router.get('/:id', getProjectDetail);
 
 router.get('/portfolio/:id', getProjectDetailsByPortfolioID);

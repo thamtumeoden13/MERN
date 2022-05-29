@@ -9,6 +9,10 @@ const projectSchema = mongoose.Schema({
         type: String,
         require: true,
     },
+    subtitle: {
+        type: String,
+        default: ''
+    },
     description: {
         type: String,
         require: true,
@@ -83,7 +87,7 @@ const projectSchema = mongoose.Schema({
     },
     project: {
         type: String,
-        require: true
+        default: '',
     },
     projectID: {
         type: String,
@@ -95,7 +99,7 @@ const projectSchema = mongoose.Schema({
     },
     portfolio: {
         type: String,
-        require: true
+        default: '',
     },
     portfolioID: {
         type: String,
@@ -109,10 +113,18 @@ const projectSchema = mongoose.Schema({
         type: Number,
         default: 1
     },
-    onlyShowRouter: {
+    isShowHeader: {
         type: Boolean,
         default: false
-    }
+    },
+    isActived: {
+        type: Boolean,
+        default: false
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
 })
 
 const projectModel = mongoose.model('ProjectDetail', projectSchema)

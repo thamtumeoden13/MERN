@@ -3,7 +3,8 @@ import ProjectModel from "../models/projectModel.js"
 
 export const getProjects = async (req, res) => {
     try {
-        const projects = await ProjectModel.find().sort({ orderIndex: 'asc' })
+        const query = { isActived: true, isDeleted: false }
+        const projects = await ProjectModel.find(query).sort({ orderIndex: 'asc' })
 
         res.status(200).json({ data: projects })
     } catch (error) {

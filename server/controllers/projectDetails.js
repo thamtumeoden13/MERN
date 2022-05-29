@@ -4,7 +4,8 @@ import ProjectDetailModel from "../models/projectDetailModel.js"
 
 export const getProjectDetails = async (req, res) => {
     try {
-        const projectDetails = await ProjectDetailModel.find().sort({ orderIndex: 'asc' })
+        const query = { isActived: true, isDeleted: false }
+        const projectDetails = await ProjectDetailModel.find(query).sort({ orderIndex: 'asc' })
 
         res.status(200).json({ data: projectDetails })
     } catch (error) {
@@ -18,6 +19,17 @@ export const getProjectDetail = async (req, res) => {
         const projectDetail = await ProjectDetailModel.findById(id)
 
         res.status(200).json({ data: projectDetail })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+export const getProjectDetailForShowHeaders = async (req, res) => {
+    try {
+        const query = { isActived: true, isDeleted: false, isShowHeader: true }
+        const projectDetails = await ProjectDetailModel.find(query).sort({ orderIndex: 'asc' })
+
+        res.status(200).json({ data: projectDetails })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
@@ -67,7 +79,8 @@ export const deleteProjectDetail = async (req, res) => {
 export const getProjectDetailsByPortfolioID = async (req, res) => {
     const { id } = req.params
     try {
-        const projectDetailByPortfolio = await ProjectDetailModel.find({ portfolio: id })
+        const query = { portfolio: id, isActived: true, isDeleted: false }
+        const projectDetailByPortfolio = await ProjectDetailModel.find(query).sort({ orderIndex: 'asc' })
 
         res.status(200).json({ data: projectDetailByPortfolio })
     } catch (error) {
@@ -78,7 +91,8 @@ export const getProjectDetailsByPortfolioID = async (req, res) => {
 export const getProjectDetailsByProjectID = async (req, res) => {
     const { id } = req.params
     try {
-        const projectDetailByProject = await ProjectDetailModel.find({ project: id })
+        const query = { project: id, isActived: true, isDeleted: false }
+        const projectDetailByProject = await ProjectDetailModel.find(query).sort({ orderIndex: 'asc' })
 
         res.status(200).json({ data: projectDetailByProject })
     } catch (error) {
@@ -88,20 +102,22 @@ export const getProjectDetailsByProjectID = async (req, res) => {
 
 export const getProjectDetailsBySearch = async (req, res) => {
     const { portfolioName, projectName, name } = req.query
-    let projectDetailsResult
+    let projectDetailsResult = []
+    let query = {}
     try {
         if (!!portfolioName) {
-            projectDetailsResult = await ProjectDetailModel.find({ portfolioName })
+            query = { portfolioName, isActived: true, isDeleted: false }
         }
 
         if (!!projectName) {
-            projectDetailsResult = await ProjectDetailModel.find({ projectName })
+            query = { projectName, isActived: true, isDeleted: false }
         }
-        if (!!name) {
-            const query = { $text: { $search: name } };
 
-            projectDetailsResult = await ProjectDetailModel.find(query)
+        if (!!name) {
+            query = { $text: { $search: name }, isActived: true, isDeleted: false };
         }
+        
+        projectDetailsResult = await ProjectDetailModel.find(query).sort({ orderIndex: 'asc' })
 
         res.status(200).json({ data: projectDetailsResult })
     } catch (error) {

@@ -14,7 +14,9 @@ export const getPortfolio = async (req, res) => {
 
 export const getPortfolios = async (req, res) => {
     try {
-        const portfolios = await PortfolioModel.find().sort({ orderIndex: 'asc' })
+
+        const query = { isActived: true, isDeleted: false }
+        const portfolios = await PortfolioModel.find(query).sort({ orderIndex: 'asc' })
         res.status(200).json({ data: portfolios })
     } catch (error) {
         res.status(404).json({ message: error.message })

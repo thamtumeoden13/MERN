@@ -9,6 +9,11 @@ export default makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
     },
+    paperHeader: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
     paperAction: {
         display: 'flex',
         flexDirection: 'column',

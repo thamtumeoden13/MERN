@@ -109,16 +109,16 @@ const headCells = [
         label: 'tags',
     },
     {
-        id: 'viewDetail',
-        numeric: false,
-        disablePadding: false,
-        label: 'Chi tiết',
-    },
-    {
         id: 'edit',
         numeric: false,
         disablePadding: false,
         label: 'Chỉnh sửa',
+    },
+    {
+        id: 'viewDetail',
+        numeric: false,
+        disablePadding: false,
+        label: 'Chi tiết',
     },
 ];
 
@@ -395,13 +395,13 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
                                             </TableCell>
                                             <TableCell align="left">{`[${row.tags.toString()}]`}</TableCell>
                                             <TableCell align="left">
-                                                <Button onClick={(event) => handleViewDetail(event, row)} >
-                                                    <VisibilityIcon fontSize='small' />
+                                                <Button onClick={(event) => handleEdit(event, row)}>
+                                                    <EditIcon fontSize='small' />
                                                 </Button>
                                             </TableCell>
                                             <TableCell align="left">
-                                                <Button onClick={(event) => handleEdit(event, row)}>
-                                                    <EditIcon fontSize='small' />
+                                                <Button onClick={(event) => handleViewDetail(event, row)} >
+                                                    <VisibilityIcon fontSize='small' />
                                                 </Button>
                                             </TableCell>
                                         </TableRow>

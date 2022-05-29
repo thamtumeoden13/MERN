@@ -2,6 +2,7 @@ import {
     START_LOADING_PROJECT_DETAIL, END_LOADING_PROJECT_DETAIL,
     FETCH_ALL_PROJECT_DETAIL, FETCH_PROJECT_DETAIL, FETCH_PROJECT_DETAIL_BY_SEARCH,
     FETCH_PROJECT_DETAIL_BY_PORFOLIO_ID, FETCH_PROJECT_DETAIL_BY_PROJECT_ID,
+    FETCH_PROJECT_DETAIL_FOR_SHOW_HEADER,
     CREATE_PROJECT_DETAIL, UPDATE_PROJECT_DETAIL, DELETE_PROJECT_DETAIL
 } from '../constants/actionType';
 
@@ -11,6 +12,7 @@ const initState = {
     projectDetailsBySearch: [],
     projectDetailsByPortfolioID: [],
     projectDetailsByProjectID: [],
+    projectDetailsForShowHeader: [],
     projectDetail: null,
     // currentPage: 0,
     // numberOfPages: 0
@@ -60,6 +62,13 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 projectDetailsByProjectID: action.payload.data,
+                // projectDetailsByPortfolioID: [],
+                // projectDetail: [],
+            }
+        case FETCH_PROJECT_DETAIL_FOR_SHOW_HEADER:
+            return {
+                ...state,
+                projectDetailsForShowHeader: action.payload.data,
                 // projectDetailsByPortfolioID: [],
                 // projectDetail: [],
             }

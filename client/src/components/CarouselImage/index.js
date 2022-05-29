@@ -57,8 +57,8 @@ const CarouselImage = ({ data = [], onViewDetail }) => {
                 >
                     <CardAnimation
                         title={state.itemSelected.title}
-                        description={state.itemSelected.description}
-                        route={state.itemSelected.route}
+                        description={state.itemSelected.subtitle}
+                        route={state.itemSelected._id}
                         onClick={handleViewDetail}
                     />
                 </Box>

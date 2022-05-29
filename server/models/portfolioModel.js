@@ -43,7 +43,15 @@ const portfolioSchema = mongoose.Schema({
     onlyShowRouter: {
         type: Boolean,
         default: false
-    }
+    },
+    isActived: {
+        type: Boolean,
+        default: false
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
 
 })
 
