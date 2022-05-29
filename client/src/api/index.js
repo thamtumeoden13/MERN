@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const URL = 'http://localhost:5000'
-// const URL = 'https://mern-fullstack-project.herokuapp.com'
+// const URL = 'http://localhost:5000'
+const URL = 'https://mern-fullstack-project.herokuapp.com'
 
 const API = axios.create({ baseURL: URL })
 
