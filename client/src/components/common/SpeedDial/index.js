@@ -23,7 +23,7 @@ const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
 
 const actions = [
     { icon: <PhoneIcon color='green' />, name: '0904 177 100 - Mr.Vinh (Tư vấn)', action: 'tel:0904177100' },
-    { icon: <ZaloIcon />, name: '0984 177 100 - Mr.Vinh', action: 'http://zalo.me/0984177100' },
+    { icon: <ZaloIcon />, name: '0984 177 100 - Art Sunday', action: 'http://zalo.me/0984177100' },
     { icon: <MessengerIcon />, name: 'Gửi tin nhắn', action: 'http://m.me/artsunday.vn/' },
 ];
 
@@ -59,7 +59,7 @@ export default function SpeedDialTooltipOpen(props) {
                             key={action.name}
                             icon={action.icon}
                             tooltipTitle={<Typography variant='body2' sx={{ width: 200, }}>{action.name}</Typography>}
-                            tooltipOpen
+                            // tooltipOpen
                             tooltipPlacement={'right'}
                             onClick={() => handleClick(action)}
                         />
