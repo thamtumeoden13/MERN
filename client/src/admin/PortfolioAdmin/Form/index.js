@@ -12,9 +12,12 @@ import Avatar from '@mui/material/Avatar'
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import { uploadFile, uploadFiles } from '../../../redux/actions/cloudinarys';
+
 import ChipInput from '../../../components/common/ChipInput'
 import ComboBox from '../../../components/common/ComboBox'
 import NumberTextField from '../../../components/common/NumberFormatCustom'
+import UploadAvatar from '../../../components/common/UploadAvatar'
 
 import { isImageUrl } from '../../../utils'
 import useStyles from './styles'
@@ -123,6 +126,41 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
         setErrors({})
     }
 
+    const handleFileUpload = async (e, name) => {
+        if (e.target.files.length == 1) {
+            const data = new FormData();
+            const file = e.target.files[0];
+            
+            data.append('file', file, file.name)
+
+            const uploadResponce = await dispatch(uploadFile(data, 'porfilio'))
+            console.log('[uploadResponce]', uploadResponce)
+
+            if (!!uploadResponce && !!uploadResponce.path) {
+                handleChangeValue(name, uploadResponce.path)
+            }
+
+        } else {
+            // const dataMulti = new FormData();
+            // const files = Object.assign([], e.target.files);
+            // console.log('[files]', files)
+
+            // files.forEach(file => {
+            //     dataMulti.append('files', file, file.name)
+            // });
+
+            // console.log('[data-multi]', dataMulti, name)
+
+            // const uploadResponce = await dispatch(uploadFiles(dataMulti, 'porfilio'))
+            // console.log('[uploadResponce]', uploadResponce)
+
+            // if (!!uploadResponce && !!uploadResponce.path) {
+            //     handleChangeValue(name, uploadResponce.path)
+            // }
+        }
+    }
+
+
     if (!user?.result?.name) {
         return (
             <Paper className={classes.paper} elevation={3}>
@@ -223,11 +261,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                             display: 'flex', alignItems: 'center',
                             flex: 1,
                         }}>
-                            <Avatar
-                                sx={{ mx: 1 }}
-                                alt={'anh-thu-nho'}
-                                src={formData.thumbnail}
-                            />
+                            <UploadAvatar name={'thumbnail'} url={formData.thumbnail} onSelectFile={handleFileUpload} />
                             <ComboBox
                                 name='thumbnail'
                                 label='Ảnh thu nhỏ'
@@ -250,11 +284,7 @@ const Form = ({ currentId, handleCurrentId, onSubmit }) => {
                             display: 'flex', alignItems: 'center',
                             flex: 1,
                         }}>
-                            <Avatar
-                                sx={{ mx: 1 }}
-                                alt={'duong-dan-anh'}
-                                src={formData.imageUrl}
-                            />
+                            <UploadAvatar name={'imageUrl'} url={formData.imageUrl} onSelectFile={handleFileUpload} />
                             <ComboBox
                                 name='imageUrl'
                                 label='Đường dẫn ảnh'

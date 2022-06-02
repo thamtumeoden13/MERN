@@ -10,7 +10,7 @@ const initState = {
     autoClose: 5000,
     hideProgressBar: false,
     pauseOnHover: true,
-    pauseOnFocusLoss: true,
+    // pauseOnFocusLoss: true,
     closeOnClick: true,
     newestOnTop: false,
     draggable: true,

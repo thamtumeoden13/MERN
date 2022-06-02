@@ -9,6 +9,7 @@ import portfolios from './portfolios'
 import projects from './projects'
 import projectDetails from './projectDetails'
 import routes from './routes'
+import cloudinarys from './cloudinarys'
 
 export default combineReducers({
     auth,
@@ -20,4 +21,5 @@ export default combineReducers({
     portfolios,
     projects,
     projectDetails,
+    cloudinarys,
 })

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const URL = 'http://localhost:5000'
-const URL = 'https://mern-fullstack-project.herokuapp.com'
+const URL = 'http://localhost:5000'
+// const URL = 'https://mern-fullstack-project.herokuapp.com'
 
 const API = axios.create({ baseURL: URL })
 
@@ -11,6 +11,20 @@ API.interceptors.request.use((req) => {
         req.headers.authorization = `Bearer ${localStorageProfile?.token}`
     }
     return req
+})
+
+API.interceptors.response.use(null, error => {
+    const expectedError =
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500;
+
+    if (!expectedError) {
+        // logService.log(error);
+        // toast("An unexpected error occurred");
+    }
+
+    return Promise.reject(error);
 })
 
 //post
@@ -64,3 +78,14 @@ export const fetchProjectDetailSearchByName = (searchQuery) => API.get(`/project
 export const createProjectDetail = (payload) => API.post(`/projectDetails`, payload)
 export const updateProjectDetail = (id, payload) => API.patch(`/projectDetails/${id}`, payload)
 export const deleteProjectDetail = (ids) => API.delete(`/projectDetails/${ids}`)
+
+
+export const uploadFile = (file) => API.post(`/cloudinarys/uploadFile`, file)
+export const uploadPorfolio = (file) => API.post(`/cloudinarys/uploadPorfolio`, file)
+export const uploadProject = (file) => API.post(`/cloudinarys/uploadProject`, file)
+export const uploadProjectDetail = (file) => API.post(`/cloudinarys/uploadProjectDetail`, file)
+
+export const uploadFiles = (files) => API.post(`/cloudinarys/uploadFiles`, files)
+export const uploadPorfolios = (files) => API.post(`/cloudinarys/uploadPorfolios`, files)
+export const uploadProjects = (files) => API.post(`/cloudinarys/uploadProjects`, files)
+export const uploadProjectDetails = (files) => API.post(`/cloudinarys/uploadProjectDetails`, files)

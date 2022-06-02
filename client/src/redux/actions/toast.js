@@ -1,4 +1,4 @@
-import { TOAST_SHOW, TOAST_HIDE, TOAST_CONFIG } from '../constants/actionType'
+import { TOAST_SHOW, TOAST_HIDE, TOAST_CONFIG, TOAST_PROMISE } from '../constants/actionType'
 import * as api from '../../api'
 import { toast } from "react-toastify";
 
@@ -24,6 +24,17 @@ export const toastHide = () => async (dispatch) => {
     toast.success("MY HIDE");
 
 }
+
+export const toastPromise = (promise) => async (dispatch) => {
+
+    const promiseResponse = await toast.promise(promise, {
+        pending: "Đang xử lý...",
+        success: "Tải lên hình ảnh thành công.",
+        error: "Có lỗi trong quá trình tải lên ảnh.",
+    });
+    return promiseResponse
+}
+
 
 export const toastConfig = (data) => async (dispatch) => {
     // console.log('[toastConfig-data]', data)
