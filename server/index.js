@@ -11,6 +11,7 @@ import projectRouters from './routers/projects.js'
 import projectDetailRouters from './routers/projectDetails.js'
 import userRouters from './routers/users.js'
 import routeRouters from './routers/routes.js';
+import cloudinaryRouter from './routers/cloudinarys.js'
 
 const app = express()
 dotenv.config()
@@ -34,6 +35,8 @@ app.use('/projectDetails', projectDetailRouters)
 app.use('/user', userRouters)
 
 app.use('/route', routeRouters)
+
+app.use('/cloudinarys', cloudinaryRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcom to MERN fullstack API')
