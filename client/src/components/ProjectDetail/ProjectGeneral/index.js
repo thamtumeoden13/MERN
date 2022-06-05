@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import lazyload from 'react-lazyload';
+import Lazyload from 'react-lazyload';
 
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -116,7 +116,7 @@ const ProjectGeneral = () => {
 			</Box>
 			<Box>
 				<Card sx={{ display: 'flex', flexDirection: 'column', }}>
-					<lazyload placeholder={<CircularProgress />}>
+					<Lazyload placeholder={<CircularProgress />}>
 						<Box sx={{ display: 'flex', flexDirection: 'column' }}>
 							<CardMedia
 								component='img'
@@ -125,7 +125,7 @@ const ProjectGeneral = () => {
 								alt='portfolio image'
 							/>
 						</Box>
-					</lazyload>
+					</Lazyload>
 					<Box sx={{
 						display: 'flex', flexDirection: 'column',
 						justifyContent: 'center',

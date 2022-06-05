@@ -12,6 +12,8 @@ import {
 } from 'slate-react'
 
 import CardMedia from '@mui/material/CardMedia'
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import { css } from '@emotion/css'
 
 import { initialValueSmall as initialValue } from '../../../constants/dataEditor'
@@ -19,7 +21,7 @@ import { Box } from '@mui/system';
 
 const ELEMENT_TAGS = {
     A: el => ({ type: 'link', url: el.getAttribute('href') }),
-    BLOCKQUOTE: () => ({ type: 'quote' }),
+    BLOCKQUOTE: () => ({ type: 'block-quote' }),
     H1: () => ({ type: 'heading-one' }),
     H2: () => ({ type: 'heading-two' }),
     H3: () => ({ type: 'heading-three' }),
@@ -27,6 +29,7 @@ const ELEMENT_TAGS = {
     H5: () => ({ type: 'heading-five' }),
     H6: () => ({ type: 'heading-six' }),
     IMG: el => ({ type: 'image', url: el.getAttribute('src') }),
+    IMGC: el => ({ type: 'image-customize', url: el.getAttribute('src') }),
     LI: () => ({ type: 'list-item' }),
     OL: () => ({ type: 'numbered-list' }),
     P: () => ({ type: 'paragraph' }),
@@ -174,7 +177,7 @@ const Element = props => {
     switch (element.type) {
         default:
             return <p {...attributes}>{children}</p>
-        case 'quote':
+        case 'block-quote':
             return <blockquote {...attributes}>{children}</blockquote>
         case 'code':
             return (
@@ -208,6 +211,16 @@ const Element = props => {
             )
         case 'image':
             return <ImageElement {...props} />
+        case 'image-customize':
+            return (
+                <ImageCustomizeElement {...props} />
+            )
+        case 'video':
+            return (
+                <VideoElement attributes={attributes} element={element}>
+                    {children}
+                </VideoElement>
+            )
     }
 }
 
@@ -233,6 +246,78 @@ const ImageElement = ({ attributes, children, element }) => {
                         `}
                 />
             </Box>
+        </div>
+    )
+}
+
+const ImageCustomizeElement = ({ attributes, children, element }) => {
+    const maxWidth = element.typeImage == 'full' ? '100%' : '50%'
+
+    return (
+        <div {...attributes}>
+            <Box sx={{
+                display: 'flex', flexDirection: 'row',
+                marginY: 2,
+            }}
+            >
+                {element.typeImage == 'half-right' &&
+                    <CardContent sx={{ flex: 1 }}>
+                        <Typography variant="title2" color="text.secondary">
+                            {children}
+                        </Typography>
+                    </CardContent>
+                }
+                {element.typeImage == 'full' && <div className={css`display: 'none';`}>{children}</div>}
+
+                <CardMedia
+                    component='img'
+                    image={element.url}
+                    alt='image'
+                    className={css`
+                            object-fit: contain;
+                            max-width: ${maxWidth};
+                            max-height: 90vh;
+                            height: 100%;
+                        `}
+                />
+                {element.typeImage == 'half-left' &&
+                    <CardContent>
+                        <Typography variant="body2" color="text.secondary">
+                            {children}
+                        </Typography>
+                    </CardContent>
+                }
+            </Box>
+        </div>
+    )
+}
+
+const VideoElement = ({ attributes, children, element }) => {
+    const { url } = element
+    return (
+        <div {...attributes}>
+            <div className={css`display: 'none';`}> {children} </div>
+            <div contentEditable={false}
+                className={css`position: relative; height: 80vh`}
+            >
+                <Box sx={{
+                    display: 'flex', flexDirection: 'row',
+                    marginY: 2,
+                }}
+                >
+                    <iframe
+                        src={`${url}`}
+                        frameBorder="0"
+                        style={{
+                            position: 'absolute',
+                            top: '0',
+                            left: '0',
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    />
+                </Box>
+            </div>
         </div>
     )
 }
