@@ -1,5 +1,8 @@
 //auth
-export const AUTH = 'AUTH'
+export const START_LOADING_AUTH = 'START_LOADING_AUTH'
+export const END_LOADING_AUTH = 'END_LOADING_AUTH'
+export const AUTH_FAILURE = 'AUTH_FAILURE'
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const LOGOUT = 'LOGOUT'
 
 //route

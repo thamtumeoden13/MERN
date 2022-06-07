@@ -10,15 +10,15 @@ export const signin = async (req, res) => {
     try {
         const existingUser = await UserModel.findOne({ email })
 
-        if (!existingUser) return res.status(404).json({ message: "User Doesn't exist." })
+        if (!existingUser) return res.status(200).json({ result: null, message: "Tài khoản không tồn tại." })
 
         const isPasswordCorrect = await bcryptjs.compare(password, existingUser.password)
 
-        if (!isPasswordCorrect) return res.status(400).json({ message: 'Invalid credentials.' })
+        if (!isPasswordCorrect) return res.status(200).json({result: null, message: 'Mật khẩu chưa chính xác' })
 
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id, level: existingUser.level }, 'test', { expiresIn: "24h" })
 
-        res.status(200).json({ result: existingUser, token })
+        res.status(200).json({ result: existingUser, token, message: '' })
     } catch (error) {
         res.status(500).json({ message: 'Something went wrong.' })
     }
@@ -29,9 +29,9 @@ export const signup = async (req, res) => {
     try {
         const existingUser = await UserModel.findOne({ email })
 
-        if (existingUser) return res.status(400).json({ message: "User already exists." })
+        if (existingUser) return res.status(200).json({ message: "Tài khoản đã tồn tại" })
 
-        if (password !== confirmPassword) return res.status(400).json({ message: "Passwords don't match." })
+        if (password !== confirmPassword) return res.status(200).json({ message: "Mật khẩu chưa chính xác" })
 
         const hashedPassword = await bcryptjs.hash(password, 12)
 

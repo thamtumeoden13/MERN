@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
 
@@ -9,12 +9,14 @@ import Avatar from '@mui/material/Avatar'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 import Input from '../common/Input'
 import Icon from '../common/Icon'
+import AlertDialog from '../common/Dialog/AlertDialog';
 
-import { AUTH } from '../../redux/constants/actionType'
+import { AUTH_SUCCESS } from '../../redux/constants/actionType'
 import { signIn, signUp } from '../../redux/actions/auth'
 
 import useStyles from './styles'
@@ -37,7 +39,17 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(initFormData)
 
+    const [dialog, setDialog] = useState({
+        open: false,
+        title: '',
+        content: '',
+    })
+
     const from = location.state?.from?.pathname || "/";
+
+    const { data, isLoading, isError, message } = useSelector((state) => state.auth)
+
+    console.log({ data, isLoading, message })
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -46,9 +58,9 @@ const Auth = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (isSignup) {
-            dispatch(signUp(formData, navigate, from))
+            await dispatch(signUp(formData, navigate, from))
         } else {
-            dispatch(signIn(formData, navigate, from))
+            await dispatch(signIn(formData, navigate, from))
         }
     }
 
@@ -68,7 +80,7 @@ const Auth = () => {
         const token = res?.tokenId
 
         try {
-            dispatch({ type: AUTH, payload: { result, token } })
+            dispatch({ type: AUTH_SUCCESS, payload: { result, token } })
             navigate(from, { replace: true });
         } catch (error) {
             console.error(error)
@@ -79,8 +91,31 @@ const Auth = () => {
         console.log('Google Sign In was unsuccessful, Try Again Later', err)
     }
 
+    const handleAccept = () => {
+        setDialog(prev => { return { ...prev, open: false } })
+        // navigate(`/`)
+    }
+
+    const handleReject = () => {
+        setDialog(prev => { return { ...prev, open: false } })
+        // navigate(`/`)
+    }
+
+    useEffect(() => {
+        if (!!isError) {
+            setDialog({ open: true, title: !!isSignup ? 'Đăng Ký' : 'Đăng Nhập', content: message })
+        }
+    }, [isError])
+
     return (
         <Container component='main' maxWidth='xs'>
+            <AlertDialog
+                title={dialog.title}
+                description={dialog.content}
+                open={dialog.open}
+                onAccept={handleAccept}
+                onReject={handleReject}
+            />
             <Paper
                 className={classes.paper}
                 elevation={3}
@@ -147,8 +182,10 @@ const Auth = () => {
                         variant='contained'
                         color='primary'
                         className={classes.googleButton}
+                        disabled={!!isLoading}
                     >
-                        {isSignup ? 'Đăng Ký' : 'Đăng Nhập'}
+                        {!!isSignup ? 'Đăng Ký' : 'Đăng Nhập'}
+                        {!!isLoading && <CircularProgress size={20} sx={{ ml: 2 }} />}
                     </Button>
                     {/* <GoogleLogin
                         clientId='711608998315-74dlgofriutfd2h0k2dovspne0mqqg6q.apps.googleusercontent.com'
