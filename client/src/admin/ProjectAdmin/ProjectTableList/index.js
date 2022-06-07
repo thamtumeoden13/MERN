@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +18,7 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
+import TextField from '@mui/material/TextField';
 import { red } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -25,10 +26,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit'
 
 import { visuallyHidden } from '@mui/utils';
+import { removeAccents } from '../../../utils';
 
-function createData(name, title, description, tags, thumbnail) {
+function createData(portfolioName, title, description, tags, thumbnail) {
     return {
-        name,
+        portfolioName,
         title,
         description,
         tags,
@@ -84,10 +86,10 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'name',
+        id: 'portfolioName',
         numeric: false,
         disablePadding: false,
-        label: 'Tên dự án',
+        label: 'Hạn mục dự án',
     },
     {
         id: 'title',
@@ -242,17 +244,22 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
+    const timeoutSearch = useRef(null)
+
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('name');
+    const [orderBy, setOrderBy] = useState('portfolioName');
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(true);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
+    const [search, setSearch] = useState('')
     const [result, setResult] = useState([])
+    const [resultFilter, setResultFilter] = useState([])
 
     useEffect(() => {
         setResult(data || [])
+        setResultFilter(data || [])
     }, [data])
 
     const handleRequestSort = (event, property) => {
@@ -263,7 +270,7 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = result.map((n) => n._id);
+            const newSelecteds = resultFilter.map((n) => n._id);
             setSelected(newSelecteds);
             return;
         }
@@ -324,6 +331,26 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
         }
     }
 
+    const searchFilter = (text) => {
+        if (timeoutSearch.current) {
+            clearTimeout(timeoutSearch.current)
+        }
+        timeoutSearch.current = setTimeout(() => {
+            if (text) {
+                const newData = result.filter((item) => {
+                    const textData = removeAccents(text.toUpperCase())
+                    const itemData = removeAccents(`${item.portfolioName.toUpperCase()},${item.title.toUpperCase()}}`)
+                    return itemData.indexOf(textData) > -1
+                })
+
+                setResultFilter(newData)
+            } else {
+                setResultFilter(result)
+            }
+        }, 300);
+        setSearch(text)
+    }
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -331,6 +358,14 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
+                <TextField
+                    variant='outlined'
+                    placeholder='search...'
+                    type='search'
+                    fullWidth
+                    value={search}
+                    onInput={(e) => searchFilter(e.target.value)}
+                />
                 <EnhancedTableToolbar numSelected={selected.length} onRemove={handleRemove} />
                 <TableContainer>
                     <Table
@@ -344,12 +379,12 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={result.length}
+                            rowCount={resultFilter.length}
                         />
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                            {stableSort(result, getComparator(order, orderBy))
+                            {stableSort(resultFilter, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row._id);
@@ -382,7 +417,7 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
                                                 scope="row"
                                                 padding="none"
                                             >
-                                                {row.name}
+                                                {row.portfolioName}
                                             </TableCell>
                                             <TableCell align="left">{row.title}</TableCell>
                                             <TableCell align="center">
@@ -421,7 +456,7 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={result.length}
+                    count={resultFilter.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

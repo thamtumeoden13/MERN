@@ -57,7 +57,8 @@ const ProjectAdmin = () => {
     }
 
     const handleDetail = (item) => {
-        navigate(`/han-muc-du-an/chi-tiet-du-an/${item._id}`)
+        // navigate(`/han-muc-du-an/chi-tiet-du-an/${item._id}`)
+        window.open(`/han-muc-du-an/chi-tiet-du-an/${item._id}`, { target: '_blank' })
     }
 
     const handlePreRemove = (ids) => {
@@ -92,7 +93,7 @@ const ProjectAdmin = () => {
     const handleClickItem = (item) => {
         navigate(`${item.route}`)
     }
-    
+
     // console.log('[projects]', projects, initialValue)
 
     return (

@@ -27,9 +27,8 @@ import EditIcon from '@mui/icons-material/Edit'
 
 import { visuallyHidden } from '@mui/utils';
 
-function createData(name, title, description, tags, thumbnail) {
+function createData( title, description, tags, thumbnail) {
     return {
-        name,
         title,
         description,
         tags,
@@ -84,12 +83,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: false,
-        label: 'Tên dự án',
-    },
+    // {
+    //     id: 'name',
+    //     numeric: false,
+    //     disablePadding: false,
+    //     label: 'Tên dự án',
+    // },
     {
         id: 'title',
         numeric: false,
@@ -244,7 +243,7 @@ EnhancedTableToolbar.propTypes = {
 
 const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('name');
+    const [orderBy, setOrderBy] = useState('title');
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(true);
@@ -377,14 +376,14 @@ const EnhancedTable = ({ data, onViewDetail, onEdit, onRemove }) => {
                                                     }}
                                                 />
                                             </TableCell>
-                                            <TableCell
+                                            {/* <TableCell
                                                 component="th"
                                                 id={labelId}
                                                 scope="row"
                                                 padding="none"
                                             >
                                                 {row.name}
-                                            </TableCell>
+                                            </TableCell> */}
                                             <TableCell align="left">{row.title}</TableCell>
                                             <TableCell align="center">
                                                 <Avatar

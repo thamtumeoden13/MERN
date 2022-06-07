@@ -55,7 +55,8 @@ const PortfolioAdmin = () => {
     }
 
     const handleDetail = (item) => {
-        navigate(`/han-muc-du-an/du-an/${item._id}`)
+        // navigate(`/han-muc-du-an/du-an/${item._id}`)
+        window.open(`/han-muc-du-an/du-an/${item._id}`, { target: '_blank' })
     }
 
     const handlePreRemove = (ids) => {

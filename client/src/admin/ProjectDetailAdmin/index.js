@@ -56,7 +56,8 @@ const ProjectDetailAdmin = () => {
     }
 
     const handleDetail = (item) => {
-        navigate(`/chi-tiet-du-an/${item._id}`)
+        // navigate(`/chi-tiet-du-an/${item._id}`)
+        window.open(`/chi-tiet-du-an/${item._id}`, { target: '_blank' })
     }
 
     const handlePreRemove = (ids) => {
