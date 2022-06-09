@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
+import Lottie from "lottie-react";
 
 import ForumIcon from '@mui/icons-material/Forum';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 
 import { styled } from '@mui/material/styles';
-import { Typography } from '@mui/material';
+import { Button, Grow, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import ZaloIcon from '../Icon/ZaloIcon';
 import MessengerIcon from '../Icon/MessengerIcon';
 import PhoneIcon from '../Icon/PhoneIcon'
+
+import pulse from '../../../assets/svg/pulse.json';
+import DialAnimation from '../../DialAnimation';
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
     position: 'absolute',
@@ -22,14 +28,20 @@ const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
 }));
 
 const actions = [
-    { icon: <PhoneIcon color='green' />, name: '0904 177 100 - Mr.Vinh (Tư vấn)', action: 'tel:0904177100' },
-    { icon: <ZaloIcon />, name: '0984 177 100 - Art Sunday', action: 'http://zalo.me/0984177100' },
     { icon: <MessengerIcon />, name: 'Gửi tin nhắn', action: 'http://m.me/artsunday.vn/' },
+    { icon: <ZaloIcon />, name: '0984 177 100 - Art Sunday', action: 'http://zalo.me/0984177100' },
+    { icon: <PhoneIcon color='green' />, name: '0904 177 100 - Mr.Vinh (Tư vấn)', action: 'tel:0904177100' },
 ];
 
 export default function SpeedDialTooltipOpen(props) {
 
-    const [open, setOpen] = React.useState(false);
+    useEffect(() => {
+        return () => [
+            handleClose()
+        ]
+    }, [])
+
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -45,35 +57,54 @@ export default function SpeedDialTooltipOpen(props) {
     return (
         <Box sx={{ transform: 'translateZ(0px)', flexGrow: 1, }}>
             <Box sx={{ position: 'relative', mt: 3, height: 320 }}>
-                <StyledSpeedDial
-                    ariaLabel="SpeedDial playground example"
-                    direction={'up'}
-                    hidden={false}
-                    icon={<ForumIcon />}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    open={open}
+                <IconButton sx={{
+                    position: 'absolute', bottom: 8, left: 16,
+                    zIndex: 999,
+                    height: 60,
+                    width: 60,
+                    borderRadius: 30,
+                    backgroundColor: 'primary.main',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+                    onClick={() => setOpen(!open)}
                 >
-                    {actions.map((action) => (
-                        <SpeedDialAction
-                            key={action.name}
-                            icon={action.icon}
-                            tooltipTitle={<Typography variant='body2' sx={{ width: 200, }}>{action.name}</Typography>}
-                            // tooltipOpen
-                            tooltipPlacement={'right'}
-                            onClick={() => handleClick(action)}
+                    <ForumIcon style={{ color: 'white' }} />
+                </IconButton>
+                <Box sx={{
+                    position: 'absolute', bottom: 16, left: 80,
+                    borderRadius: 2,
+                    paddingLeft: 1,
+                    paddingRight: 1,
+                    backgroundColor: 'primary.main'
+                }}>
+                    <Typography sx={{ width: 150, color: 'white' }} >{'Bạn cần hỗ trợ?'}</Typography>
+                </Box>
+
+                <Lottie animationData={pulse}
+                    autoPlay
+                    loop
+                    style={{ width: 120, height: 120, justifyContent: 'center', position: 'absolute', left: -14, bottom: -22 }}
+                />
+                <Grow
+                    in={true}
+                    style={{ transformOrigin: '0 0 0' }}
+                    {...{ timeout: 1000 }}
+                >
+                    <Box style={{ position: 'absolute', zIndex: 20 }}
+                        sx={{
+                            left: { xs: 0, sm: 20, md: 40, lg: 40 },
+                            bottom: { xs: 0, sm: 20, md: 60, lg: 80 },
+                        }}
+                    >
+                        <DialAnimation
+                            open={open}
+                            actions={actions}
+                            onClick={handleClick}
                         />
-                    ))}
-                    <Box sx={{
-                        position: 'absolute', bottom: 16, left: 58,
-                        borderRadius: 2,
-                        paddingLeft: 1,
-                        paddingRight: 1,
-                        backgroundColor: 'primary.main'
-                    }}>
-                        <Typography sx={{ width: 150, color: 'white' }} >{'Bạn cần hỗ trợ?'}</Typography>
                     </Box>
-                </StyledSpeedDial>
+                </Grow>
             </Box>
         </Box>
     );

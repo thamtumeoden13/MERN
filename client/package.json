@@ -19,6 +19,7 @@
         "image-extensions": "^1.1.0",
         "is-url": "^1.2.4",
         "jwt-decode": "^3.1.2",
+        "lottie-react": "^2.2.1",
         "moment": "^2.29.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",

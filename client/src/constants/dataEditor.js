@@ -4,13 +4,17 @@ export const initialValueSmall = [
     {
         type: 'paragraph',
         children: [
-            { text: 'This is editable ' },
+            {
+                "type": 'link',
+                "url": 'https://en.wikipedia.org/wiki/Hypertext',
+                "children": [{ "text": "Thiết kế nhà phố 4x16m" }],
+            },
         ],
     },
     {
         type: 'paragraph',
         children: [
-            { text: '', code: true },
+            { text: 'This is editable ' },
         ],
     },
     {

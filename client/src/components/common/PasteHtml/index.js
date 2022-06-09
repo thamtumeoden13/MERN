@@ -205,7 +205,11 @@ const Element = props => {
             return <ol {...attributes}>{children}</ol>
         case 'link':
             return (
-                <a href={element.url} {...attributes}>
+                <a href={element.url} {...attributes} target='_blank' className={css`
+                color: #1976D2;
+                text-decoration: none;
+                background-color: transparent;
+              `} >
                     {children}
                 </a>
             )
