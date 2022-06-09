@@ -80,7 +80,7 @@ const DialAnimation = ({ open = false, actions = [], onClick }) => {
                             onClick={() => onClick(action)}
                         >
                             {action.icon}
-                            <Typography variant='body2' >{action.name}</Typography>
+                            <Typography variant='body2' style={{ color: 'white', paddingLeft: 4, fontSize: 16 }} >{action.name}</Typography>
                         </IconButton>
                     )
                 })}
