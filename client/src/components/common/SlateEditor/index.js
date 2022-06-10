@@ -36,6 +36,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import AppBar from '@mui/material/AppBar'
+import Toolbar2 from '@mui/material/Toolbar'
 
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
@@ -58,10 +60,9 @@ import ImageIcon from '@mui/icons-material/Image'
 import BurstModeIcon from '@mui/icons-material/BurstMode';
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import DeleteIcon from '@mui/icons-material/Delete'
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import RemoveLinkIcon from '@mui/icons-material/LinkOff';
-import FindReplaceIcon from '@mui/icons-material/FindReplace';
+import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
 import { Button, Toolbar, Menu, Portal } from './Component'
 
@@ -175,45 +176,6 @@ const SlateEditor = (props) => {
 
     return (
         <Slate editor={editor} value={value} onChange={value => handleChange(value)}>
-            <Toolbar>
-                <MarkButton format="bold" icon="format_bold" Icon={() => <FormatBoldIcon />} />
-                <MarkButton format="italic" icon="format_italic" Icon={() => <FormatItalicIcon />} />
-                <MarkButton format="underline" icon="format_underlined" Icon={() => <FormatUnderlinedIcon />} />
-                <MarkButton format="code" icon="code" Icon={() => <CodeIcon />} />
-                <BlockButton format="heading-one" icon="looks_one" Icon={() => <LooksOneIcon />} />
-                <BlockButton format="heading-two" icon="looks_two" Icon={() => <LooksTwoIcon />} />
-                <BlockButton format="heading-three" icon="three" Icon={() => <LooksThreeIcon />} />
-                <BlockButton format="heading-four" icon="four" Icon={() => <LooksFourIcon />} />
-                <BlockButton format="heading-five" icon="five" Icon={() => <LooksFiveIcon />} />
-                <BlockButton format="heading-six" icon="six" Icon={() => <LooksSixIcon />} />
-                <BlockButton format="block-quote" icon="format_quote" Icon={() => <FormatQuoteIcon />} />
-                <BlockButton format="numbered-list" icon="format_list_numbered" Icon={() => <FormatListNumberedIcon />} />
-                <BlockButton format="bulleted-list" icon="format_list_bulleted" Icon={() => <FormatListBulletedIcon />} />
-                <BlockButton format="left" icon="format_align_left" Icon={() => <FormatAlignLeftIcon />} />
-                <BlockButton format="center" icon="format_align_center" Icon={() => <FormatAlignCenterIcon />} />
-                <BlockButton format="right" icon="format_align_right" Icon={() => <FormatAlignRightIcon />} />
-                <BlockButton format="justify" icon="format_align_justify" Icon={() => <FormatAlignJustifyIcon />} />
-                <InsertImageButton format="image" icon="insert_image" Icon={() => <ImageIcon />} />
-                <InsertImageCustomizeButton format="image-customize" icon="insert_image_customize" Icon={() => <BurstModeIcon />} onClickOpen={() => handleDialog(true, 1)} />
-                <InsertVideoButton format="video" icon="insert_video" Icon={() => <YouTubeIcon />} />
-                <div className={css` display: flex; margin-left: 0;`} >
-                    <InsertLinkButton format="link" icon="insert_link" Icon={() => <FindReplaceIcon />} onClickOpen={() => handleDialog(true, 2)} />
-                    <div className={css` margin-left: 10px;`} >
-                        <input
-                            type="search"
-                            placeholder="Search the text..."
-                            onChange={e => setSearch(e.target.value)}
-                            className={css`
-                                        padding-left: 1.5em;
-                                        height: 24px;
-                                        width: 280px;
-                                    `}
-                        />
-                    </div>
-                </div>
-            </Toolbar>
-
-            <HoveringToolbar setOpenDialog={handleDialog} />
 
             <Editable
                 renderElement={renderElement}
@@ -231,8 +193,52 @@ const SlateEditor = (props) => {
                         }
                     }
                 }}
-                style={{ padding: '0 20px', }}
+                style={{ padding: '20px', }}
             />
+            <AppBar position="relative" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+                <Toolbar >
+                    <MarkButton format="bold" icon="format_bold" Icon={() => <FormatBoldIcon />} />
+                    <MarkButton format="italic" icon="format_italic" Icon={() => <FormatItalicIcon />} />
+                    <MarkButton format="underline" icon="format_underlined" Icon={() => <FormatUnderlinedIcon />} />
+                    <MarkButton format="code" icon="code" Icon={() => <CodeIcon />} />
+                    <BlockButton format="heading-one" icon="looks_one" Icon={() => <LooksOneIcon />} />
+                    <BlockButton format="heading-two" icon="looks_two" Icon={() => <LooksTwoIcon />} />
+                    <BlockButton format="heading-three" icon="three" Icon={() => <LooksThreeIcon />} />
+                    <BlockButton format="heading-four" icon="four" Icon={() => <LooksFourIcon />} />
+                    <BlockButton format="heading-five" icon="five" Icon={() => <LooksFiveIcon />} />
+                    <BlockButton format="heading-six" icon="six" Icon={() => <LooksSixIcon />} />
+                    <BlockButton format="block-quote" icon="format_quote" Icon={() => <FormatQuoteIcon />} />
+                    <BlockButton format="numbered-list" icon="format_list_numbered" Icon={() => <FormatListNumberedIcon />} />
+                    <BlockButton format="bulleted-list" icon="format_list_bulleted" Icon={() => <FormatListBulletedIcon />} />
+                    <BlockButton format="left" icon="format_align_left" Icon={() => <FormatAlignLeftIcon />} />
+                    <BlockButton format="center" icon="format_align_center" Icon={() => <FormatAlignCenterIcon />} />
+                    <BlockButton format="right" icon="format_align_right" Icon={() => <FormatAlignRightIcon />} />
+                    <BlockButton format="justify" icon="format_align_justify" Icon={() => <FormatAlignJustifyIcon />} />
+                    <InsertImageButton format="image" icon="insert_image" Icon={() => <ImageIcon />} />
+                    <InsertImageCustomizeButton format="image-customize" icon="insert_image_customize" Icon={() => <BurstModeIcon />} onClickOpen={() => handleDialog(true, 1)} />
+                    <InsertVideoButton format="video" icon="insert_video" Icon={() => <YouTubeIcon />} />
+                    <AddLinkButton format="link" icon="insert_link" Icon={() => <AddLinkIcon />} />
+                    <RemoveLinkButton format="link" icon="insert_link" Icon={() => <RemoveLinkIcon />} />
+
+                    <div style={{ display: 'flex', flexDirection:'row', marginLeft: 0, padding: 4 }} >
+                        <div style={{ marginLeft: '4px' }} >
+                            <input
+                                type="search"
+                                placeholder="Search the text..."
+                                onChange={e => setSearch(e.target.value)}
+                                className={css`
+                                        padding-left: 1.5em;
+                                        height: 24px;
+                                        width: 180px;
+                                    `}
+                            />
+                        </div>
+                        <div style={{ marginLeft: '10px' }} >
+                            <InsertLinkButton format="link" icon="insert_link" Icon={() => <ReplayCircleFilledIcon />} onClickOpen={() => handleDialog(true, 2)} />
+                        </div>
+                    </div>
+                </Toolbar>
+            </AppBar>
             <DialogComponent search={search} openDialog={dialog.open} typeDialog={dialog.type} setVisible={() => handleDialog(false, -1)} />
         </Slate>
     )
@@ -357,10 +363,11 @@ const wrapAndReplaceLink = (editor, url, search) => {
                         unwrapLink(editor)
                     }
 
+                    const searchConvert = search.normalize('NFD')
                     const link = {
                         type: 'link',
                         url: url,
-                        children: [{ text: search.normalize('NFD') }],
+                        children: [{ text: search }],
                     }
 
                     Transforms.insertNodes(editor, link)
@@ -1214,26 +1221,27 @@ const HoveringToolbar = ({ setOpenDialog }) => {
     })
 
     return (
-        <Portal>
-            <Menu
-                ref={ref}
-                className={css`
-            padding: 8px 7px 6px;
-            position: absolute;
-            z-index: 99;
-            top: -10000px;
-            left: -10000px;
-            margin-top: -6px;
-            opacity: 0;
-            background-color: #6a6a6a;
-            border-radius: 4px;
-            transition: opacity 0.75s;
-          `}
-                onMouseDown={e => {
-                    // prevent toolbar from taking focus away from editor
-                    e.preventDefault()
-                }}
-            >
+        <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+            <Toolbar>
+                {/* // <Portal>
+        //     <Menu
+        //         ref={ref}
+        //         className={css`
+        //     padding: 8px 7px 6px;
+        //     position: absolute;
+        //     z-index: 9999;
+        //     top: -10000px;
+        //     left: -10000px;
+        //     margin-top: -6px;
+        //     opacity: 0;
+        //     background-color: #6a6a6a;
+        //     border-radius: 4px;
+        //     transition: opacity 0.75s;
+        //   `}
+        //         onMouseDown={e => {
+        //             e.preventDefault()
+        //         }}
+        //     > */}
                 <MarkButton format="bold" icon="format_bold" Icon={() => <FormatBoldIcon />} />
                 <MarkButton format="italic" icon="format_italic" Icon={() => <FormatItalicIcon />} />
                 <MarkButton format="underline" icon="format_underlined" Icon={() => <FormatUnderlinedIcon />} />
@@ -1256,8 +1264,10 @@ const HoveringToolbar = ({ setOpenDialog }) => {
                 <InsertVideoButton format="video" icon="insert_video" Icon={() => <YouTubeIcon />} />
                 <AddLinkButton format="link" icon="insert_link" Icon={() => <AddLinkIcon />} />
                 <RemoveLinkButton format="link" icon="insert_link" Icon={() => <RemoveLinkIcon />} />
-            </Menu>
-        </Portal>
+                {/* </Menu>
+        </Portal> */}
+            </Toolbar>
+        </AppBar>
     )
 }
 
