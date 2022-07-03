@@ -98,9 +98,10 @@ const PasteHtmlComponent = (props) => {
 
     const [state, setState] = useState({
         readOnly: false,
+        alt: 'artsunday.vn'
     })
 
-    const renderElement = useCallback(props => <Element {...props} />, [])
+    const renderElement = useCallback(props => <Element {...props} alt={state.alt} />, [state.alt])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
     const editor = useMemo(
         () => withHtml(withReact(withHistory(createEditor()))),
@@ -110,6 +111,10 @@ const PasteHtmlComponent = (props) => {
     useEffect(() => {
         setState(prev => { return { ...prev, readOnly: props.readOnly } })
     }, [props.readOnly])
+
+    useEffect(() => {
+        setState(prev => { return { ...prev, alt: props.alt } })
+    }, [props.alt])
 
     useEffect(() => {
         setValue(null)
@@ -228,8 +233,8 @@ const Element = props => {
     }
 }
 
-const ImageElement = ({ attributes, children, element }) => {
-
+const ImageElement = ({ attributes, children, element, alt }) => {
+    console.log('[element.url]', element, alt)
     return (
         <div {...attributes}>
             {children}
@@ -241,7 +246,7 @@ const ImageElement = ({ attributes, children, element }) => {
                 <CardMedia
                     component='img'
                     image={element.url}
-                    alt='image'
+                    alt={alt}
                     className={css`
                             object-fit: contain;
                             max-width: 100%;
@@ -254,7 +259,7 @@ const ImageElement = ({ attributes, children, element }) => {
     )
 }
 
-const ImageCustomizeElement = ({ attributes, children, element }) => {
+const ImageCustomizeElement = ({ attributes, children, element, alt }) => {
     const maxWidth = element.typeImage == 'full' ? '100%' : '50%'
 
     return (
@@ -276,7 +281,7 @@ const ImageCustomizeElement = ({ attributes, children, element }) => {
                 <CardMedia
                     component='img'
                     image={element.url}
-                    alt='image'
+                    alt={alt}
                     className={css`
                             object-fit: contain;
                             max-width: ${maxWidth};

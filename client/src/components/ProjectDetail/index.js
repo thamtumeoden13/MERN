@@ -18,18 +18,20 @@ const ProjectDetailComponent = () => {
     const { projectDetail, isLoading } = useSelector((state) => state.projectDetails)
 
     const [description, setDescription] = useState(null)
+    const [alt, setAlt] = useState(null)
 
     useEffect(() => {
         if (!!projectDetail && Object.keys(projectDetail).length > 0) {
             setDescription(JSON.parse(projectDetail.description))
+            setAlt(projectDetail.name)
         }
     }, [projectDetail])
 
     return (
         <Grid className={classes.gridContainer} container spacing={3}>
             <Grid item xs={12} sm={12} md={9}>
-                <ProjectGeneral />
-                <PasteHtmlComponent initialValue={description} readOnly={true} />
+                <ProjectGeneral alt={alt} />
+                <PasteHtmlComponent alt={alt} initialValue={description} readOnly={true} />
             </Grid>
             <Grid item xs={12} sm={6} md={3} sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}>
                 <ProjectAlbums />

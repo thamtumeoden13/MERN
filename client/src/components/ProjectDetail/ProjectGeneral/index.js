@@ -50,7 +50,7 @@ const dataSource = [
 	},
 ]
 
-const ProjectGeneral = () => {
+const ProjectGeneral = ({ alt }) => {
 	const classes = useStyles()
 
 	const { projectDetails, projectDetail, isLoading } = useSelector((state) => state.projectDetails)
@@ -122,7 +122,7 @@ const ProjectGeneral = () => {
 								component='img'
 								className={classes.cardImage}
 								image={state.imageUrl}
-								alt='portfolio image'
+								alt={alt}
 							/>
 						</Box>
 					</Lazyload>
