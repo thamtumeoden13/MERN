@@ -201,7 +201,7 @@ const SlateEditor = (props) => {
                     <MarkButton format="italic" icon="format_italic" Icon={() => <FormatItalicIcon />} />
                     <MarkButton format="underline" icon="format_underlined" Icon={() => <FormatUnderlinedIcon />} />
                     <MarkButton format="code" icon="code" Icon={() => <CodeIcon />} />
-                    <BlockButton format="heading-one" icon="looks_one" Icon={() => <LooksOneIcon />} />
+                    {/* <BlockButton format="heading-one" icon="looks_one" Icon={() => <LooksOneIcon />} /> */}
                     <BlockButton format="heading-two" icon="looks_two" Icon={() => <LooksTwoIcon />} />
                     <BlockButton format="heading-three" icon="three" Icon={() => <LooksThreeIcon />} />
                     <BlockButton format="heading-four" icon="four" Icon={() => <LooksFourIcon />} />

@@ -89,7 +89,7 @@ const ProjectGeneral = ({ alt }) => {
 
 	return (
 		<Box>
-			<Typography component='div' variant='h5' sx={{ mb: 2 }}>
+			<Typography component='h1' variant='h4' sx={{ mb: 2, }}>
 				{state.title}
 			</Typography>
 			<Box sx={{ mt: 2, mb: 2 }}>
